@@ -95,7 +95,7 @@ if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 if ( ! (Test-path $profile)) {
 	Write-Host "You do not have a PowerShell Profile......Gay" -ForegroundColor Red -BackgroundColor DarkGray
 	Write-Host "Creating one now..." -ForegroundColor DarkYellow -BackgroundColor DarkGray
-	New-item â€“type file â€“force $profile
+	New-item -type file -force $profile
 	Write-Host "Your PowerShell profile was created at $profile" -ForegroundColor Green -BackgroundColor DarkGray
 } else {
 Write-Host "You already have a PowerShell profile at $profile , you sly dog." -ForegroundColor Green -BackgroundColor DarkGray
@@ -113,11 +113,11 @@ Get-PSDrive
 Set-Location -Path "HKLM:\System\CurrentControlSet\Control\FileSystem"
 
 
-#If you’re a Windows developer, system administrator or seasoned user, there’s  good chance you’re fully aware
-#of the 255-260 character limit of filesystem paths. However, in case you never heard about it, here’s a small recap of the issue:
+#If youâ€™re a Windows developer, system administrator or seasoned user, thereâ€™s  good chance youâ€™re fully aware
+#of the 255-260 character limit of filesystem paths. However, in case you never heard about it, hereâ€™s a small recap of the issue:
 #In the Windows API (with some exceptions discussed in the following paragraphs), the maximum length for a path is MAX_PATH, which is defined as 260 characters
-#If you’re a standard user, chances are you won’t get bothered by this limitation: who needs these long paths anyway? However, if you happen to be a developer
-#working with linux-native package managers such as NPM, you will be struck by that issue sooner or later. That’s because there are many popular script-based
+#If youâ€™re a standard user, chances are you wonâ€™t get bothered by this limitation: who needs these long paths anyway? However, if you happen to be a developer
+#working with linux-native package managers such as NPM, you will be struck by that issue sooner or later. Thatâ€™s because there are many popular script-based
 #libraries which make an intensive use of folder-nesting
 
 
@@ -184,7 +184,7 @@ $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown');
 <# Remove both these if installing
 
 #stops Window Defender messing with tools scanning system
-Add-MpPreference -ExclusionPath “C:\tools\Sysinternals”
+Add-MpPreference -ExclusionPath â€œC:\tools\Sysinternalsâ€
 #installs
 choco install sysinternals --params "/InstallDir:C:\tools\Sysinternals"
 #adds Sysinternals to Windows path so commands can be called directly
@@ -201,7 +201,7 @@ Remove both these if installing#>
 <# Remove both these if installing
 
 #stops Window Defender messing with tools scanning system
-Add-MpPreference -ExclusionPath “C:\tools\NirLauncher”
+Add-MpPreference -ExclusionPath â€œC:\tools\NirLauncherâ€
 #installs
 choco install nirlauncher --params "'/Sysinternals'" --install-args="'/DIR=C:\tools\NirLauncher'"
 
