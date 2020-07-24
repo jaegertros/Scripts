@@ -1,0 +1,17 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Software\Python\PythonCore]
+"DisplayName"="Official Python"
+"SupportUrl"="https://www.python.org/"
+
+[HKEY_CURRENT_USER\Software\Python\PythonCore\3.8]
+"DisplayName"="Python 3.8"
+
+[HKEY_CURRENT_USER\Software\Python\PythonCore\3.8\InstallPath]
+@="C:\\tools\\Python38"
+"ExecutablePath"="C:\\tools\\Python38\\python.exe"
+"WindowedExecutablePath"="C:\\tools\\Python38\\pythonw.exe"
+
+[HKEY_CURRENT_USER\Software\Python\PythonCore\3.8\PythonPath]
+@="C:\\tools\\Python38\\Lib\\;C:\\tools\\Python38\\DLLs\\"
+

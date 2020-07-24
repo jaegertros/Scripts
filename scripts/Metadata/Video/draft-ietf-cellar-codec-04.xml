@@ -1,0 +1,1490 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- name="GENERATOR" content="github.com/mmarkdown/mmark Mmark Markdown Processor - mmark.miek.nl" -->
+<rfc version="3" ipr="trust200902" docName="draft-ietf-cellar-codec-04" submissionType="IETF" category="info" xml:lang="en" xmlns:xi="http://www.w3.org/2001/XInclude" consensus="true">
+
+<front>
+<title abbrev="Matroska Codec">Matroska Media Container Codec Specifications</title><seriesInfo value="draft-ietf-cellar-codec-04" stream="IETF" status="informational" name="Internet Draft"></seriesInfo>
+<author initials="S." surname="Lhomme" fullname="Steve Lhomme"><organization></organization><address><postal><street></street>
+</postal><email>slhomme@matroska.org</email>
+</address></author>
+<author initials="M." surname="Bunkus" fullname="Moritz Bunkus"><organization></organization><address><postal><street></street>
+</postal><email>moritz@bunkus.org</email>
+</address></author>
+<author initials="D." surname="Rice" fullname="Dave Rice"><organization></organization><address><postal><street></street>
+</postal><email>dave@dericed.com</email>
+</address></author>
+<date/>
+<area>art</area>
+<workgroup>cellar</workgroup>
+
+<abstract>
+<t>This document defines the Matroska codec mappings, including the codec ID, layout of data in a <tt>Block Element</tt> and in an optional <tt>CodecPrivate Element</tt>.</t>
+</abstract>
+
+</front>
+
+<middle>
+
+<section anchor="introduction"><name>Introduction</name>
+<t>Matroska aims to become THE standard of multimedia container formats. It stores interleaved and timestamped audio/video/subtitle data using various codecs. To interpret the codec data, a mapping between the way the data is stored in Matroska and how it is understood by such a codec is necessary.</t>
+<t>This document intends to define this mapping for many commonly used codecs in Matroska.</t>
+</section>
+
+<section anchor="status-of-this-document"><name>Status of this document</name>
+<t>This document is a work-in-progress specification defining the Matroska file format as part of the <eref target="https://datatracker.ietf.org/wg/cellar/charter/">IETF Cellar working group</eref>. It uses basic elements and concept already defined in the Matroska specifications defined by this workgroup.</t>
+</section>
+
+<section anchor="security-considerations"><name>Security Considerations</name>
+<t>This document inherits security considerations from the EBML and Matroska documents.</t>
+</section>
+
+<section anchor="iana-considerations"><name>IANA Considerations</name>
+<t>To be determined.</t>
+</section>
+
+<section anchor="notations-and-conventions"><name>Notations and Conventions</name>
+<t>The key words &quot;MUST&quot;, &quot;MUST NOT&quot;, &quot;REQUIRED&quot;, &quot;SHALL&quot;, &quot;SHALL NOT&quot;, &quot;SHOULD&quot;, &quot;SHOULD NOT&quot;, &quot;RECOMMENDED&quot;, &quot;NOT RECOMMENDED&quot;, &quot;MAY&quot;, and &quot;OPTIONAL&quot; in this document are to be interpreted as described in BCP 14 <xref target="RFC2119"></xref> <xref target="RFC8174"></xref> when, and only when, they appear in all capitals, as shown here.</t>
+</section>
+
+<section anchor="codec-mappings"><name>Codec Mappings</name>
+<t>A <tt>Codec Mapping</tt> is a set of attributes to identify, name, and contextualize the format and characteristics of encoded data that can be contained within Matroska Clusters.</t>
+<t>Each TrackEntry used within Matroska MUST reference a defined <tt>Codec Mapping</tt> using the <tt>Codec ID</tt> to identify and describe the format of the encoded data in its associated Clusters. This <tt>Codec ID</tt> is a unique registered identifier that represents the encoding stored within the Track. Certain encodings MAY also require some form of codec initialization in order to provide its decoder with context and technical metadata.</t>
+<t>The intention behind this list is not to list all existing audio and video codecs, but rather to list those codecs that are currently supported in Matroska and therefore need a well defined <tt>Codec ID</tt> so that all developers supporting Matroska will use the same <tt>Codec ID</tt>. If you feel we missed support for a very important codec, please tell us on our development mailing list (cellar at ietf.org).</t>
+
+<section anchor="defining-matroska-codec-support"><name>Defining Matroska Codec Support</name>
+<t>Support for a codec is defined in Matroska with the following values.</t>
+
+<section anchor="codec-id"><name>Codec ID</name>
+<t>Each codec supported for storage in Matroska MUST have a unique <tt>Codec ID</tt>. Each <tt>Codec ID</tt> MUST be prefixed with the string from the following table according to the associated type of the codec. All characters of a <tt>Codec ID Prefix</tt> MUST be capital letters (A-Z) except for the last character of a <tt>Codec ID Prefix</tt> which MUST be an underscore (&quot;_&quot;).</t>
+<table>
+<thead>
+<tr>
+<th>Codec Type</th>
+<th>Codec ID Prefix</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Video</td>
+<td>&quot;V_&quot;</td>
+</tr>
+
+<tr>
+<td>Audio</td>
+<td>&quot;A_&quot;</td>
+</tr>
+
+<tr>
+<td>Subtitle</td>
+<td>&quot;S_&quot;</td>
+</tr>
+
+<tr>
+<td>Button</td>
+<td>&quot;B_&quot;</td>
+</tr>
+</tbody>
+</table><t>Each <tt>Codec ID</tt> MUST include a <tt>Major Codec ID</tt> immediately following the <tt>Codec ID Prefix</tt>. A <tt>Major Codec ID</tt> MAY be followed by an OPTIONAL <tt>Codec ID Suffix</tt> to communicate a refinement of the <tt>Major Codec ID</tt>. If a <tt>Codec ID Suffix</tt> is used, then the <tt>Codec ID</tt> MUST include a forward slash (&quot;/&quot;) as a separator between the <tt>Major Codec ID</tt> and the <tt>Codec ID Suffix</tt>. The <tt>Major Codec ID</tt> MUST be composed of only capital letters (A-Z) and numbers (0-9). The <tt>Codec ID Suffix</tt> MUST be composed of only capital letters (A-Z), numbers (0-9), underscore (&quot;_&quot;), and forward slash (&quot;/&quot;).</t>
+<t>The following table provides examples of valid <tt>Codec IDs</tt> and their components:</t>
+<table>
+<thead>
+<tr>
+<th>Codec ID Prefix</th>
+<th align="left">Major Codec ID</th>
+<th align="left">Separator</th>
+<th align="left">Codec ID Suffix</th>
+<th align="left">Codec ID</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>A_</td>
+<td align="left">AAC</td>
+<td align="left">/</td>
+<td align="left">MPEG2/LC/SBR</td>
+<td align="left">A_AAC/MPEG2/LC/SBR</td>
+</tr>
+
+<tr>
+<td>V_</td>
+<td align="left">MPEG4</td>
+<td align="left">/</td>
+<td align="left">ISO/ASP</td>
+<td align="left">V_MPEG4/ISO/ASP</td>
+</tr>
+
+<tr>
+<td>V_</td>
+<td align="left">MPEG1</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">V_MPEG1</td>
+</tr>
+</tbody>
+</table></section>
+
+<section anchor="codec-name"><name>Codec Name</name>
+<t>Each encoding supported for storage in Matroska MUST have a <tt>Codec Name</tt>. The <tt>Codec Name</tt> provides a readable label for the encoding.</t>
+</section>
+
+<section anchor="description"><name>Description</name>
+<t>An optional description for the encoding. This value is only intended for human consumption.</t>
+</section>
+
+<section anchor="initialization"><name>Initialization</name>
+<t>Each encoding supported for storage in Matroska MUST have a defined Initialization. The Initialization MUST describe the storage of data necessary to initialize the decoder, which MUST be stored within the <tt>CodecPrivate Element</tt>. When the Initialization is updated within a track then that updated Initialization data MUST be written into the <tt>CodecState Element</tt> of the first <tt>Cluster</tt> to require it. If the encoding does not require any form of Initialization then <tt>none</tt> MUST be used to define the Initialization and the <tt>CodecPrivate Element</tt> SHOULD NOT be written and MUST be ignored. Data that is defined Initialization to be stored in the <tt>CodecPrivate Element</tt> is known as <tt>Private Data</tt>.</t>
+</section>
+
+<section anchor="codec-blockadditions"><name>Codec BlockAdditions</name>
+<t>Additional data that contextualizes or supplements a <tt>Block</tt> can be stored within the <tt>BlockAdditional Element</tt> of a <tt>BlockMore Element</tt>. This <tt>BlockAdditional</tt> data MAY be passed to the associated decoder along with the content of the <tt>Block Element</tt>. Each <tt>BlockAdditional</tt> is coupled with a <tt>BlockAddID</tt> that identifies the kind of data it contains. The following table defines the meanings of <tt>BlockAddID</tt> values.</t>
+<table>
+<thead>
+<tr>
+<th>BlockAddID Value</th>
+<th align="left">Definition</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>0</td>
+<td align="left">Invalid.</td>
+</tr>
+
+<tr>
+<td>1</td>
+<td align="left">Indicates that the context of the <tt>BlockAdditional</tt> data is defined by the corresponding <tt>Codec Mapping</tt>.</td>
+</tr>
+
+<tr>
+<td>2 or greater</td>
+<td align="left"><tt>BlockAddID</tt> values of 2 and greater are mapped to the <tt>BlockAddIDValue</tt> of the <tt>BlockAdditionMapping</tt> of the associated Track.</td>
+</tr>
+</tbody>
+</table><t>The values of <tt>BlockAddID</tt> that are 2 of greater have no semantic meaning, but simply associate the <tt>BlockMore Element</tt> with a <tt>BlockAdditionMapping</tt> of the associated Track. See <eref target="#block-additional-mapping">the section on Block Additional Mappings</eref> for more information.</t>
+<t>The following XML depicts the nested Elements of a <tt>BlockGroup Element</tt> with an example of BlockAdditions:</t>
+
+<artwork type="ascii-art">&lt;BlockGroup&gt;
+  &lt;Block&gt;{Binary data of a VP9 video frame in YUV}&lt;/Block&gt;
+  &lt;BlockAdditions&gt;
+    &lt;BlockMore&gt;
+      &lt;BlockAddID&gt;1&lt;/BlockAddID&gt;
+      &lt;BlockAdditional&gt;
+        {alpha channel encoding to supplement the VP9 frame}
+      &lt;/BlockAdditional&gt;
+    &lt;/BlockMore&gt;
+  &lt;/BlockAdditions&gt;
+&lt;/BlockGroup&gt;
+</artwork>
+</section>
+
+<section anchor="citation"><name>Citation</name>
+<t>Documentation of the associated normative and informative references for the codec is RECOMMENDED.</t>
+</section>
+
+<section anchor="deprecation-date"><name>Deprecation Date</name>
+<t>A timestamp, expressed in <xref target="RFC3339"></xref> that notes when support for the <tt>Codec Mapping</tt> within Matroska was deprecated. If a <tt>Codec Mapping</tt> is defined with a <tt>Deprecation Date</tt>, then it is RECOMMENDED that Matroska writers SHOULD NOT use the <tt>Codec Mapping</tt> after the <tt>Deprecation Date</tt>.</t>
+</section>
+
+<section anchor="superseded-by"><name>Superseded By</name>
+<t>A <tt>Codec Mapping</tt> MAY only be defined with a <tt>Superseded By</tt> value, if it has an expressed <tt>Deprecation Date</tt>. If used, the <tt>Superseded By</tt> value MUST store the <tt>Codec ID</tt> of another <tt>Codec Mapping</tt> that has superseded the <tt>Codec Mapping</tt>.</t>
+</section>
+</section>
+
+<section anchor="recommendations-for-the-creation-of-new-codec-mappings"><name>Recommendations for the Creation of New Codec Mappings</name>
+<t>Creators of new <tt>Codec Mappings</tt> to be used in the context of Matroska:</t>
+
+<ul>
+<li><t>SHOULD assume that all <tt>Codec Mappings</tt> they create might become standardized, public, commonly deployed, or usable across multiple implementations.</t>
+</li>
+<li><t>SHOULD employ meaningful values for <tt>Codec ID</tt> and <tt>Codec Name</tt> that they have reason to believe are currently unused.</t>
+</li>
+<li><t>SHOULD NOT prefix their <tt>Codec ID</tt> with &quot;X_&quot; or similar constructs.</t>
+</li>
+</ul>
+<t>These recommendations are based upon Section 3 of <xref target="RFC6648"></xref>.</t>
+</section>
+
+<section anchor="video-codec-mappings"><name>Video Codec Mappings</name>
+
+<section anchor="v-ms-vfw-fourcc"><name>V_MS/VFW/FOURCC</name>
+<t>Codec ID: <tt>V_MS/VFW/FOURCC</tt></t>
+<t>Codec Name: Microsoft (TM) Video Codec Manager (VCM)</t>
+<t>Description: The private data contains the VCM structure BITMAPINFOHEADER including the extra private bytes, as <eref target="https://msdn.microsoft.com/en-us/library/windows/desktop/dd318229(v=vs.85">defined by Microsoft</eref>.aspx). The data are stored in little endian format (like on IA32 machines). Where is the Huffman table stored in HuffYUV, not AVISTREAMINFO ??? And the FourCC, not in AVISTREAMINFO.fccHandler ???</t>
+<t>Initialization: <tt>Private Data</tt> contains the VCM structure BITMAPINFOHEADER including the extra private bytes, as defined by Microsoft in <eref target="https://msdn.microsoft.com/en-us/library/windows/desktop/dd183376(v=vs.85).aspx">https://msdn.microsoft.com/en-us/library/windows/desktop/dd183376(v=vs.85).aspx</eref>.</t>
+<t>Citation: <eref target="https://msdn.microsoft.com/en-us/library/windows/desktop/dd183376(v=vs.85).aspx">https://msdn.microsoft.com/en-us/library/windows/desktop/dd183376(v=vs.85).aspx</eref></t>
+</section>
+
+<section anchor="v-uncompressed"><name>V_UNCOMPRESSED</name>
+<t>Codec ID: V_UNCOMPRESSED</t>
+<t>Codec Name: Video, raw uncompressed video frames</t>
+<t>Description: All details about the used color specs and bit depth are to be put/read from the KaxCodecColourSpace elements.</t>
+<t>Initialization: none</t>
+</section>
+
+<section anchor="v-mpeg4-iso-sp"><name>V_MPEG4/ISO/SP</name>
+<t>Codec ID: V_MPEG4/ISO/SP</t>
+<t>Codec Name: MPEG4 ISO simple profile (DivX4)</t>
+<t>Description: Stream was created via improved codec API (UCI) or even transmuxed from AVI (no b-frames in Simple Profile), frame order is coding order.</t>
+<t>Initialization: none</t>
+</section>
+
+<section anchor="v-mpeg4-iso-asp"><name>V_MPEG4/ISO/ASP</name>
+<t>Codec ID: V_MPEG4/ISO/ASP</t>
+<t>Codec Name: MPEG4 ISO advanced simple profile (DivX5, XviD, FFMPEG)</t>
+<t>Description: Stream was created via improved codec API (UCI) or transmuxed from MP4, not simply transmuxed from AVI. Note there are differences how b-frames are handled in these native streams, when being compared to a VfW created stream, as here there are <tt>no</tt> dummy frames inserted, the frame order is exactly the same as the coding order, same as in MP4 streams.</t>
+<t>Initialization: none</t>
+</section>
+
+<section anchor="v-mpeg4-iso-ap"><name>V_MPEG4/ISO/AP</name>
+<t>Codec ID: V_MPEG4/ISO/AP</t>
+<t>Codec Name: MPEG4 ISO advanced profile</t>
+<t>Description: Stream was created via improved codec API (UCI) or transmuxed from MP4, not simply transmuxed from AVI. Note there are differences how b-frames are handled in these native streams, when being compared to a VfW created stream, as here there are <tt>no</tt> dummy frames inserted, the frame order is exactly the same as the coding order, same as in MP4 streams.</t>
+<t>Initialization: none</t>
+</section>
+
+<section anchor="v-mpeg4-ms-v3"><name>V_MPEG4/MS/V3</name>
+<t>Codec ID: V_MPEG4/MS/V3</t>
+<t>Codec Name: Microsoft (TM) MPEG4 V3</t>
+<t>Description: Microsoft (TM) MPEG4 V3 and derivates, means DivX3, Angelpotion, SMR, etc.; stream was created using VfW codec or transmuxed from AVI; note that V1/V2 are covered in VfW compatibility mode.</t>
+<t>Initialization: none</t>
+</section>
+
+<section anchor="v-mpeg1"><name>V_MPEG1</name>
+<t>Codec ID: V_MPEG1</t>
+<t>Codec Name: MPEG 1</t>
+<t>Description: The Matroska video stream will contain a demuxed Elementary Stream (ES), where block boundaries are still to be defined. Its RECOMMENDED to use MPEG2MKV.exe for creating those files, and to compare the results with self-made implementations</t>
+<t>Initialization: none</t>
+</section>
+
+<section anchor="v-mpeg2"><name>V_MPEG2</name>
+<t>Codec ID: V_MPEG2</t>
+<t>Codec Name: MPEG 2</t>
+<t>Description: The Matroska video stream will contain a demuxed Elementary Stream (ES), where block boundaries are still to be defined. Its RECOMMENDED to use MPEG2MKV.exe for creating those files, and to compare the results with self-made implementations</t>
+<t>Initialization: none</t>
+</section>
+
+<section anchor="v-real-rv10"><name>V_REAL/RV10</name>
+<t>Codec ID: V_REAL/RV10</t>
+<t>Codec Name: RealVideo 1.0 aka RealVideo 5</t>
+<t>Description: Individual slices from the Real container are combined into a single frame.</t>
+<t>Initialization: The <tt>Private Data</tt> contains a <tt>real_video_props_t</tt> structure in Big Endian byte order as found in <eref target="https://github.com/mbunkus/mkvtoolnix/blob/master/lib/librmff/librmff.h">librmff</eref>.</t>
+</section>
+
+<section anchor="v-real-rv20"><name>V_REAL/RV20</name>
+<t>Codec ID: V_REAL/RV20</t>
+<t>Codec Name: RealVideo G2 and RealVideo G2+SVT</t>
+<t>Description: Individual slices from the Real container are combined into a single frame.</t>
+<t>Initialization: The <tt>Private Data</tt> contains a <tt>real_video_props_t</tt> structure in Big Endian byte order as found in <eref target="https://github.com/mbunkus/mkvtoolnix/blob/master/lib/librmff/librmff.h">librmff</eref>.</t>
+</section>
+
+<section anchor="v-real-rv30"><name>V_REAL/RV30</name>
+<t>Codec ID: V_REAL/RV30</t>
+<t>Codec Name: RealVideo 8</t>
+<t>Description: Individual slices from the Real container are combined into a single frame.</t>
+<t>Initialization: The <tt>Private Data</tt> contains a <tt>real_video_props_t</tt> structure in Big Endian byte order as found in <eref target="https://github.com/mbunkus/mkvtoolnix/blob/master/lib/librmff/librmff.h">librmff</eref>.</t>
+</section>
+
+<section anchor="v-real-rv40"><name>V_REAL/RV40</name>
+<t>Codec ID: V_REAL/RV40</t>
+<t>Codec Name: rv40 : RealVideo 9</t>
+<t>Description: Individual slices from the Real container are combined into a single frame.</t>
+<t>Initialization: The <tt>Private Data</tt> contains a <tt>real_video_props_t</tt> structure in Big Endian byte order as found in <eref target="https://github.com/mbunkus/mkvtoolnix/blob/master/lib/librmff/librmff.h">librmff</eref>.</t>
+</section>
+
+<section anchor="v-quicktime"><name>V_QUICKTIME</name>
+<t>Codec ID: V_QUICKTIME</t>
+<t>Codec Name: Video taken from QuickTime(TM) files</t>
+<t>Description: Several codecs as stored in QuickTime, e.g. Sorenson or Cinepak.</t>
+<t>Initialization: The <tt>Private Data</tt> contains all additional data that is stored in the 'stsd' (sample description) atom in the QuickTime file <strong>after</strong> the mandatory video descriptor structure (starting with the size and FourCC fields). For an explanation of the QuickTime file format read <eref target="https://developer.apple.com/library/mac/documentation/QuickTime/QTFF/QTFFPreface/qtffPreface.html">QuickTime File Format Specification</eref>.</t>
+</section>
+
+<section anchor="v-theora"><name>V_THEORA</name>
+<t>Codec ID: V_THEORA</t>
+<t>Codec Name: Theora</t>
+<t>Initialization: The <tt>Private Data</tt> contains the first three Theora packets in order. The lengths of the packets precedes them. The actual layout is:</t>
+
+<ul>
+<li><t>Byte 1: number of distinct packets '<tt>#p</tt>' minus one inside the CodecPrivate block. This MUST be '2' for current (as of 2016-07-08) Theora headers.</t>
+</li>
+<li><t>Bytes 2..n: lengths of the first '<tt>#p</tt>' packets, coded in Xiph-style lacing. The length of the last packet is the length of the CodecPrivate block minus the lengths coded in these bytes minus one.</t>
+</li>
+<li><t>Bytes n+1..: The Theora identification header, followed by the commend header followed by the codec setup header. Those are described in the <eref target="http://www.theora.org/doc/Theora.pdf">Theora specs</eref>.</t>
+</li>
+</ul>
+</section>
+
+<section anchor="v-prores"><name>V_PRORES</name>
+<t>Codec ID: V_PRORES</t>
+<t>Codec Name: Apple ProRes</t>
+<t>Initialization: The <tt>Private Data</tt> contains the FourCC as found in MP4 movies:</t>
+
+<ul>
+<li><t>ap4x: ProRes 4444 XQ</t>
+</li>
+<li><t>ap4h: ProRes 4444</t>
+</li>
+<li><t>apch: ProRes 422 High Quality</t>
+</li>
+<li><t>apcn: ProRes 422 Standard Definition</t>
+</li>
+<li><t>apcs: ProRes 422 LT</t>
+</li>
+<li><t>apco: ProRes 422 Proxy</t>
+</li>
+<li><t>aprh: ProRes RAW High Quality</t>
+</li>
+<li><t>aprn: ProRes RAW Standard Definition</t>
+</li>
+</ul>
+<t><eref target="http://wiki.multimedia.cx/index.php?title=Apple_ProRes#Frame_layout">this page for more technical details on ProRes</eref></t>
+</section>
+
+<section anchor="v-vp8"><name>V_VP8</name>
+<t>Codec ID: V_VP8</t>
+<t>Codec Name: VP8 Codec format</t>
+<t>Description: VP8 is an open and royalty free video compression format developed by Google and created by On2 Technologies as a successor to VP7. <xref target="RFC6386"></xref></t>
+<t>Codec BlockAdditions: A single-channel encoding of an alpha channel MAY be stored in <tt>BlockAdditions</tt>. The <tt>BlockAddId</tt> of the <tt>BlockMore</tt> containing these data MUST be 1.</t>
+<t>Initialization: none</t>
+</section>
+
+<section anchor="v-vp9"><name>V_VP9</name>
+<t>Codec ID: V_VP9</t>
+<t>Codec Name: VP9 Codec format</t>
+<t>Description: VP9 is an open and royalty free video compression format developed by Google as a successor to VP8. <eref target="https://www.webmproject.org/vp9/">Draft VP9 Bitstream and Decoding Process Specification</eref></t>
+<t>Codec BlockAdditions: A single-channel encoding of an alpha channel MAY be stored in <tt>BlockAdditions</tt>. The <tt>BlockAddId</tt> of the <tt>BlockMore</tt> containing these data MUST be 1.</t>
+<t>Initialization: none</t>
+</section>
+
+<section anchor="v-ffv1"><name>V_FFV1</name>
+<t>Codec ID: V_FFV1</t>
+<t>Codec Name: FF Video Codec 1</t>
+<t>Description: FFV1 is a lossless intra-frame video encoding format designed to efficiently compress video data in a variety of pixel formats. Compared to uncompressed video, FFV1 offers storage compression, frame fixity, and self-description, which makes FFV1 useful as a preservation or intermediate video format. <eref target="https://datatracker.ietf.org/doc/draft-ietf-cellar-ffv1/">Draft FFV1 Specification</eref></t>
+<t>Initialization: For FFV1 versions 0 or 1, <tt>Private Data</tt> SHOULD NOT be written. For FFV1 version 3 or greater, the <tt>Private Data</tt> MUST contain the FFV1 Configuration Record structure, as defined in <eref target="https://tools.ietf.org/html/draft-ietf-cellar-ffv1-04#section-4.2">https://tools.ietf.org/html/draft-ietf-cellar-ffv1-04#section-4.2</eref>, and no other data.</t>
+</section>
+</section>
+
+<section anchor="audio-codec-mappings"><name>Audio Codec Mappings</name>
+
+<section anchor="a-mpeg-l3"><name>A_MPEG/L3</name>
+<t>Codec ID: A_MPEG/L3</t>
+<t>Codec Name: MPEG Audio 1, 2, 2.5 Layer III</t>
+<t>Description: The data contain everything needed for playback in the MPEG Audio header of each frame. Corresponding ACM wFormatTag : 0x0055</t>
+<t>Initialization: none</t>
+</section>
+
+<section anchor="a-mpeg-l2"><name>A_MPEG/L2</name>
+<t>Codec ID: A_MPEG/L2</t>
+<t>Codec Name: MPEG Audio 1, 2 Layer II</t>
+<t>Description: The data contain everything needed for playback in the MPEG Audio header of each frame. Corresponding ACM wFormatTag : 0x0050</t>
+<t>Initialization: none</t>
+</section>
+
+<section anchor="a-mpeg-l1"><name>A_MPEG/L1</name>
+<t>Codec ID: A_MPEG/L1</t>
+<t>Codec Name: MPEG Audio 1, 2 Layer I</t>
+<t>Description: The data contain everything needed for playback in the MPEG Audio header of each frame. Corresponding ACM wFormatTag : 0x0050</t>
+<t>Initialization: none</t>
+</section>
+
+<section anchor="a-pcm-int-big"><name>A_PCM/INT/BIG</name>
+<t>Codec ID: A_PCM/INT/BIG</t>
+<t>Codec Name: PCM Integer Big Endian</t>
+<t>Description: The audio bit depth MUST be read and set from the <tt>BitDepth Element</tt>. Audio samples MUST be considered as signed values, except if the audio bit depth is <tt>8</tt> which MUST be interpreted as unsigned values. Corresponding ACM wFormatTag : ???</t>
+<t>Initialization: none</t>
+</section>
+
+<section anchor="a-pcm-int-lit"><name>A_PCM/INT/LIT</name>
+<t>Codec ID: A_PCM/INT/LIT</t>
+<t>Codec Name: PCM Integer Little Endian</t>
+<t>Description: The audio bit depth MUST be read and set from the <tt>BitDepth Element</tt>. Audio samples MUST be considered as signed values, except if the audio bit depth is <tt>8</tt> which MUST be interpreted as unsigned values. Corresponding ACM wFormatTag : 0x0001</t>
+<t>Initialization: none</t>
+</section>
+
+<section anchor="a-pcm-float-ieee"><name>A_PCM/FLOAT/IEEE</name>
+<t>Codec ID: A_PCM/FLOAT/IEEE</t>
+<t>Codec Name: Floating Point, IEEE compatible</t>
+<t>Description: The audio bit depth MUST be read and set from the <tt>BitDepth Element</tt> (32 bit in most cases). The floats are stored as defined in <xref target="IEEE.754.1985"></xref> and in little endian order. Corresponding ACM wFormatTag : 0x0003</t>
+<t>Initialization: none</t>
+</section>
+
+<section anchor="a-mpc"><name>A_MPC</name>
+<t>Codec ID: A_MPC</t>
+<t>Codec Name: MPC (musepack) SV8</t>
+<t>Description: The main developer for musepack has requested that we wait until the SV8 framing has been fully defined for musepack before defining how to store it in Matroska.</t>
+</section>
+
+<section anchor="a-ac3"><name>A_AC3</name>
+<t>Codec ID: A_AC3</t>
+<t>Codec Name: (Dolby™) AC3</t>
+<t>Description: BSID &lt;= 8 !! The private data is void ??? Corresponding ACM wFormatTag : 0x2000 ; channel number have to be read from the corresponding audio element</t>
+</section>
+
+<section anchor="a-ac3-bsid9"><name>A_AC3/BSID9</name>
+<t>Codec ID: A_AC3/BSID9</t>
+<t>Codec Name: (Dolby™) AC3</t>
+<t>Description: The ac3 frame header has, similar to the mpeg-audio header a version field. Normal ac3 is defined as bitstream id 8 (5 Bits, numbers are 0-15). Everything below 8 is still compatible with all decoders that handle 8 correctly. Everything higher are additions that break decoder compatibility.
+For the samplerates 24kHz (00); 22,05kHz (01) and 16kHz (10) the BSID is 9
+For the samplerates 12kHz (00); 11,025kHz (01) and 8kHz (10) the BSID is 10</t>
+<t>Initialization: none</t>
+</section>
+
+<section anchor="a-ac3-bsid10"><name>A_AC3/BSID10</name>
+<t>Codec ID: A_AC3/BSID10</t>
+<t>Codec Name: (Dolby™) AC3</t>
+<t>Description: The ac3 frame header has, similar to the mpeg-audio header a version field. Normal ac3 is defined as bitstream id 8 (5 Bits, numbers are 0-15). Everything below 8 is still compatible with all decoders that handle 8 correctly. Everything higher are additions that break decoder compatibility.
+For the samplerates 24kHz (00); 22,05kHz (01) and 16kHz (10) the BSID is 9
+For the samplerates 12kHz (00); 11,025kHz (01) and 8kHz (10) the BSID is 10</t>
+<t>Initialization: none</t>
+</section>
+
+<section anchor="a-alac"><name>A_ALAC</name>
+<t>Codec ID: A_ALAC</t>
+<t>Codec Name: ALAC (Apple Lossless Audio Codec)</t>
+<t>Initialization: The <tt>Private Data</tt> contains ALAC's magic cookie (both the codec specific configuration as well as the optional channel layout information). Its format is described in <eref target="http://alac.macosforge.org/trac/browser/trunk/ALACMagicCookieDescription.txt">ALAC's official source code</eref>.</t>
+</section>
+
+<section anchor="a-dts"><name>A_DTS</name>
+<t>Codec ID: A_DTS</t>
+<t>Codec Name: Digital Theatre System</t>
+<t>Description: Supports DTS, DTS-ES, DTS-96/26, DTS-HD High Resolution Audio and DTS-HD Master Audio. The private data is void. Corresponding ACM wFormatTag : 0x2001</t>
+<t>Initialization: none</t>
+</section>
+
+<section anchor="a-dts-express"><name>A_DTS/EXPRESS</name>
+<t>Codec ID: A_DTS/EXPRESS</t>
+<t>Codec Name: Digital Theatre System Express</t>
+<t>Description: DTS Express (a.k.a. LBR) audio streams. The private data is void. Corresponding ACM wFormatTag : 0x2001</t>
+<t>Initialization: none</t>
+</section>
+
+<section anchor="a-dts-lossless"><name>A_DTS/LOSSLESS</name>
+<t>Codec ID: A_DTS/LOSSLESS</t>
+<t>Codec Name: Digital Theatre System Lossless</t>
+<t>Description: DTS Lossless audio that does not have a core substream. The private data is void. Corresponding ACM wFormatTag : 0x2001</t>
+<t>Initialization: none</t>
+</section>
+
+<section anchor="a-vorbis"><name>A_VORBIS</name>
+<t>Codec ID: A_VORBIS</t>
+<t>Codec Name: Vorbis</t>
+<t>Initialization: The <tt>Private Data</tt> contains the first three Vorbis packet in order. The lengths of the packets precedes them. The actual layout is:
+- Byte 1: number of distinct packets '<tt>#p</tt>' minus one inside the CodecPrivate block. This MUST be '2' for current (as of 2016-07-08) Vorbis headers.
+- Bytes 2..n: lengths of the first '<tt>#p</tt>' packets, coded in Xiph-style lacing. The length of the last packet is the length of the CodecPrivate block minus the lengths coded in these bytes minus one.
+- Bytes n+1..: The <eref target="https://xiph.org/vorbis/doc/Vorbis_I_spec.html">Vorbis identification header</eref>, followed by the <eref target="https://xiph.org/vorbis/doc/v-comment.html">Vorbis comment header</eref> followed by the <eref target="https://xiph.org/vorbis/doc/Vorbis_I_spec.html">codec setup header</eref>.</t>
+</section>
+
+<section anchor="a-flac"><name>A_FLAC</name>
+<t>Codec ID: A_FLAC</t>
+<t>Codec Name: <eref target="http://flac.sourceforge.net/">FLAC (Free Lossless Audio Codec)</eref></t>
+<t>Initialization: The <tt>Private Data</tt> contains all the header/metadata packets before the first data packet. These include the first header packet containing only the word <tt>fLaC</tt> as well as all metadata packets.</t>
+</section>
+
+<section anchor="a-real-14-4"><name>A<em>REAL/14</em>4</name>
+<t>Codec ID: A<em>REAL/14</em>4</t>
+<t>Codec Name: Real Audio 1</t>
+<t>Initialization: The <tt>Private Data</tt> contains either the &quot;real<em>audio</em>v4<em>props</em>t&quot; or the &quot;real<em>audio</em>v5<em>props</em>t&quot; structure (differentiated by their &quot;version&quot; field; Big Endian byte order) as found in <eref target="https://github.com/mbunkus/mkvtoolnix/blob/master/lib/librmff/librmff.h">librmff</eref>.</t>
+</section>
+
+<section anchor="a-real-28-8"><name>A<em>REAL/28</em>8</name>
+<t>Codec ID: A<em>REAL/28</em>8</t>
+<t>Codec Name: Real Audio 2</t>
+<t>Initialization: The <tt>Private Data</tt> contains either the &quot;real<em>audio</em>v4<em>props</em>t&quot; or the &quot;real<em>audio</em>v5<em>props</em>t&quot; structure (differentiated by their &quot;version&quot; field; Big Endian byte order) as found in <eref target="https://github.com/mbunkus/mkvtoolnix/blob/master/lib/librmff/librmff.h">librmff</eref>.</t>
+</section>
+
+<section anchor="a-real-cook"><name>A_REAL/COOK</name>
+<t>Codec ID: A_REAL/COOK</t>
+<t>Codec Name: Real Audio Cook Codec (codename: Gecko)</t>
+<t>Initialization: The <tt>Private Data</tt> contains either the &quot;real<em>audio</em>v4<em>props</em>t&quot; or the &quot;real<em>audio</em>v5<em>props</em>t&quot; structure (differentiated by their &quot;version&quot; field; Big Endian byte order) as found in <eref target="https://github.com/mbunkus/mkvtoolnix/blob/master/lib/librmff/librmff.h">librmff</eref>.</t>
+</section>
+
+<section anchor="a-real-sipr"><name>A_REAL/SIPR</name>
+<t>Codec ID: A_REAL/SIPR</t>
+<t>Codec Name: Sipro Voice Codec</t>
+<t>Initialization: The <tt>Private Data</tt> contains either the &quot;real<em>audio</em>v4<em>props</em>t&quot; or the &quot;real<em>audio</em>v5<em>props</em>t&quot; structure (differentiated by their &quot;version&quot; field; Big Endian byte order) as found in <eref target="https://github.com/mbunkus/mkvtoolnix/blob/master/lib/librmff/librmff.h">librmff</eref>.</t>
+</section>
+
+<section anchor="a-real-ralf"><name>A_REAL/RALF</name>
+<t>Codec ID: A_REAL/RALF</t>
+<t>Codec Name: Real Audio Lossless Format</t>
+<t>Initialization: The <tt>Private Data</tt> contains either the &quot;real<em>audio</em>v4<em>props</em>t&quot; or the &quot;real<em>audio</em>v5<em>props</em>t&quot; structure (differentiated by their &quot;version&quot; field; Big Endian byte order) as found in <eref target="https://github.com/mbunkus/mkvtoolnix/blob/master/lib/librmff/librmff.h">librmff</eref>.</t>
+</section>
+
+<section anchor="a-real-atrc"><name>A_REAL/ATRC</name>
+<t>Codec ID: A_REAL/ATRC</t>
+<t>Codec Name: Sony Atrac3 Codec</t>
+<t>Initialization: The <tt>Private Data</tt> contains either the &quot;real<em>audio</em>v4<em>props</em>t&quot; or the &quot;real<em>audio</em>v5<em>props</em>t&quot; structure (differentiated by their &quot;version&quot; field; Big Endian byte order) as found in <eref target="https://github.com/mbunkus/mkvtoolnix/blob/master/lib/librmff/librmff.h">librmff</eref>.</t>
+</section>
+
+<section anchor="a-ms-acm"><name>A_MS/ACM</name>
+<t>Codec ID: A_MS/ACM</t>
+<t>Codec Name: Microsoft(TM) Audio Codec Manager (ACM)</t>
+<t>Description: The data are stored in little endian format (like on IA32 machines).</t>
+<t>Initialization: The <tt>Private Data</tt> contains the ACM structure WAVEFORMATEX including the extra private bytes, as <eref target="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/multimed/mmstr_625u.asp">defined by Microsoft</eref>.</t>
+</section>
+
+<section anchor="a-aac-mpeg2-main"><name>A_AAC/MPEG2/MAIN</name>
+<t>Codec ID: A_AAC/MPEG2/MAIN</t>
+<t>Codec Name: MPEG2 Main Profile</t>
+<t>Description: Channel number and sample rate have to be read from the corresponding audio element. Audio stream is stripped from ADTS headers and normal Matroska frame based muxing scheme is applied. AAC audio always uses wFormatTag 0xFF.</t>
+<t>Initialization: none</t>
+</section>
+
+<section anchor="a-aac-mpeg2-lc"><name>A_AAC/MPEG2/LC</name>
+<t>Codec ID: A_AAC/MPEG2/LC</t>
+<t>Codec Name: Low Complexity</t>
+<t>Description: Channel number and sample rate have to be read from the corresponding audio element. Audio stream is stripped from ADTS headers and normal Matroska frame based muxing scheme is applied. AAC audio always uses wFormatTag 0xFF.</t>
+<t>Initialization: none</t>
+</section>
+
+<section anchor="a-aac-mpeg2-lc-sbr"><name>A_AAC/MPEG2/LC/SBR</name>
+<t>Codec ID: A_AAC/MPEG2/LC/SBR</t>
+<t>Codec Name: Low Complexity with Spectral Band Replication</t>
+<t>Description: Channel number and sample rate have to be read from the corresponding audio element. Audio stream is stripped from ADTS headers and normal Matroska frame based muxing scheme is applied. AAC audio always uses wFormatTag 0xFF.</t>
+<t>Initialization: none</t>
+</section>
+
+<section anchor="a-aac-mpeg2-ssr"><name>A_AAC/MPEG2/SSR</name>
+<t>Codec ID: A_AAC/MPEG2/SSR</t>
+<t>Codec Name: Scalable Sampling Rate</t>
+<t>Description: Channel number and sample rate have to be read from the corresponding audio element. Audio stream is stripped from ADTS headers and normal Matroska frame based muxing scheme is applied. AAC audio always uses wFormatTag 0xFF.</t>
+<t>Initialization: none</t>
+</section>
+
+<section anchor="a-aac-mpeg4-main"><name>A_AAC/MPEG4/MAIN</name>
+<t>Codec ID: A_AAC/MPEG4/MAIN</t>
+<t>Codec Name: MPEG4 Main Profile</t>
+<t>Description: Channel number and sample rate have to be read from the corresponding audio element. Audio stream is stripped from ADTS headers and normal Matroska frame based muxing scheme is applied. AAC audio always uses wFormatTag 0xFF.</t>
+<t>Initialization: none</t>
+</section>
+
+<section anchor="a-aac-mpeg4-lc"><name>A_AAC/MPEG4/LC</name>
+<t>Codec ID: A_AAC/MPEG4/LC</t>
+<t>Codec Name: Low Complexity</t>
+<t>Description: Channel number and sample rate have to be read from the corresponding audio element. Audio stream is stripped from ADTS headers and normal Matroska frame based muxing scheme is applied. AAC audio always uses wFormatTag 0xFF.</t>
+<t>Initialization: none</t>
+</section>
+
+<section anchor="a-aac-mpeg4-lc-sbr"><name>A_AAC/MPEG4/LC/SBR</name>
+<t>Codec ID: A_AAC/MPEG4/LC/SBR</t>
+<t>Codec Name: Low Complexity with Spectral Band Replication</t>
+<t>Description: Channel number and sample rate have to be read from the corresponding audio element. Audio stream is stripped from ADTS headers and normal Matroska frame based muxing scheme is applied. AAC audio always uses wFormatTag 0xFF.</t>
+<t>Initialization: none</t>
+</section>
+
+<section anchor="a-aac-mpeg4-ssr"><name>A_AAC/MPEG4/SSR</name>
+<t>Codec ID: A_AAC/MPEG4/SSR</t>
+<t>Codec Name: Scalable Sampling Rate</t>
+<t>Description: Channel number and sample rate have to be read from the corresponding audio element. Audio stream is stripped from ADTS headers and normal Matroska frame based muxing scheme is applied. AAC audio always uses wFormatTag 0xFF.</t>
+<t>Initialization: none</t>
+</section>
+
+<section anchor="a-aac-mpeg4-ltp"><name>A_AAC/MPEG4/LTP</name>
+<t>Codec ID: A_AAC/MPEG4/LTP</t>
+<t>Codec Name: Long Term Prediction</t>
+<t>Description: Channel number and sample rate have to be read from the corresponding audio element. Audio stream is stripped from ADTS headers and normal Matroska frame based muxing scheme is applied. AAC audio always uses wFormatTag 0xFF.</t>
+<t>Initialization: none</t>
+</section>
+
+<section anchor="a-quicktime"><name>A_QUICKTIME</name>
+<t>Codec ID: A_QUICKTIME</t>
+<t>Codec Name: Audio taken from QuickTime(TM) files</t>
+<t>Description: Several codecs as stored in QuickTime, e.g. QDesign Music v1 or v2.</t>
+<t>Initialization: The <tt>Private Data</tt> contains all additional data that is stored in the 'stsd' (sample description) atom in the QuickTime file <strong>after</strong> the mandatory sound descriptor structure (starting with the size and FourCC fields). For an explanation of the QuickTime file format read <eref target="https://developer.apple.com/library/mac/documentation/QuickTime/QTFF/QTFFPreface/qtffPreface.html">QuickTime File Format Specification</eref>.</t>
+</section>
+
+<section anchor="a-quicktime-qdmc"><name>A_QUICKTIME/QDMC</name>
+<t>Codec ID: A_QUICKTIME/QDMC</t>
+<t>Codec Name: QDesign Music</t>
+<t>Description:</t>
+<t>Initialization: The <tt>Private Data</tt> contains all additional data that is stored in the 'stsd' (sample description) atom in the QuickTime file <strong>after</strong> the mandatory sound descriptor structure (starting with the size and FourCC fields). For an explanation of the QuickTime file format read <eref target="https://developer.apple.com/library/mac/documentation/QuickTime/QTFF/QTFFPreface/qtffPreface.html">QuickTime File Format Specification</eref>.</t>
+<t>Superseded By: A_QUICKTIME</t>
+</section>
+
+<section anchor="a-quicktime-qdm2"><name>A_QUICKTIME/QDM2</name>
+<t>Codec ID: A_QUICKTIME/QDM2</t>
+<t>Codec Name: QDesign Music v2</t>
+<t>Description:</t>
+<t>Initialization: The <tt>Private Data</tt> contains all additional data that is stored in the 'stsd' (sample description) atom in the QuickTime file <strong>after</strong> the mandatory sound descriptor structure (starting with the size and FourCC fields). For an explanation of the QuickTime file format read <eref target="https://developer.apple.com/library/mac/documentation/QuickTime/QTFF/QTFFPreface/qtffPreface.html">QuickTime File Format Specification</eref>.</t>
+<t>Superseded By: A_QUICKTIME</t>
+</section>
+
+<section anchor="a-tta1"><name>A_TTA1</name>
+<t>Codec ID: A_TTA1</t>
+<t>Codec Name: <eref target="http://tausoft.org/">The True Audio</eref> lossless audio compressor</t>
+<t>Description: <eref target="http://tausoft.org/wiki/True_Audio_Codec_Format">TTA format description</eref>
+Each frame is kept intact, including the CRC32. The header and seektable are dropped. SamplingFrequency, Channels and BitDepth are used in the TrackEntry. wFormatTag = 0x77A1</t>
+<t>Initialization: none</t>
+</section>
+
+<section anchor="a-wavpack4"><name>A_WAVPACK4</name>
+<t>Codec ID: A_WAVPACK4</t>
+<t>Codec Name: <eref target="http://www.wavpack.com/">WavPack</eref> lossless audio compressor</t>
+<t>Description: The Wavpack packets consist of a stripped header followed by the frame data. For multi-track (&gt; 2 tracks) a frame consists of many packets. For more details, check the <eref target="wavpack.html">WavPack muxing description</eref>.</t>
+<t>Codec BlockAdditions: For hybrid <tt>A_WAVPACK4</tt> encodings (that include a lossy encoding with a supplemental correction to produce a lossless encoding), the correction part is stored in BlockAdditional. The <tt>BlockAddId</tt> of the <tt>BlockMore</tt> containing these data MUST be 1.</t>
+<t>Initialization: none</t>
+</section>
+</section>
+
+<section anchor="subtitle-codec-mappings"><name>Subtitle Codec Mappings</name>
+
+<section anchor="s-text-utf8"><name>S_TEXT/UTF8</name>
+<t>Codec ID: S_TEXT/UTF8</t>
+<t>Codec Name: UTF-8 Plain Text</t>
+<t>Description: Basic text subtitles. For more information, please look at <eref target="#subtitles">the Subtitles section</eref>.</t>
+</section>
+
+<section anchor="s-text-ssa"><name>S_TEXT/SSA</name>
+<t>Codec ID: S_TEXT/SSA</t>
+<t>Codec Name: Subtitles Format</t>
+<t>Description: The [Script Info] and [V4 Styles] sections are stored in the codecprivate. Each event is stored in its own Block. For more information, see <eref target="#subtitles">the SSA/ASS section in Subtitles</eref>.</t>
+</section>
+
+<section anchor="s-text-ass"><name>S_TEXT/ASS</name>
+<t>Codec ID: S_TEXT/ASS</t>
+<t>Codec Name: Advanced Subtitles Format</t>
+<t>Description: The [Script Info] and [V4 Styles] sections are stored in the codecprivate. Each event is stored in its own Block. For more information, see <eref target="#subtitles">the SSA/ASS section in Subtitles</eref>.</t>
+</section>
+
+<section anchor="s-text-usf"><name>S_TEXT/USF</name>
+<t>Codec ID: S_TEXT/USF</t>
+<t>Codec Name: Universal Subtitle Format</t>
+<t>Description: This is mostly defined, but not typed out yet. It will first be available on the USF specification <eref target="#subtitles">in Subtitles</eref>.</t>
+</section>
+
+<section anchor="s-text-webvtt"><name>S_TEXT/WEBVTT</name>
+<t>Codec ID: S_TEXT/WEBVTT</t>
+<t>Codec Name: Web Video Text Tracks Format (WebVTT)</t>
+<t>Description: Advanced text subtitles. For more information, see <eref target="#subtitles">the WebVTT section in Subtitles</eref>.</t>
+</section>
+
+<section anchor="s-image-bmp"><name>S_IMAGE/BMP</name>
+<t>Codec ID: S_IMAGE/BMP</t>
+<t>Codec Name: Bitmap</t>
+<t>Description: Basic image based subtitle format; The subtitles are stored as images, like in the DVD. The timestamp in the block header of Matroska indicates the start display time, the duration is set with the Duration element. The full data for the subtitle bitmap is stored in the Block's data section.</t>
+</section>
+
+<section anchor="s-dvbsub"><name>S_DVBSUB</name>
+<t>Codec ID: S_DVBSUB</t>
+<t>Codec Name: Digital Video Broadcasting (DVB) subtitles</t>
+<t>Description: This is the graphical subtitle format used in the Digital Video Broadcasting standard. For more information, see <eref target="#subtitles">the Digital Video Broadcasting (DVB) section in Subtitles</eref>.</t>
+</section>
+
+<section anchor="s-vobsub"><name>S_VOBSUB</name>
+<t>Codec ID: S_VOBSUB</t>
+<t>Codec Name: VobSub subtitles</t>
+<t>Description: The same subtitle format used on DVDs. Supported is only format version 7 and newer. VobSubs consist of two files, the .idx containing information, and the .sub, containing the actual data. The .idx file is stripped of all empty lines, of all comments and of lines beginning with <tt>alt:</tt> or <tt>langidx:</tt>. The line beginning with <tt>id:</tt> SHOULD be transformed into the appropriate Matroska track language element and is discarded. All remaining lines but the ones containing timestamps and file positions are put into the <tt>CodecPrivate</tt> element.</t>
+<t>For each line containing the timestamp and file position data is read from the appropriate position in the .sub file. This data consists of a MPEG program stream which in turn contains SPU packets. The MPEG program stream data is discarded, and each SPU packet is put into one Matroska frame.</t>
+</section>
+
+<section anchor="s-hdmv-pgs"><name>S_HDMV/PGS</name>
+<t>Codec ID: S_HDMV/PGS</t>
+<t>Codec Name: HDMV presentation graphics subtitles (PGS)</t>
+<t>Description: This is the graphical subtitle format used on Blu-rays. For more information, see <eref target="#subtitles">HDMV text presentation in Subtitles</eref>.</t>
+</section>
+
+<section anchor="s-hdmv-textst"><name>S_HDMV/TEXTST</name>
+<t>Codec ID: S_HDMV/TEXTST</t>
+<t>Codec Name: HDMV text subtitles</t>
+<t>Description: This is the textual subtitle format used on Blu-rays. For more information, see <eref target="#subtitles">HDMV graphics presentation in Subtitles</eref>.</t>
+</section>
+
+<section anchor="s-kate"><name>S_KATE</name>
+<t>Codec ID: S_KATE</t>
+<t>Codec Name: Karaoke And Text Encapsulation</t>
+<t>Description: A subtitle format developed for ogg. The mapping for Matroska is described on the <eref target="http://wiki.xiph.org/index.php/OggKate#Matroska_mapping">Xiph wiki</eref>. As for Theora and Vorbis, Kate headers are stored in the private data as xiph-laced packets.</t>
+</section>
+</section>
+
+<section anchor="button-codec-mappings"><name>Button Codec Mappings</name>
+
+<section anchor="b-vobbtn"><name>B_VOBBTN</name>
+<t>Codec ID: B_VOBBTN</t>
+<t>Codec Name: VobBtn Buttons</t>
+<t>Description: Based on <eref target="http://dvd.sourceforge.net/dvdinfo/pci_pkt.html">MPEG/VOB PCI packets</eref>. The file contains a header consisting of the string &quot;butonDVD&quot; followed by the width and height in pixels (16 bits integer each) and 4 reserved bytes. The rest is full <eref target="http://dvd.sourceforge.net/dvdinfo/pci_pkt.html">PCI packets</eref>.</t>
+</section>
+</section>
+</section>
+
+<section anchor="subtitles"><name>Subtitles</name>
+<t>Because Matroska is a general container format, we try to avoid specifying the formats to store in it. This type of work is really outside of the scope of a container-only format. However, because the use of subtitles in A/V containers has been so limited (with the exception of DVD) we are taking the time to specify how to store some of the more common subtitle formats in Matroska. This is being done to help facilitate their growth. Otherwise, incompatibilities could prevent the standardization and use of subtitle storage.</t>
+<t>This page is not meant to be a complete listing of all subtitle formats that will be used in Matroska, it is only meant to be a guide for the more common, current formats. It is possible that we will add future formats to this page as they are created, but it is not likely as any other new subtitle format designer would likely have their own specifications. Any specification listed here SHOULD be strictly adhered to or it SHOULD NOT use the corresponding Codec ID.</t>
+<t>Here is a list of pointers for storing subtitles in Matroska:</t>
+
+<ul>
+<li><t>Any Matroska file containing only subtitles SHOULD use the extension &quot;.mks&quot;.</t>
+</li>
+<li><t>As a general rule of thumb for all codecs, information that is global to an entire stream SHOULD be stored in the CodecPrivate element.</t>
+</li>
+<li><t>Start and stop timestamps that are used in a timestamps native storage format SHOULD be removed when being placed in Matroska as they could interfere if the file is edited afterwards. Instead, the Blocks timestamp and Duration SHOULD be used to say when the timestamp is displayed.</t>
+</li>
+<li><t>Because a &quot;subtitle&quot; stream is actually just an overlay stream, anything with a transparency layer could be use, including video.</t>
+</li>
+</ul>
+
+<section anchor="images-subtitles"><name>Images Subtitles</name>
+<t>The first image format that is a goal to import into Matroska is the VobSub subtitle format. This subtitle type is generated by exporting the subtitles from a DVD.</t>
+<t>The requirement for muxing VobSub into Matroska is v7 subtitles (see first line of the .IDX file). If the version is smaller, you must remux them using the SubResync utility from VobSub 2.23 (or MPC) into v7 format. Generally any newly created subs will be in v7 format.</t>
+<t>The .IFO file will not be used at all.</t>
+<t>If there is more than one subtitle stream in the VobSub set, each stream will need to be separated into separate tracks for storage in Matroska. E.g. the VobSub file contains streams for both English and German subtitles. Then the resulting Matroska file SHOULD contain two tracks. That way the language information can be 'dropped' and mapped to Matroska's language tags.</t>
+<t>The .IDX file is reformatted (see below) and placed in the CodecPrivate.</t>
+<t>Each .BMP will be stored in its own Block. The Timestamp with be stored in the Blocks Timestamp and the duration will be stored in the Default Duration.</t>
+<t>Here is an example .IDX file:</t>
+
+<artwork> # VobSub index file, v7 (do not modify this line!)
+ #
+ # To repair desynchronization, you can insert gaps this way:
+ # (it usually happens after vob id changes)
+ #
+ # delay: [sign]hh:mm:ss:ms
+ #
+ # Where:
+ # [sign]: +, - (optional)
+ # hh: hours (0 &lt;= hh)
+ # mm/ss: minutes/seconds (0 &lt;= mm/ss &lt;= 59)
+ # ms: milliseconds (0 &lt;= ms &lt;= 999)
+ #
+ # Note: You can't position a sub before the previous with a negative
+ # value.
+ #
+ # You can also modify timestamps or delete a few subs you don't
+ # like. Just make sure they stay in increasing order.
+
+ # Settings
+
+ # Original frame size
+ size: 720x480
+
+ # Origin, relative to the upper-left corner, can be overloaded by
+ # alignment
+ org: 0, 0
+
+ # Image scaling (hor,ver), origin is at the upper-left corner or at
+ # the alignment coord (x, y)
+ scale: 100%, 100%
+
+ # Alpha blending
+ alpha: 100%
+
+ # Smoothing for very blocky images (use OLD for no filtering)
+ smooth: OFF
+
+ # In millisecs
+ fadein/out: 50, 50
+
+ # Force subtitle placement relative to (org.x, org.y)
+ align: OFF at LEFT TOP
+
+ # For correcting non-progressive desync. (in millisecs or
+ # hh:mm:ss:ms)
+ # Note: Not effective in DirectVobSub, use &quot;delay: ... &quot; instead.
+ time offset: 0
+
+ # ON: displays only forced subtitles, OFF: shows everything
+ forced subs: OFF
+
+ # The original palette of the DVD
+ palette: 000000, 7e7e7e, fbff8b, cb86f1, 7f74b8, e23f06, 0a48ea, \
+ b3d65a, 6b92f1, 87f087, c02081, f8d0f4, e3c411, 382201, e8840b, \
+ fdfdfd
+
+ # Custom colors (transp idxs and the four colors)
+ custom colors: OFF, tridx: 0000, colors: 000000, 000000, 000000, \
+ 000000
+
+ # Language index in use
+ langidx: 0
+
+ # English
+ id: en, index: 0
+ # Uncomment next line to activate alternative name in DirectVobSub /
+ # Windows Media Player 6.x
+ # alt: English
+ # Vob/Cell ID: 1, 1 (PTS: 0)
+ timestamp: 00:00:01:101, filepos: 000000000
+ timestamp: 00:00:08:708, filepos: 000001000
+</artwork>
+<t>First, lines beginning with &quot;#&quot; are removed. These are comments to make text file editing easier, and as this is not a text file, they aren't needed.</t>
+<t>Next remove the &quot;langidx&quot; and &quot;id&quot; lines. These are used to differentiate the subtitle streams and define the language. As the streams will be stored separately anyway, there is no need to differentiate them here. Also, the language setting will be stored in the Matroska tags, so there is no need to store it here.</t>
+<t>Finally, the &quot;timestamp&quot; will be used to set the Block's timestamp. Once it is set there, there is no need for it to be stored here. Also, as it may interfere if the file is edited, it SHOULD NOT be stored here.</t>
+<t>Once all of these items are removed, the data to store in the CodecPrivate SHOULD look like this:</t>
+
+<artwork> size: 720x480
+ org: 0, 0
+ scale: 100%, 100%
+ alpha: 100%
+ smooth: OFF
+ fadein/out: 50, 50
+ align: OFF at LEFT TOP
+ time offset: 0
+ forced subs: OFF
+ palette: 000000, 7e7e7e, fbff8b, cb86f1, 7f74b8, e23f06, 0a48ea, \
+ b3d65a, 6b92f1, 87f087, c02081, f8d0f4, e3c411, 382201, e8840b, \
+ fdfdfd
+ custom colors: OFF, tridx: 0000, colors: 000000, 000000, 000000, \
+ 000000
+</artwork>
+<t>There SHOULD also be two Blocks containing one image each with the timestamps &quot;00:00:01:101&quot; and &quot;00:00:08:708&quot;.</t>
+</section>
+
+<section anchor="srt-subtitles"><name>SRT Subtitles</name>
+<t>SRT is perhaps the most basic of all subtitle formats.</t>
+<t>It consists of four parts, all in text..</t>
+<t>1. A number indicating which subtitle it is in the sequence.
+2. The time that the subtitle appears on the screen, and then disappears.
+3. The subtitle itself.
+4. A blank line indicating the start of a new subtitle.</t>
+<t>When placing SRT in Matroska, part 3 is converted to UTF-8 (S_TEXT/UTF8) and placed in the data portion of the Block. Part 2 is used to set the timestamp of the Block, and BlockDuration element. Nothing else is used.</t>
+<t>Here is an example SRT file:</t>
+
+<artwork>1
+00:02:17,440 --&gt; 00:02:20,375
+Senator, we're making
+our final approach into Coruscant.
+
+2
+00:02:20,476 --&gt; 00:02:22,501
+Very good, Lieutenant.
+</artwork>
+<t>In this example, the text &quot;Senator, we're making our final approach into Coruscant.&quot; would be converted into UTF-8 and placed in the Block. The timestamp of the block would be set to &quot;00:02:17,440&quot;. And the BlockDuration element would be set to &quot;00:00:02,935&quot;.</t>
+<t>The same is repeated for the next subtitle.</t>
+<t>Because there are no general settings for SRT, the CodecPrivate is left blank.</t>
+</section>
+
+<section anchor="ssa-ass-subtitles"><name>SSA/ASS Subtitles</name>
+<t>SSA stands for Sub Station Alpha. It's the file format used by the popular subtitle editor, <eref target="http://wiki.multimedia.cx/index.php?title=SubStation_Alpha">SubStation Alpha</eref>. This format is widely used by fansubbers.</t>
+<t>It allows you to do some advanced display features, like positioning, karaoke, style managements...</t>
+<t>For detailed information on SSA/ASS, see the <eref target="http://moodub.free.fr/video/ass-specs.doc">SSA specs</eref>. It includes an SSA specs description and the advanced features added by ASS format (standing for Advanced SSA). Because SSA and ASS are so similar, they are treated the same here.</t>
+<t>Like SRT, this format is text based with a particular syntax.</t>
+<t>A file consists of 4 or 5 parts, declared ala INI file (but it's not an INI !)</t>
+<t>The first, &quot;[Script Info]&quot; contains some information about the subtitle file, such as it's title, who created it, type of script and a very important one : &quot;PlayResY&quot;. Be careful of this value, everything in your script (font size, positioning) is scaled by it. Sub Station Alpha uses your desktops Y resolution to write this value, so if a friend with a large monitor and a high screen resolution gives you an edited script, you can mess everything up by saving the script in SSA with your low-cost monitor.</t>
+<t>The second, &quot;[V4 Styles]&quot;, is a list of style definitions. A style describe how will look a text on the screen. It defines font, font size, primary/.../outile colour, position, alignment, etc.</t>
+<t>For example this :</t>
+
+<artwork>Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, \
+TertiaryColour, BackColour, Bold, Italic, BorderStyle, Outline, \
+Shadow, Alignment, MarginL, MarginR, MarginV, AlphaLevel, Encoding
+Style: Wolf main,Wolf_Rain,56,15724527,15724527,15724527,4144959,0,\
+0,1,1,2,2,5,5,30,0,0
+</artwork>
+<t>The third, &quot;[Events]&quot;, is the list of text you want to display at the right timing. You can specify some attribute here. Like the style to use for this event (MUST be defined in the list), the position of the text (Left, Right, Vertical Margin), an effect. Name is mostly used by translator to know who said this sentence. Timing is in h:mm:ss.cc (centisec).</t>
+
+<artwork>Format: Marked, Start, End, Style, Name, MarginL, MarginR, MarginV, \
+Effect, Text
+Dialogue: Marked=0,0:02:40.65,0:02:41.79,Wolf main,Cher,0000,0000,\
+0000,,Et les enregistrements de ses ondes delta ?
+Dialogue: Marked=0,0:02:42.42,0:02:44.15,Wolf main,autre,0000,0000,\
+0000,,Toujours rien.
+</artwork>
+<t>&quot;[Pictures]&quot; or &quot;[Fonts]&quot; part can be found in some SSA file, they contains UUE-encoded pictures/font but those features are only used by Sub Station Alpha, i.e. no filter (Vobsub/Avery Lee Subtiler filter) use them.</t>
+<t>Now, how are they stored in Matroska ?</t>
+
+<ul>
+<li><t>All text is converted to UTF-8*   All the headers are stored in CodecPrivate ( Script Info and the Styles list)*   Start &amp; End field are used to set TimeStamp and the BlockDuration element. the data stored is :*   Events are stored in the Block in this order: ReadOrder, Layer, Style, Name, MarginL, MarginR, MarginV, Effect, Text (Layer comes from ASS specs ... it's empty for SSA.) &quot;ReadOrder field is needed for the decoder to be able to reorder the streamed samples as they were placed originally in the file.&quot;</t>
+</li>
+</ul>
+<t>Here is an example of an SSA file.</t>
+
+<artwork>[Script Info]
+; This is a Sub Station Alpha v4 script.
+; For Sub Station Alpha info and downloads,
+; go to \
+; [http://www.eswat.demon.co.uk/](http://www.eswat.demon.co.uk/)
+; or email \
+; [kotus@eswat.demon.co.uk](mailto:kotus@eswat.demon.co.uk)
+Title: Wolf's rain 2
+Original Script: Anime-spirit Ishin-francais
+Original Translation: Coolman
+Original Editing: Spikewolfwood
+Original Timing: Lord_alucard
+Original Script Checking: Spikewolfwood
+ScriptType: v4.00
+Collisions: Normal
+PlayResY: 1024
+PlayDepth: 0
+Wav: 0, 128697,D:\Alex\Anime\- Fansub -\- TAFF -\WR_-_02_Wav.wav
+Wav: 0, 120692,H:\team truc\WR_-_02.wav
+Wav: 0, 116504,E:\sub\wolf's_rain\WOLF'S RAIN 02.wav
+LastWav: 3
+Timer: 100,0000
+
+[V4 Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, \
+TertiaryColour, BackColour, Bold, Italic, BorderStyle, Outline, \
+Shadow, Alignment, MarginL, MarginR, MarginV, AlphaLevel, Encoding
+Style: Default,Arial,20,65535,65535,65535,-2147483640,-1,0,1,3,0,2,\
+30,30,30,0,0
+Style: Titre_episode,Akbar,140,15724527,65535,65535,986895,-1,0,1,1,\
+0,3,30,30,30,0,0
+Style: Wolf main,Wolf_Rain,56,15724527,15724527,15724527,4144959,0,\
+0,1,1,2,2,5,5,30,0,0
+
+[Events]
+Format: Marked, Start, End, Style, Name, MarginL, MarginR, MarginV, \
+Effect, Text
+Dialogue: Marked=0,0:02:40.65,0:02:41.79,Wolf main,Cher,0000,0000,\
+0000,,Et les enregistrements de ses ondes delta ?
+Dialogue: Marked=0,0:02:42.42,0:02:44.15,Wolf main,autre,0000,0000,\
+0000,,Toujours rien.
+</artwork>
+<t>Here is what would be placed into the CodecPrivate element.</t>
+
+<artwork>[Script Info]
+; This is a Sub Station Alpha v4 script.
+; For Sub Station Alpha info and downloads,
+; go to \
+; [http://www.eswat.demon.co.uk/](http://www.eswat.demon.co.uk/)
+; or email \
+; [kotus@eswat.demon.co.uk](mailto:kotus@eswat.demon.co.uk)
+Title: Wolf's rain 2
+Original Script: Anime-spirit Ishin-francais
+Original Translation: Coolman
+Original Editing: Spikewolfwood
+Original Timing: Lord_alucard
+Original Script Checking: Spikewolfwood
+ScriptType: v4.00
+Collisions: Normal
+PlayResY: 1024
+PlayDepth: 0
+Wav: 0, 128697,D:\Alex\Anime\- Fansub -\- TAFF -\WR_-_02_Wav.wav
+Wav: 0, 120692,H:\team truc\WR_-_02.wav
+Wav: 0, 116504,E:\sub\wolf's_rain\WOLF'S RAIN 02.wav
+LastWav: 3
+Timer: 100,0000
+
+[V4 Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, \
+TertiaryColour, BackColour, Bold, Italic, BorderStyle, Outline, \
+Shadow, Alignment, MarginL, MarginR, MarginV, AlphaLevel, Encoding
+Style: Default,Arial,20,65535,65535,65535,-2147483640,-1,0,1,3,0,2,\
+30,30,30,0,0
+Style: Titre_episode,Akbar,140,15724527,65535,65535,986895,-1,0,1,1,\
+0,3,30,30,30,0,0
+Style: Wolf main,Wolf_Rain,56,15724527,15724527,15724527,4144959,0,\
+0,1,1,2,2,5,5,30,0,0
+</artwork>
+<t>And here are the two blocks that would be generated.</t>
+<t>Block's timestamp: 00:02:40.650
+BlockDuration: 00:00:01.140</t>
+
+<artwork>1,,Wolf main,Cher,0000,0000,0000,,Et les enregistrements de ses \
+ondes delta ?
+</artwork>
+<t>Block's timestamp: 00:02:42.420
+BlockDuration: 00:00:01.730</t>
+
+<artwork>2,,Wolf main,autre,0000,0000,0000,,Toujours rien.
+</artwork>
+</section>
+
+<section anchor="usf-subtitles"><name>USF Subtitles</name>
+<t>Under construction</t>
+</section>
+
+<section anchor="webvtt"><name>WebVTT</name>
+<t>The &quot;Web Video Text Tracks Format&quot; (short: WebVTT) is developed by the <eref target="https://www.w3.org/">World Wide Web Consortium (W3C)</eref>. Its specifications are <eref target="https://w3c.github.io/webvtt/">freely available</eref>.</t>
+<t>The guiding principles for the storage of WebVTT in Matroska are:</t>
+
+<ul>
+<li><t>Consistency: store data in a similar way to other subtitle codecs</t>
+</li>
+<li><t>Simplicity: making decoding and remuxing as easy as possible for existing infrastructures</t>
+</li>
+<li><t>Completeness: keeping as much data as possible from the original WebVTT file</t>
+</li>
+</ul>
+
+<section anchor="storage-of-webvtt-in-matroska"><name>Storage of WebVTT in Matroska</name>
+
+<section anchor="codecid-codec-identification"><name>CodecID: codec identification</name>
+<t>The CodecID to use is <tt>S_TEXT/WEBVTT</tt>.</t>
+</section>
+
+<section anchor="codecprivate-storage-of-global-webvtt-blocks"><name>CodecPrivate: storage of global WebVTT blocks</name>
+<t>This element contains all global blocks before the first subtitle entry. This starts at the &quot;<tt>WEBVTT</tt>&quot; file identification marker but excludes the optional byte order mark.</t>
+</section>
+
+<section anchor="storage-of-non-global-webvtt-blocks"><name>Storage of non-global WebVTT blocks</name>
+<t>Non-global WebVTT blocks (e.g. &quot;NOTE&quot;) before a WebVTT Cue Text are stored in Matroska's BlockAddition element together with the Matroska Block containing the WebVTT Cue Text these blocks precede (see below for the actual format).</t>
+</section>
+
+<section anchor="storage-of-cues-in-matroska-blocks"><name>Storage of Cues in Matroska blocks</name>
+<t>Each WebVTT Cue Text is stored directly in the Matroska Block.</t>
+<t>A muxer MUST change all WebVTT Cue Timestamps present within the Cue Text to be relative to the Matroska Block's timestamp.</t>
+<t>The Cue's start timestamp is used as the Matroska Block's timestamp.</t>
+<t>The difference between the Cue's end timestamp and its start timestamp is used as the Matroska Block's duration.</t>
+</section>
+
+<section anchor="blockadditions-storing-non-global-webvtt-blocks-cue-settings-lists-and-cue-identifiers"><name>BlockAdditions: storing non-global WebVTT blocks, Cue Settings Lists and Cue identifiers</name>
+<t>Each Matroska Block may be accompanied by one BlockAdditions element. Its format is as follows:</t>
+
+<ol>
+<li><t>The first line contains the WebVTT Cue Text's optional Cue Settings List followed by one line feed character (U+0x000a). The Cue Settings List may be empty in which case the line consists of the line feed character only.</t>
+</li>
+<li><t>The second line contains the WebVTT Cue Text's optional Cue Identifier followed by one line feed character (U+0x000a). The line may be empty indicating that there was no Cue Identifier in the source file in which case the line consists of the line feed character only.</t>
+</li>
+<li><t>The third and all following lines contain all WebVTT Comment Blocks that precede the current WebVTT Cue Block. These may be absent.</t>
+</li>
+</ol>
+<t>If there is no Matroska BlockAddition element stored together with the Matroska Block then all three components (Cue Settings List, Cue Identifier, Cue Comments) MUST be assumed to be absent.</t>
+</section>
+</section>
+
+<section anchor="examples-of-transformation"><name>Examples of transformation</name>
+<t>Here's an example how a WebVTT is transformed.</t>
+
+<section anchor="example-webvtt-file"><name>Example WebVTT file</name>
+<t>Let's take the following example file:</t>
+
+<artwork>WEBVTT with text after the signature
+
+STYLE
+::cue {
+  background-image: linear-gradient(to bottom, dimgray, lightgray);
+  color: papayawhip;
+}
+/* Style blocks cannot use blank lines nor &quot;dash dash greater \
+than&quot; */
+
+NOTE comment blocks can be used between style blocks.
+
+STYLE
+::cue(b) {
+  color: peachpuff;
+}
+
+REGION
+id:bill
+width:40%
+lines:3
+regionanchor:0%,100%
+viewportanchor:10%,90%
+scroll:up
+
+NOTE
+Notes always span a whole block and can cover multiple
+lines. Like this one.
+An empty line ends the block.
+
+hello
+00:00:00.000 --&gt; 00:00:10.000
+Example entry 1: Hello &lt;b&gt;world&lt;/b&gt;.
+
+NOTE style blocks cannot appear after the first cue.
+
+00:00:25.000 --&gt; 00:00:35.000
+Example entry 2: Another entry.
+This one has multiple lines.
+
+00:01:03.000 --&gt; 00:01:06.500 position:90% align:right size:35%
+Example entry 3: That stuff to the right of the timestamps are cue \
+settings.
+
+00:03:10.000 --&gt; 00:03:20.000
+Example entry 4: Entries can even include timestamps.
+For example:&lt;00:03:15.000&gt;This becomes visible five seconds
+after the first part.
+</artwork>
+</section>
+
+<section anchor="example-of-codecprivate"><name>Example of CodecPrivate</name>
+<t>The resulting CodecPrivate element will look like this:</t>
+
+<artwork>WEBVTT with text after the signature
+
+STYLE
+::cue {
+  background-image: linear-gradient(to bottom, dimgray, lightgray);
+  color: papayawhip;
+}
+/* Style blocks cannot use blank lines nor &quot;dash dash greater \
+than&quot; */
+
+NOTE comment blocks can be used between style blocks.
+
+STYLE
+::cue(b) {
+  color: peachpuff;
+}
+
+REGION
+id:bill
+width:40%
+lines:3
+regionanchor:0%,100%
+viewportanchor:10%,90%
+scroll:up
+
+NOTE
+Notes always span a whole block and can cover multiple
+lines. Like this one.
+An empty line ends the block.
+</artwork>
+</section>
+
+<section anchor="storage-of-cue-1"><name>Storage of Cue 1</name>
+<t>Example Cue 1: timestamp 00:00:00.000, duration 00:00:10.000, Block's content:</t>
+
+<artwork>Example entry 1: Hello &lt;b&gt;world&lt;/b&gt;.
+</artwork>
+<t>BlockAddition's content starts with one empty line as there's no Cue Settings List:</t>
+
+<artwork>
+hello
+</artwork>
+</section>
+
+<section anchor="storage-of-cue-2"><name>Storage of Cue 2</name>
+<t>Example Cue 2: timestamp 00:00:25.000, duration 00:00:10.000, Block's content:</t>
+
+<artwork>Example entry 2: Another entry.
+This one has multiple lines.
+</artwork>
+<t>BlockAddition's content starts with two empty lines as there's neither a Cue Settings List nor a Cue Identifier:</t>
+
+<artwork>
+NOTE style blocks cannot appear after the first cue.
+</artwork>
+</section>
+
+<section anchor="storage-of-cue-3"><name>Storage of Cue 3</name>
+<t>Example Cue 3: timestamp 00:01:03.000, duration 00:00:03.500, Block's content:</t>
+
+<artwork>Example entry 3: That stuff to the right of the timestamps are cue \
+settings.
+</artwork>
+<t>BlockAddition's content ends with an empty line as there's no Cue Identifier and there were no WebVTT Comment blocks:</t>
+
+<artwork>position:90% align:right size:35%
+
+</artwork>
+</section>
+
+<section anchor="storage-of-cue-4"><name>Storage of Cue 4</name>
+<t>Example Cue 4: timestamp 00:03:10.000, duration 00:00:10.000, Block's content:</t>
+<t>Example entry 4: Entries can even include timestamps. For example:<eref target="00:00:05.000">00:00:05.000</eref>This becomes visible five seconds after the first part.</t>
+<t>This Block does not need a BlockAddition as the Cue did not contain an Identifier, nor a Settings List, and it wasn't preceded by Comment blocks.</t>
+</section>
+</section>
+
+<section anchor="storage-of-webvtt-in-matroska-vs-webm"><name>Storage of WebVTT in Matroska vs. WebM</name>
+<t>Note: the storage of WebVTT in Matroska is not the same as the design document for storage of WebVTT in WebM. There are several reasons for this including but not limited to: the WebM document is old (from February 2012) and was based on an earlier draft of WebVTT and ignores several parts that were added to WebVTT later; WebM does still <eref target="http://www.webmproject.org/docs/container/">not support subtitles at all</eref>; the proposal suggests splitting the information across multiple tracks making demuxer's and remuxer's life very difficult.</t>
+</section>
+</section>
+
+<section anchor="hdmv-presentation-graphics-subtitles"><name>HDMV presentation graphics subtitles</name>
+<t>The specifications for the HDMV presentation graphics subtitle format (short: HDMV PGS) can be found in the document &quot;Blu-ray Disc Read-Only Format; Part 3 — Audio Visual Basic Specifications&quot; in section 9.14 &quot;HDMV graphics streams&quot;.</t>
+
+<section anchor="storage-of-hdmv-presentation-graphics-subtitles"><name>Storage of HDMV presentation graphics subtitles</name>
+<t>The CodecID to use is <tt>S_HDMV/PGS</tt>. A CodecPrivate element is not used.</t>
+
+<section anchor="storage-of-hdmv-pgs-segments-in-matroska-blocks"><name>Storage of HDMV PGS Segments in Matroska Blocks</name>
+<t>Each HDMV PGS Segment (short: Segment) will be stored in a Matroska Block. A Segment is the data structure described in section 9.14.2.1 &quot;Segment coding structure and parameters&quot; of the Blu-ray specifications.</t>
+<t>Each Segment contains a presentation timestamp. This timestamp will be used as the timestamp for the Matroska Block.</t>
+<t>A Segment is normally shown until a subsequent Segment is encountered. Therefore the Matroska Block MAY have no Duration. In that case a player MUST display a Segment within a Matroska Block until the next Segment is encountered.</t>
+<t>A muxer MAY use a Duration, e.g. by calculating the distance between two subsequent Segments. If a Matroska Block has a Duration, a player MUST display that Segment only for the duration of the Block's Duration.</t>
+</section>
+</section>
+</section>
+
+<section anchor="hdmv-text-subtitles"><name>HDMV text subtitles</name>
+<t>The specifications for the HDMV text subtitle format (short: HDMV TextST) can be found in the document &quot;Blu-ray Disc Read-Only Format; Part 3 — Audio Visual Basic Specifications&quot; in section 9.15 &quot;HDMV text subtitle streams&quot;.</t>
+
+<section anchor="storage-of-hdmv-text-subtitles"><name>Storage of HDMV text subtitles</name>
+<t>The CodecID to use is <tt>S_HDMV/TEXTST</tt>.</t>
+<t>A CodecPrivate Element is required. It MUST contain the stream's Dialog Style Segment as described in section 9.15.4.2 &quot;Dialog Style Segment&quot; of the Blu-ray specifications.</t>
+
+<section anchor="storage-of-hdmv-textst-dialog-presentation-segments-in-matroska-blocks"><name>Storage of HDMV TextST Dialog Presentation Segments in Matroska Blocks</name>
+<t>Each HDMV Dialog Presentation Segment (short: Segment) will be stored in a Matroska Block. A Segment is the data structure described in section 9.15.4.3 &quot;Dialog presentation segment&quot; of the Blu-ray specifications.</t>
+<t>Each Segment contains a start and an end presentation timestamp (short: start PTS &amp; end PTS). The start PTS will be used as the timestamp for the Matroska Block. The Matroska Block MUST have a Duration, and that Duration is the difference between the end PTS and the start PTS.</t>
+<t>A player MUST use the Matroska Block's timestamp and Duration instead of the Segment's start and end PTS for determining when and how long to show the Segment.</t>
+</section>
+
+<section anchor="character-set"><name>Character set</name>
+<t>When TextST subtitles are stored inside Matroska, the only allowed character set is UTF-8.</t>
+<t>Each HDMV text subtitle stream in a Blu-ray can use one of a handful of character sets. This information is not stored in the MPEG2 Transport Stream itself but in the accompanying Clip Information file.</t>
+<t>Therefore a muxer MUST parse the accompanying Clip Information file. If the information indicates a character set other than UTF-8, it MUST re-encode all text Dialog Presentation Segments from the indicated character set to UTF-8 prior to storing them in Matroska.</t>
+</section>
+</section>
+</section>
+
+<section anchor="digital-video-broadcasting-dvb-subtitles"><name>Digital Video Broadcasting (DVB) subtitles</name>
+<t>The specifications for the Digital Video Broadcasting subtitle bitstream format (short: DVB subtitles) can be found in the document &quot;ETSI EN 300 743 - Digital Video Broadcasting (DVB); Subtitling systems&quot;. The storage of DVB subtitles in MPEG transport streams is specified in the document &quot;ETSI EN 300 468 - Digital Video Broadcasting (DVB); Specification for Service Information (SI) in DVB systems&quot;.</t>
+
+<section anchor="storage-of-dvb-subtitles"><name>Storage of DVB subtitles</name>
+
+<section anchor="codecid"><name>CodecID</name>
+<t>The CodecID to use is <tt>S_DVBSUB</tt>.</t>
+</section>
+
+<section anchor="codecprivate"><name>CodecPrivate</name>
+<t>The CodecPrivate element is five bytes long and has the following structure:</t>
+
+<ul>
+<li><t>2 bytes: composition page ID (bit string, left bit first)</t>
+</li>
+<li><t>2 bytes: ancillary page ID (bit string, left bit first)</t>
+</li>
+<li><t>1 byte: subtitling type (bit string, left bit first)</t>
+</li>
+</ul>
+<t>The semantics of these bytes are the same as the ones described in section 6.2.41 &quot;Subtitling descriptor&quot; of ETSI EN 300 468.</t>
+</section>
+
+<section anchor="storage-of-dvb-subtitles-in-matroska-blocks"><name>Storage of DVB subtitles in Matroska Blocks</name>
+<t>Each Matroska Block consists of one or more DVB Subtitle Segments as described in segment 7.2 &quot;Syntax and semantics of the subtitling segment&quot; of ETSI EN 300 743.</t>
+<t>Each Matroska Block SHOULD have a Duration indicating how long the DVB Subtitle Segments in that Block SHOULD be displayed.</t>
+</section>
+</section>
+</section>
+</section>
+
+<section anchor="block-additional-mapping"><name>Block Additional Mapping</name>
+<t>Extra data or metadata can be added to each <tt>Block</tt> using <tt>BlockAdditional</tt> data. Each <tt>BlockAdditional</tt> contains a <tt>BlockAddID</tt> that identifies the kind of data it contains.
+When the <tt>BlockAddID</tt> is set to <tt>1</tt> the contents of the <tt>BlockAdditional Element</tt> are define by the Codec Mappings defines (see <xref target="codec-blockadditions"></xref>).
+When the <tt>BlockAddID</tt> is set a value greater than <tt>1</tt>, then the contents of the <tt>BlockAdditional Element</tt> are defined by the <tt>BlockAdditionalMapping Element</tt> within the associated <tt>Track Element</tt> where the <tt>BlockAddID Element</tt> of <tt>BlockAdditional Element</tt> equals the <tt>BlockAddIDValue</tt> of the associated Track's <tt>BlockAdditionalMapping Element</tt>. That <tt>BlockAdditionalMapping Element</tt> then identifies a particular Block Additional Mapping by the <tt>BlockAddIDType</tt>.</t>
+<t>The following XML depicts a use of a Block Additional Mapping to associate a timecode value with a <tt>Block</tt>:</t>
+
+<artwork type="ascii-art">&lt;Segment&gt;
+  &lt;!--Mandatory elements ommitted for readability--&gt;
+  &lt;Tracks&gt;
+    &lt;TrackEntry&gt;
+      &lt;TrackNumber&gt;1&lt;/TrackNumber&gt;
+      &lt;TrackUID&gt;568001708&lt;/TrackUID&gt;
+      &lt;TrackType&gt;1&lt;/TrackType&gt;
+      &lt;BlockAdditionalMapping&gt;
+        &lt;BlockAddIDValue&gt;2&lt;/BlockAddIDValue&gt;&lt;!--arbitrary value
+          used in BlockAddID--&gt;
+        &lt;BlockAddIDName&gt;timecode&lt;/BlockAddIDName&gt;
+        &lt;BlockAddIDType&gt;12&lt;/BlockAddIDType&gt;
+      &lt;/BlockAdditionalMapping&gt;
+      &lt;CodecID&gt;V_FFV1&lt;/CodecID&gt;
+      &lt;Video&gt;
+        &lt;PixelWidth&gt;1920&lt;/PixelWidth&gt;
+        &lt;PixelHeight&gt;1080&lt;/PixelHeight&gt;
+      &lt;/Video&gt;
+    &lt;/TrackEntry&gt;
+  &lt;/Tracks&gt;
+  &lt;Cluster&gt;
+    &lt;Timestamp&gt;3000&lt;/Timestamp&gt;
+    &lt;BlockGroup&gt;
+      &lt;Block&gt;{binary video frame}&lt;/Block&gt;
+      &lt;BlockAdditions&gt;
+        &lt;BlockMore&gt;
+          &lt;BlockAddID&gt;2&lt;/BlockAddID&gt;&lt;!--arbitrary value from
+            BlockAdditionalMapping--&gt;
+          &lt;BlockAdditional&gt;01:00:00:00&lt;/BlockAdditional&gt;
+        &lt;/BlockMore&gt;
+      &lt;/BlockAdditions&gt;
+    &lt;/BlockGroup&gt;
+  &lt;/Cluster&gt;
+&lt;/Segment&gt;
+</artwork>
+<t>Block Additional Mappings detail how additional data MAY be stored in the <tt>BlockMore Element</tt> with a <tt>BlockAdditionMapping Element</tt> within the <tt>Track Element</tt> which identifies the <tt>BlockAdditional</tt> content.
+Block Additional Mappings define the <tt>BlockAddIDType</tt> value reserved to identify that type of data as well as providing an optional label stored within the <tt>BlockAddIDName Element</tt>.
+When the Block Additional Mapping is dependent on additional contextual information then the Mapping SHOULD describe how such additional contextual information is stored within the <tt>BlockAddIDExtraData Element</tt>.</t>
+<t>The following Block Additional Mappings are defined.</t>
+
+<section anchor="summary-of-assigned-blockaddidtype-values"><name>Summary of Assigned BlockAddIDType Values</name>
+<t>For convenience, the following table shows the assigned BlockAddIDType values along with the BlockAddIDName and Citation.</t>
+<table>
+<thead>
+<tr>
+<th align="left">BlockAddIDType</th>
+<th align="left">BlockAddIDName</th>
+<th align="left">Citation</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">121</td>
+<td align="left">SMPTE ST 12-1 timecode</td>
+<td align="left"><xref target="smpte-st-12-1-timecode"></xref></td>
+</tr>
+</tbody>
+</table></section>
+
+<section anchor="smpte-st-12-1-timecode"><name>SMPTE ST 12-1 Timecode</name>
+
+<section anchor="timecode-description"><name>Timecode Description</name>
+<t>SMPTE ST 12-1 timecode values can be stored in the <tt>BlockMore Element</tt> to associate the content of a Matroska Block with a particular timecode value.
+If the Block uses Lacing, the timecode value is associated with the first frame of the Lace.</t>
+<t>The Block Additional Mapping contains a full binary representation of a 64 bit SMPTE timecode value stored in big endian format and expressed exactly as defined in Section 8 and 9 of SMPTE 12M <xref target="SMPTE-ST12"></xref>. For convenience, here are the bit assignments for a SMPTE ST 12-1 binary representation as described in Section 6.2 of <xref target="RFC5484"></xref>:</t>
+<table>
+<thead>
+<tr>
+<th align="center">Bit Positions</th>
+<th align="left">Label</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center">0--3</td>
+<td align="left">Units of frames</td>
+</tr>
+
+<tr>
+<td align="center">4--7</td>
+<td align="left">First binary group</td>
+</tr>
+
+<tr>
+<td align="center">8--9</td>
+<td align="left">Tens of frames</td>
+</tr>
+
+<tr>
+<td align="center">10</td>
+<td align="left">Drop frame flag</td>
+</tr>
+
+<tr>
+<td align="center">11</td>
+<td align="left">Color frame flag</td>
+</tr>
+
+<tr>
+<td align="center">12--15</td>
+<td align="left">Second binary group</td>
+</tr>
+
+<tr>
+<td align="center">16--19</td>
+<td align="left">Units of seconds</td>
+</tr>
+
+<tr>
+<td align="center">20--23</td>
+<td align="left">Third binary group</td>
+</tr>
+
+<tr>
+<td align="center">24--26</td>
+<td align="left">Tens of seconds</td>
+</tr>
+
+<tr>
+<td align="center">27</td>
+<td align="left">Polarity correction</td>
+</tr>
+
+<tr>
+<td align="center">28--31</td>
+<td align="left">Fourth binary group</td>
+</tr>
+
+<tr>
+<td align="center">32--35</td>
+<td align="left">Units of minutes</td>
+</tr>
+
+<tr>
+<td align="center">36--39</td>
+<td align="left">Fifth binary group</td>
+</tr>
+
+<tr>
+<td align="center">40--42</td>
+<td align="left">Tens of minutes</td>
+</tr>
+
+<tr>
+<td align="center">43</td>
+<td align="left">Binary group flag BGF0</td>
+</tr>
+
+<tr>
+<td align="center">44--47</td>
+<td align="left">Sixth binary group</td>
+</tr>
+
+<tr>
+<td align="center">48--51</td>
+<td align="left">Units of hours</td>
+</tr>
+
+<tr>
+<td align="center">52--55</td>
+<td align="left">Seventh binary group</td>
+</tr>
+
+<tr>
+<td align="center">56--57</td>
+<td align="left">Tens of hours</td>
+</tr>
+
+<tr>
+<td align="center">58</td>
+<td align="left">Binary group flag BGF1</td>
+</tr>
+
+<tr>
+<td align="center">59</td>
+<td align="left">Binary group flag BGF2</td>
+</tr>
+
+<tr>
+<td align="center">60--63</td>
+<td align="left">Eighth binary group</td>
+</tr>
+</tbody>
+</table><t>For example, a timecode value of <tt>07:32:54;18</tt> can be expressed as a 64 bit SMPTE 12M value as:</t>
+
+<artwork>10000000 01100000 01100000 01010000
+00100000 00110000 01110000 00000000
+</artwork>
+</section>
+
+<section anchor="blockaddidtype"><name>BlockAddIDType</name>
+<t>The BlockAddIDType value reserved for timecode is <tt>121</tt>.</t>
+</section>
+
+<section anchor="blockaddidname"><name>BlockAddIDName</name>
+<t>The BlockAddIDName value reserved for timecode is &quot;SMPTE ST 12-1 timecode&quot;.</t>
+</section>
+
+<section anchor="blockaddidextradata"><name>BlockAddIDExtraData</name>
+<t>BlockAddIDExtraData is unused within this block additional mapping.</t>
+</section>
+</section>
+</section>
+
+</middle>
+
+<back>
+<references><name>Normative References</name>
+<xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
+<xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.3339.xml"/>
+<xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6648.xml"/>
+<xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6386.xml"/>
+<reference anchor="IEEE.754.1985" target="">
+  <front>
+    <title>Standard for Binary Floating-Point Arithmetic</title>
+    <author>
+      <organization>Institute of Electrical and Electronics Engineers</organization>
+    </author>
+    <date year="1985" month="August"></date>
+  </front>
+</reference>
+<reference anchor="SMPTE-ST12" target="https://ieeexplore.ieee.org/servlet/opac?punumber=7291027">
+  <front>
+    <title>SMPTE ST 12-1:2014 Time and Control Code</title>
+    <author>
+      <organization>Society of Motion Picture and Television Engineers</organization>
+    </author>
+    <date year="2014" month="February"></date>
+  </front>
+</reference>
+<xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
+</references>
+<references><name>Informative References</name>
+<xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5484.xml"/>
+</references>
+
+</back>
+
+</rfc>

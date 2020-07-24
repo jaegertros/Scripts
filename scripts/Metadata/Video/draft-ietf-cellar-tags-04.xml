@@ -1,0 +1,993 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- name="GENERATOR" content="github.com/mmarkdown/mmark Mmark Markdown Processor - mmark.miek.nl" -->
+<rfc version="3" ipr="trust200902" docName="draft-ietf-cellar-tags-04" submissionType="IETF" category="info" xml:lang="en" xmlns:xi="http://www.w3.org/2001/XInclude" consensus="true">
+
+<front>
+<title abbrev="Matroska Tags">Matroska Media Container Tag Specifications</title><seriesInfo value="draft-ietf-cellar-tags-04" stream="IETF" status="informational" name="Internet-Draft"></seriesInfo>
+<author initials="S." surname="Lhomme" fullname="Steve Lhomme"><organization></organization><address><postal><street></street>
+</postal><email>slhomme@matroska.org</email>
+</address></author>
+<author initials="M." surname="Bunkus" fullname="Moritz Bunkus"><organization></organization><address><postal><street></street>
+</postal><email>moritz@bunkus.org</email>
+</address></author>
+<author initials="D." surname="Rice" fullname="Dave Rice"><organization></organization><address><postal><street></street>
+</postal><email>dave@dericed.com</email>
+</address></author>
+<date/>
+<area>art</area>
+<workgroup>cellar</workgroup>
+
+<abstract>
+<t>This document defines the Matroska tags, namely the tag names and their respective semantic meaning.</t>
+</abstract>
+
+</front>
+
+<middle>
+
+<section anchor="introduction"><name>Introduction</name>
+<t>Matroska aims to become THE standard of multimedia container formats. It can store timestamped multimedia data but also chapters and tags. The <tt>Tag Elements</tt> add important metadata to identify and classify the information found in a <tt>Matroska Segment</tt>. It can tag a whole <tt>Segment</tt>, separate <tt>Track Elements</tt>, individual <tt>Chapter Elements</tt> or <tt>Attachment Elements</tt>.</t>
+<t>While the Matroska tagging framework allows anyone to create their own custom tags, it's important to have a common set of values for interoperability. This document intends to define a set of common tag names used in Matroska.</t>
+</section>
+
+<section anchor="status-of-this-document"><name>Status of this document</name>
+<t>This document is a work-in-progress specification defining the Matroska file format as part of the <eref target="https://datatracker.ietf.org/wg/cellar/charter/">IETF Cellar working group</eref>. It uses basic elements and concepts already defined in the Matroska specifications defined by this workgroup.</t>
+</section>
+
+<section anchor="security-considerations"><name>Security Considerations</name>
+<t><tt>Tag</tt> values can be either strings or binary blobs. This document inherits security considerations from the EBML and Matroska documents.</t>
+</section>
+
+<section anchor="iana-considerations"><name>IANA Considerations</name>
+<t>To be determined.</t>
+</section>
+
+<section anchor="notations-and-conventions"><name>Notations and Conventions</name>
+<t>The key words &quot;MUST&quot;, &quot;MUST NOT&quot;, &quot;REQUIRED&quot;, &quot;SHALL&quot;, &quot;SHALL NOT&quot;, &quot;SHOULD&quot;, &quot;SHOULD NOT&quot;, &quot;RECOMMENDED&quot;, &quot;NOT RECOMMENDED&quot;, &quot;MAY&quot;, and &quot;OPTIONAL&quot; in this document are to be interpreted as described in BCP 14 <xref target="RFC2119"></xref> <xref target="RFC8174"></xref> when, and only when, they appear in all capitals, as shown here.</t>
+</section>
+
+<section anchor="tagging"><name>Tagging</name>
+<t>When a Tag is nested within another Tag, the nested Tag becomes an attribute of the base tag. For instance, if you wanted to store the dates that a singer used certain addresses for, that singer being the lead singer for a track that included multiple bands simultaneously, then your tag tree would look something like this:</t>
+
+<ul>
+<li><t>Targets</t>
+
+<ul>
+<li><t>TrackUID</t>
+</li>
+</ul></li>
+<li><t>BAND</t>
+
+<ul>
+<li><t>LEADPERFORMER</t>
+</li>
+<li><t>ADDRESS</t>
+
+<ul>
+<li><t>DATE</t>
+</li>
+<li><t>DATEEND</t>
+</li>
+</ul></li>
+<li><t>ADDRESS</t>
+
+<ul>
+<li><t>DATE</t>
+</li>
+</ul></li>
+</ul></li>
+</ul>
+<t>In this way, it becomes possible to store any Tag as attributes of another tag.</t>
+<t>Multiple items SHOULD never be stored as a list in a single TagString. If there is more than one tag of a certain type to be stored, then more than one SimpleTag SHOULD be used.</t>
+<t>For authoring Tags outside of EBML, the <eref target="http://www.matroska.org/files/tags/matroskatags.dtd">following XML syntax is proposed</eref> <eref target="http://www.bunkus.org/videotools/mkvtoolnix/doc/mkvmerge.html#mkvmerge.tags">used in mkvmerge</eref>. Binary data SHOULD be stored using BASE64 encoding if it is being stored at authoring time.</t>
+
+<section anchor="why-official-tags-matter"><name>Why official tags matter</name>
+<t>There is a debate between people who think all tags SHOULD be free and those who think all tags SHOULD be strict. If you look at this page you will realize we are in between.</t>
+<t>Advanced-users application might let you put any tag in your file. But for the rest of the applications, they usually give you a basic list of tags you can use. Both have their needs. But it's usually a bad idea to use custom/exotic tags because you will probably be the only person to use this information even though everyone else could benefit from it. So hopefully when someone wants to put information in one's file, they will find an official one that fit them and hopefully use it ! If it's not in the list, this person can contact us any time for addition of such a missing tag. But it doesn't mean it will be accepted... Matroska files are not meant the become a whole database of people who made costumes for a film. A website would be better for that... It's hard to define what SHOULD be in and what doesn't make sense in a file. So we'll treat each request carefully.</t>
+<t>We also need an official list simply for developers to be able to display relevant information in their own design (if they choose to support a list of meta-information they SHOULD know which tag has the wanted meaning so that other apps could understand the same meaning).</t>
+</section>
+
+<section anchor="tag-translations"><name>Tag translations</name>
+<t>To be able to save tags from other systems to Matroska we need to translate them to our system. There is a translation table <eref target="othertagsystems/comparetable.html">on our site</eref>.</t>
+</section>
+
+<section anchor="tag-formatting"><name>Tag Formatting</name>
+
+<ul>
+<li><t>The TagName SHOULD always be written in all capital letters and contain no space.</t>
+</li>
+<li><t>The fields with dates SHOULD have the following format: YYYY-MM-DD hh:mm:ss.mss YYYY = Year, MM = Month, DD = Days, HH = Hours, mm = Minutes, ss = Seconds, mss = Milliseconds. To store less accuracy, you remove items starting from the right. To store only the year, you would use, &quot;2004&quot;. To store a specific day such as May 1st, 2003, you would use &quot;2003-05-01&quot;.</t>
+</li>
+<li><t>Fields that require a Float SHOULD use the &quot;.&quot; mark instead of the &quot;,&quot; mark. To display it differently for another local, applications SHOULD support auto replacement on display. Also, a thousandths separator SHOULD NOT be used.</t>
+</li>
+<li><t>For currency amounts, there SHOULD only be a numeric value in the Tag. Only numbers, no letters or symbols other than &quot;.&quot;. For instance, you would store &quot;15.59&quot; instead of &quot;$15.59USD&quot;.</t>
+</li>
+</ul>
+</section>
+
+<section anchor="target-types"><name>Target types</name>
+<t>The TargetType element allows tagging of different parts that are inside or outside a given file. For example in an audio file with one song you could have information about the album it comes from and even the CD set even if it's not found in the file.</t>
+<t>For application to know what kind of information (like TITLE) relates to a certain level (CD title or track title), we also need a set of official TargetType names. For now audio and video will have different values &amp; names. That also means the same tag name can have different meanings depending on where it is (otherwise we would end up with 15 TITLE_ tags).</t>
+<table>
+<thead>
+<tr>
+<th>TargetTypeValue</th>
+<th align="left">Audio strings</th>
+<th align="left">Video strings</th>
+<th align="left">Comment</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>70</td>
+<td align="left">COLLECTION</td>
+<td align="left">COLLECTION</td>
+<td align="left">the high hierarchy consisting of many different lower items</td>
+</tr>
+
+<tr>
+<td>60</td>
+<td align="left">EDITION / ISSUE / VOLUME / OPUS</td>
+<td align="left">SEASON / SEQUEL / VOLUME</td>
+<td align="left">a list of lower levels grouped together</td>
+</tr>
+
+<tr>
+<td>50</td>
+<td align="left">ALBUM / OPERA / CONCERT</td>
+<td align="left">MOVIE / EPISODE / CONCERT</td>
+<td align="left">the most common grouping level of music and video (equals to an episode for TV series)</td>
+</tr>
+
+<tr>
+<td>40</td>
+<td align="left">PART / SESSION</td>
+<td align="left">PART / SESSION</td>
+<td align="left">when an album or episode has different logical parts</td>
+</tr>
+
+<tr>
+<td>30</td>
+<td align="left">TRACK / SONG</td>
+<td align="left">CHAPTER</td>
+<td align="left">the common parts of an album or a movie</td>
+</tr>
+
+<tr>
+<td>20</td>
+<td align="left">SUBTRACK / PART / MOVEMENT</td>
+<td align="left">SCENE</td>
+<td align="left">corresponds to parts of a track for audio (like a movement)</td>
+</tr>
+
+<tr>
+<td>10</td>
+<td align="left">-</td>
+<td align="left">SHOT</td>
+<td align="left">the lowest hierarchy found in music or movies</td>
+</tr>
+</tbody>
+</table><t>An upper level value tag applies to the lower level. That means if a CD has the same artist for all tracks, you just need to set the ARTIST tag at level 50 (ALBUM) and not to each TRACK (but you can). That also means that if some parts of the CD have no known ARTIST the value MUST be set to nothing (a void string &quot;&quot;).</t>
+<t>When a level doesn't exist it MUST NOT be specified in the files, so that the TOTAL<em>PARTS and PART</em>NUMBER elements match the same levels.</t>
+<t>Here is an example of how these <tt>organizational</tt> tags work: If you set 10 TOTAL_PARTS to the ALBUM level (40) it means the album contains 10 lower parts. The lower part in question is the first lower level that is specified in the file. So if it's TRACK (30) then that means it contains 10 tracks. If it's MOVEMENT (20) that means it's 10 movements, etc.</t>
+</section>
+
+<section anchor="official-tags"><name>Official tags</name>
+<t>The following is a complete list of the supported Matroska Tags. While it is possible to use Tag names that are not listed below, this is not recommended as compatibility will be compromised. If you find that there is a Tag missing that you would like to use, then please contact the Matroska team for its inclusion in the specifications before the format reaches 1.0.</t>
+</section>
+
+<section anchor="nesting-information"><name>Nesting Information</name>
+<t>Nesting Information tags are intended to contain other tags.</t>
+<table>
+<thead>
+<tr>
+<th align="left">Tag Name</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">ORIGINAL</td>
+<td align="left">-</td>
+<td align="left">A special tag that is meant to have other tags inside (using nested tags) to describe the original work of art that this item is based on. All tags in this list can be used &quot;under&quot; the ORIGINAL tag like LYRICIST, PERFORMER, etc.</td>
+</tr>
+
+<tr>
+<td align="left">SAMPLE</td>
+<td align="left">-</td>
+<td align="left">A tag that contains other tags to describe a sample used in the targeted item taken from another work of art. All tags in this list can be used &quot;under&quot; the SAMPLE tag like TITLE, ARTIST, DATE_RELEASED, etc.</td>
+</tr>
+
+<tr>
+<td align="left">COUNTRY</td>
+<td align="left">UTF-8</td>
+<td align="left">The name of the country (<eref target="https://www.loc.gov/standards/iso639-2/php/English_list.php">biblio ISO-639-2</eref>) that is meant to have other tags inside (using nested tags) to country specific information about the item. All tags in this list can be used &quot;under&quot; the COUNTRY<em>SPECIFIC tag like LABEL, PUBLISH</em>RATING, etc.</td>
+</tr>
+</tbody>
+</table></section>
+
+<section anchor="organization-information"><name>Organization Information</name>
+<table>
+<thead>
+<tr>
+<th align="left">Tag Name</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">TOTAL_PARTS</td>
+<td align="left">UTF-8</td>
+<td align="left">Total number of parts defined at the first lower level. (e.g. if TargetType is ALBUM, the total number of tracks of an audio CD)</td>
+</tr>
+
+<tr>
+<td align="left">PART_NUMBER</td>
+<td align="left">UTF-8</td>
+<td align="left">Number of the current part of the current level. (e.g. if TargetType is TRACK, the track number of an audio CD)</td>
+</tr>
+
+<tr>
+<td align="left">PART_OFFSET</td>
+<td align="left">UTF-8</td>
+<td align="left">A number to add to PART_NUMBER when the parts at that level don't start at 1. (e.g. if TargetType is TRACK, the track number of the second audio CD)</td>
+</tr>
+</tbody>
+</table></section>
+
+<section anchor="titles"><name>Titles</name>
+<table>
+<thead>
+<tr>
+<th align="left">Tag Name</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">TITLE</td>
+<td align="left">UTF-8</td>
+<td align="left">The title of this item. For example, for music you might label this &quot;Canon in D&quot;, or for video's audio track you might use &quot;English 5.1&quot; This is akin to the TIT2 tag in ID3.</td>
+</tr>
+
+<tr>
+<td align="left">SUBTITLE</td>
+<td align="left">UTF-8</td>
+<td align="left">Sub Title of the entity.</td>
+</tr>
+</tbody>
+</table></section>
+
+<section anchor="nested-information"><name>Nested Information</name>
+<t>Nested Information includes tags contained in other tags.</t>
+<table>
+<thead>
+<tr>
+<th align="left">Tag Name</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">URL</td>
+<td align="left">UTF-8</td>
+<td align="left">URL corresponding to the tag it's included in.</td>
+</tr>
+
+<tr>
+<td align="left">SORT_WITH</td>
+<td align="left">UTF-8</td>
+<td align="left">A child element to indicate what alternative value the parent tag can have to be sorted, for example &quot;Pet Shop Boys&quot; instead of &quot;The Pet Shop Boys&quot;. Or &quot;Marley Bob&quot; and &quot;Marley Ziggy&quot; (no comma needed).</td>
+</tr>
+
+<tr>
+<td align="left">INSTRUMENTS</td>
+<td align="left">UTF-8</td>
+<td align="left">The instruments that are being used/played, separated by a comma. It SHOULD be a child of the following tags: ARTIST, LEAD_PERFORMER or ACCOMPANIMENT.</td>
+</tr>
+
+<tr>
+<td align="left">EMAIL</td>
+<td align="left">UTF-8</td>
+<td align="left">Email corresponding to the tag it's included in.</td>
+</tr>
+
+<tr>
+<td align="left">ADDRESS</td>
+<td align="left">UTF-8</td>
+<td align="left">The physical address of the entity. The address SHOULD include a country code. It can be useful for a recording label.</td>
+</tr>
+
+<tr>
+<td align="left">FAX</td>
+<td align="left">UTF-8</td>
+<td align="left">The fax number corresponding to the tag it's included in. It can be useful for a recording label.</td>
+</tr>
+
+<tr>
+<td align="left">PHONE</td>
+<td align="left">UTF-8</td>
+<td align="left">The phone number corresponding to the tag it's included in. It can be useful for a recording label.</td>
+</tr>
+</tbody>
+</table></section>
+
+<section anchor="entities"><name>Entities</name>
+<table>
+<thead>
+<tr>
+<th align="left">Tag Name</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">ARTIST</td>
+<td align="left">UTF-8</td>
+<td align="left">A person or band/collective generally considered responsible for the work. This is akin to the <eref target="http://id3.org/id3v2.3.0#TPE1">TPE1 tag in ID3</eref>.</td>
+</tr>
+
+<tr>
+<td align="left">LEAD_PERFORMER</td>
+<td align="left">UTF-8</td>
+<td align="left">Lead Performer/Soloist(s). This can sometimes be the same as ARTIST.</td>
+</tr>
+
+<tr>
+<td align="left">ACCOMPANIMENT</td>
+<td align="left">UTF-8</td>
+<td align="left">Band/orchestra/accompaniment/musician. This is akin to the <eref target="http://id3.org/id3v2.3.0#TPE2">TPE2 tag in ID3</eref>.</td>
+</tr>
+
+<tr>
+<td align="left">COMPOSER</td>
+<td align="left">UTF-8</td>
+<td align="left">The name of the composer of this item. This is akin to the <eref target="http://id3.org/id3v2.3.0#TCOM">TCOM tag in ID3</eref>.</td>
+</tr>
+
+<tr>
+<td align="left">ARRANGER</td>
+<td align="left">UTF-8</td>
+<td align="left">The person who arranged the piece, e.g., Ravel.</td>
+</tr>
+
+<tr>
+<td align="left">LYRICS</td>
+<td align="left">UTF-8</td>
+<td align="left">The lyrics corresponding to a song (in case audio synchronization is not known or as a doublon to a subtitle track). Editing this value when subtitles are found SHOULD also result in editing the subtitle track for more consistency.</td>
+</tr>
+
+<tr>
+<td align="left">LYRICIST</td>
+<td align="left">UTF-8</td>
+<td align="left">The person who wrote the lyrics for a musical item. This is akin to the <eref target="http://id3.org/id3v2.3.0#TEXT">TEXT</eref> tag in ID3.</td>
+</tr>
+
+<tr>
+<td align="left">CONDUCTOR</td>
+<td align="left">UTF-8</td>
+<td align="left">Conductor/performer refinement. This is akin to the <eref target="http://id3.org/id3v2.3.0#TPE3">TPE3</eref>.</td>
+</tr>
+
+<tr>
+<td align="left">DIRECTOR</td>
+<td align="left">UTF-8</td>
+<td align="left">This is akin to the [IART tag in RIFF]<xref target="RIFF.tags"></xref>.</td>
+</tr>
+
+<tr>
+<td align="left">ASSISTANT_DIRECTOR</td>
+<td align="left">UTF-8</td>
+<td align="left">The name of the assistant director.</td>
+</tr>
+
+<tr>
+<td align="left">DIRECTOR<em>OF</em>PHOTOGRAPHY</td>
+<td align="left">UTF-8</td>
+<td align="left">The name of the director of photography, also known as cinematographer. This is akin to the ICNM tag in Extended RIFF.</td>
+</tr>
+
+<tr>
+<td align="left">SOUND_ENGINEER</td>
+<td align="left">UTF-8</td>
+<td align="left">The name of the sound engineer or sound recordist.</td>
+</tr>
+
+<tr>
+<td align="left">ART_DIRECTOR</td>
+<td align="left">UTF-8</td>
+<td align="left">The person who oversees the artists and craftspeople who build the sets.</td>
+</tr>
+
+<tr>
+<td align="left">PRODUCTION_DESIGNER</td>
+<td align="left">UTF-8</td>
+<td align="left">Artist responsible for designing the overall visual appearance of a movie.</td>
+</tr>
+
+<tr>
+<td align="left">CHOREGRAPHER</td>
+<td align="left">UTF-8</td>
+<td align="left">The name of the choregrapher</td>
+</tr>
+
+<tr>
+<td align="left">COSTUME_DESIGNER</td>
+<td align="left">UTF-8</td>
+<td align="left">The name of the costume designer</td>
+</tr>
+
+<tr>
+<td align="left">ACTOR</td>
+<td align="left">UTF-8</td>
+<td align="left">An actor or actress playing a role in this movie. This is the person's real name, not the character's name the person is playing.</td>
+</tr>
+
+<tr>
+<td align="left">CHARACTER</td>
+<td align="left">UTF-8</td>
+<td align="left">The name of the character an actor or actress plays in this movie. This SHOULD be a sub-tag of an <tt>ACTOR</tt> tag in order not to cause ambiguities.</td>
+</tr>
+
+<tr>
+<td align="left">WRITTEN_BY</td>
+<td align="left">UTF-8</td>
+<td align="left">The author of the story or script (used for movies and TV shows).</td>
+</tr>
+
+<tr>
+<td align="left">SCREENPLAY_BY</td>
+<td align="left">UTF-8</td>
+<td align="left">The author of the screenplay or scenario (used for movies and TV shows).</td>
+</tr>
+
+<tr>
+<td align="left">EDITED_BY</td>
+<td align="left">UTF-8</td>
+<td align="left">This is akin to the IEDT tag in Extended RIFF.</td>
+</tr>
+
+<tr>
+<td align="left">PRODUCER</td>
+<td align="left">UTF-8</td>
+<td align="left">Produced by. This is akin to the IPRO tag in Extended RIFF.</td>
+</tr>
+
+<tr>
+<td align="left">COPRODUCER</td>
+<td align="left">UTF-8</td>
+<td align="left">The name of a co-producer.</td>
+</tr>
+
+<tr>
+<td align="left">EXECUTIVE_PRODUCER</td>
+<td align="left">UTF-8</td>
+<td align="left">The name of an executive producer.</td>
+</tr>
+
+<tr>
+<td align="left">DISTRIBUTED_BY</td>
+<td align="left">UTF-8</td>
+<td align="left">This is akin to the IDST tag in Extended RIFF.</td>
+</tr>
+
+<tr>
+<td align="left">MASTERED_BY</td>
+<td align="left">UTF-8</td>
+<td align="left">The engineer who mastered the content for a physical medium or for digital distribution.</td>
+</tr>
+
+<tr>
+<td align="left">ENCODED_BY</td>
+<td align="left">UTF-8</td>
+<td align="left">This is akin to the <eref target="http://id3.org/id3v2.3.0#TENC">TENC tag</eref> in ID3.</td>
+</tr>
+
+<tr>
+<td align="left">MIXED_BY</td>
+<td align="left">UTF-8</td>
+<td align="left">DJ mix by the artist specified</td>
+</tr>
+
+<tr>
+<td align="left">REMIXED_BY</td>
+<td align="left">UTF-8</td>
+<td align="left">Interpreted, remixed, or otherwise modified by. This is akin to the <eref target="http://id3.org/id3v2.3.0#TPE4">TPE4 tag in ID3</eref>.</td>
+</tr>
+
+<tr>
+<td align="left">PRODUCTION_STUDIO</td>
+<td align="left">UTF-8</td>
+<td align="left">This is akin to the ISTD tag in Extended RIFF.</td>
+</tr>
+
+<tr>
+<td align="left">THANKS_TO</td>
+<td align="left">UTF-8</td>
+<td align="left">A very general tag for everyone else that wants to be listed.</td>
+</tr>
+
+<tr>
+<td align="left">PUBLISHER</td>
+<td align="left">UTF-8</td>
+<td align="left">This is akin to the <eref target="http://id3.org/id3v2.3.0#TPUB">TPUB tag in ID3</eref>.</td>
+</tr>
+
+<tr>
+<td align="left">LABEL</td>
+<td align="left">UTF-8</td>
+<td align="left">The record label or imprint on the disc.</td>
+</tr>
+</tbody>
+</table></section>
+
+<section anchor="search-and-classification"><name>Search and Classification</name>
+<table>
+<thead>
+<tr>
+<th align="left">Tag Name</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">GENRE</td>
+<td align="left">UTF-8</td>
+<td align="left">The main genre (classical, ambient-house, synthpop, sci-fi, drama, etc). The format follows the infamous TCON tag in ID3.</td>
+</tr>
+
+<tr>
+<td align="left">MOOD</td>
+<td align="left">UTF-8</td>
+<td align="left">Intended to reflect the mood of the item with a few keywords, e.g. &quot;Romantic&quot;, &quot;Sad&quot; or &quot;Uplifting&quot;. The format follows that of the TMOO tag in ID3.</td>
+</tr>
+
+<tr>
+<td align="left">ORIGINAL<em>MEDIA</em>TYPE</td>
+<td align="left">UTF-8</td>
+<td align="left">Describes the original type of the media, such as, &quot;DVD&quot;, &quot;CD&quot;, &quot;computer image,&quot; &quot;drawing,&quot; &quot;lithograph,&quot; and so forth. This is akin to the <eref target="http://id3.org/id3v2.3.0#TMED">TMED tag in ID3</eref>.</td>
+</tr>
+
+<tr>
+<td align="left">CONTENT_TYPE</td>
+<td align="left">UTF-8</td>
+<td align="left">The type of the item. e.g. Documentary, Feature Film, Cartoon, Music Video, Music, Sound FX, ...</td>
+</tr>
+
+<tr>
+<td align="left">SUBJECT</td>
+<td align="left">UTF-8</td>
+<td align="left">Describes the topic of the file, such as &quot;Aerial view of Seattle.&quot;</td>
+</tr>
+
+<tr>
+<td align="left">DESCRIPTION</td>
+<td align="left">UTF-8</td>
+<td align="left">A short description of the content, such as &quot;Two birds flying.&quot;</td>
+</tr>
+
+<tr>
+<td align="left">KEYWORDS</td>
+<td align="left">UTF-8</td>
+<td align="left">Keywords to the item separated by a comma, used for searching.</td>
+</tr>
+
+<tr>
+<td align="left">SUMMARY</td>
+<td align="left">UTF-8</td>
+<td align="left">A plot outline or a summary of the story.</td>
+</tr>
+
+<tr>
+<td align="left">SYNOPSIS</td>
+<td align="left">UTF-8</td>
+<td align="left">A description of the story line of the item.</td>
+</tr>
+
+<tr>
+<td align="left">INITIAL_KEY</td>
+<td align="left">UTF-8</td>
+<td align="left">The initial key that a musical track starts in. The format is identical to ID3.</td>
+</tr>
+
+<tr>
+<td align="left">PERIOD</td>
+<td align="left">UTF-8</td>
+<td align="left">Describes the period that the piece is from or about. For example, &quot;Renaissance&quot;.</td>
+</tr>
+
+<tr>
+<td align="left">LAW_RATING</td>
+<td align="left">UTF-8</td>
+<td align="left">Depending on the <tt>COUNTRY</tt> it's the format of the rating of a movie (P, R, X in the USA, an age in other countries or a URI defining a logo).</td>
+</tr>
+
+<tr>
+<td align="left">ICRA</td>
+<td align="left">binary</td>
+<td align="left">The <eref target="http://www.icra.org/">ICRA</eref> content rating for parental control. (Previously RSACi)</td>
+</tr>
+</tbody>
+</table></section>
+
+<section anchor="temporal-information"><name>Temporal Information</name>
+<table>
+<thead>
+<tr>
+<th align="left">Tag Name</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">DATE_RELEASED</td>
+<td align="left">UTF-8</td>
+<td align="left">The time that the item was originally released. This is akin to the TDRL tag in ID3.</td>
+</tr>
+
+<tr>
+<td align="left">DATE_RECORDED</td>
+<td align="left">UTF-8</td>
+<td align="left">The time that the recording began. This is akin to the TDRC tag in ID3.</td>
+</tr>
+
+<tr>
+<td align="left">DATE_ENCODED</td>
+<td align="left">UTF-8</td>
+<td align="left">The time that the encoding of this item was completed began. This is akin to the TDEN tag in ID3.</td>
+</tr>
+
+<tr>
+<td align="left">DATE_TAGGED</td>
+<td align="left">UTF-8</td>
+<td align="left">The time that the tags were done for this item. This is akin to the TDTG tag in ID3.</td>
+</tr>
+
+<tr>
+<td align="left">DATE_DIGITIZED</td>
+<td align="left">UTF-8</td>
+<td align="left">The time that the item was transferred to a digital medium. This is akin to the IDIT tag in RIFF.</td>
+</tr>
+
+<tr>
+<td align="left">DATE_WRITTEN</td>
+<td align="left">UTF-8</td>
+<td align="left">The time that the writing of the music/script began.</td>
+</tr>
+
+<tr>
+<td align="left">DATE_PURCHASED</td>
+<td align="left">UTF-8</td>
+<td align="left">Information on when the file was purchased (see also <eref target="#commercial">purchase tags</eref>).</td>
+</tr>
+</tbody>
+</table></section>
+
+<section anchor="spacial-information"><name>Spacial Information</name>
+<table>
+<thead>
+<tr>
+<th align="left">Tag Name</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">RECORDING_LOCATION</td>
+<td align="left">UTF-8</td>
+<td align="left">The location where the item was recorded. The countries corresponding to the string, same 2 octets as in <eref target="https://www.iana.org/whois">Internet domains</eref>, or possibly <eref target="https://www.iso.org/iso-3166-country-codes.html">ISO-3166</eref>. This code is followed by a comma, then more detailed information such as state/province, another comma, and then city. For example, &quot;US, Texas, Austin&quot;. This will allow for easy sorting. It is okay to only store the country, or the country and the state/province. More detailed information can be added after the city through the use of additional commas. In cases where the province/state is unknown, but you want to store the city, simply leave a space between the two commas. For example, &quot;US, , Austin&quot;.</td>
+</tr>
+
+<tr>
+<td align="left">COMPOSITION_LOCATION</td>
+<td align="left">UTF-8</td>
+<td align="left">Location that the item was originally designed/written. The countries corresponding to the string, same 2 octets as in <eref target="https://www.iana.org/whois">Internet domains</eref>, or possibly <eref target="https://www.iso.org/iso-3166-country-codes.html">ISO-3166</eref>. This code is followed by a comma, then more detailed information such as state/province, another comma, and then city. For example, &quot;US, Texas, Austin&quot;. This will allow for easy sorting. It is okay to only store the country, or the country and the state/province. More detailed information can be added after the city through the use of additional commas. In cases where the province/state is unknown, but you want to store the city, simply leave a space between the two commas. For example, &quot;US, , Austin&quot;.</td>
+</tr>
+
+<tr>
+<td align="left">COMPOSER_NATIONALITY</td>
+<td align="left">UTF-8</td>
+<td align="left">Nationality of the main composer of the item, mostly for classical music. The countries corresponding to the string, same 2 octets as in <eref target="https://www.iana.org/whois">Internet domains</eref>, or possibly <eref target="https://www.iso.org/iso-3166-country-codes.html">ISO-3166</eref>.</td>
+</tr>
+</tbody>
+</table></section>
+
+<section anchor="personal"><name>Personal</name>
+<table>
+<thead>
+<tr>
+<th align="left">Tag Name</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">COMMENT</td>
+<td align="left">UTF-8</td>
+<td align="left">Any comment related to the content.</td>
+</tr>
+
+<tr>
+<td align="left">PLAY_COUNTER</td>
+<td align="left">UTF-8</td>
+<td align="left">The number of time the item has been played.</td>
+</tr>
+
+<tr>
+<td align="left">RATING</td>
+<td align="left">UTF-8</td>
+<td align="left">A numeric value defining how much a person likes the song/movie. The number is between 0 and 5 with decimal values possible (e.g. 2.7), 5(.0) being the highest possible rating. Other rating systems with different ranges will have to be scaled.</td>
+</tr>
+</tbody>
+</table></section>
+
+<section anchor="technical-information"><name>Technical Information</name>
+<table>
+<thead>
+<tr>
+<th align="left">Tag Name</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">ENCODER</td>
+<td align="left">UTF-8</td>
+<td align="left">The software or hardware used to encode this item. (&quot;LAME&quot; or &quot;XviD&quot;)</td>
+</tr>
+
+<tr>
+<td align="left">ENCODER_SETTINGS</td>
+<td align="left">UTF-8</td>
+<td align="left">A list of the settings used for encoding this item. No specific format.</td>
+</tr>
+
+<tr>
+<td align="left">BPS</td>
+<td align="left">UTF-8</td>
+<td align="left">The average bits per second of the specified item. This is only the data in the Blocks, and excludes headers and any container overhead.</td>
+</tr>
+
+<tr>
+<td align="left">FPS</td>
+<td align="left">UTF-8</td>
+<td align="left">The average frames per second of the specified item. This is typically the average number of Blocks per second. In the event that lacing is used, each laced chunk is to be counted as a separate frame.</td>
+</tr>
+
+<tr>
+<td align="left">BPM</td>
+<td align="left">UTF-8</td>
+<td align="left">Average number of beats per minute in the complete target (e.g. a chapter). Usually a decimal number.</td>
+</tr>
+
+<tr>
+<td align="left">MEASURE</td>
+<td align="left">UTF-8</td>
+<td align="left">In music, a measure is a unit of time in Western music like &quot;4/4&quot;. It represents a regular grouping of beats, a meter, as indicated in musical notation by the time signature.. The majority of the contemporary rock and pop music you hear on the radio these days is written in the 4/4 time signature.</td>
+</tr>
+
+<tr>
+<td align="left">TUNING</td>
+<td align="left">UTF-8</td>
+<td align="left">It is saved as a frequency in hertz to allow near-perfect tuning of instruments to the same tone as the musical piece (e.g. &quot;441.34&quot; in Hertz). The default value is 440.0 Hz.</td>
+</tr>
+
+<tr>
+<td align="left">REPLAYGAIN_GAIN</td>
+<td align="left">binary</td>
+<td align="left">The gain to apply to reach 89dB SPL on playback. This is based on the <eref target="http://www.replaygain.org/">Replay Gain standard</eref>. Note that ReplayGain information can be found at all TargetType levels (track, album, etc).</td>
+</tr>
+
+<tr>
+<td align="left">REPLAYGAIN_PEAK</td>
+<td align="left">binary</td>
+<td align="left">The maximum absolute peak value of the item. This is based on the <eref target="http://www.replaygain.org/">Replay Gain standard</eref>.</td>
+</tr>
+</tbody>
+</table></section>
+
+<section anchor="identifiers"><name>Identifiers</name>
+<table>
+<thead>
+<tr>
+<th align="left">Tag Name</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">ISRC</td>
+<td align="left">UTF-8</td>
+<td align="left">The <eref target="http://www.ifpi.org/isrc/isrc_handbook.html#Heading198">International Standard Recording Code</eref>, excluding the &quot;ISRC&quot; prefix and including hyphens.</td>
+</tr>
+
+<tr>
+<td align="left">MCDI</td>
+<td align="left">binary</td>
+<td align="left">This is a binary dump of the TOC of the CDROM that this item was taken from. This holds the same information as the MCDI in ID3.</td>
+</tr>
+
+<tr>
+<td align="left">ISBN</td>
+<td align="left">UTF-8</td>
+<td align="left"><eref target="https://www.isbn-international.org/">International Standard Book Number</eref></td>
+</tr>
+
+<tr>
+<td align="left">BARCODE</td>
+<td align="left">UTF-8</td>
+<td align="left"><eref target="https://www.gs1.org/standards/barcodes/ean-upc">EAN-13</eref> (European Article Numbering) or <eref target="http://www.uc-council.org/">UPC-A</eref> (Universal Product Code) bar code identifier</td>
+</tr>
+
+<tr>
+<td align="left">CATALOG_NUMBER</td>
+<td align="left">UTF-8</td>
+<td align="left">A label-specific string used to identify the release (TIC 01 for example).</td>
+</tr>
+
+<tr>
+<td align="left">LABEL_CODE</td>
+<td align="left">UTF-8</td>
+<td align="left">A 4-digit or 5-digit number to identify the record label, typically printed as (LC) xxxx or (LC) 0xxxx on CDs medias or covers (only the number is stored).</td>
+</tr>
+
+<tr>
+<td align="left">LCCN</td>
+<td align="left">UTF-8</td>
+<td align="left"><eref target="https://www.loc.gov/marc/lccn.html">Library of Congress Control Number</eref></td>
+</tr>
+
+<tr>
+<td align="left">IMDB</td>
+<td align="left">UTF-8</td>
+<td align="left"><eref target="https://www.imdb.com/">Internet Movie Database (IMDb)</eref> identifier. 'tt' followed by at least 7 digits for Movies, TV Shows and Episodes.</td>
+</tr>
+
+<tr>
+<td align="left">TMDB</td>
+<td align="left">UTF-8</td>
+<td align="left"><eref target="https://www.themoviedb.org/">The Movie Database (TMDb)</eref> identifier. The variable length digits string MUST be prefixed with either &quot;movie/&quot; or &quot;tv/&quot;.</td>
+</tr>
+
+<tr>
+<td align="left">TVDB</td>
+<td align="left">UTF-8</td>
+<td align="left"><eref target="https://www.thetvdb.com/">The TV Database (TheTVDB)</eref> identifier. Variable length all-digits string identifying a TV Show.</td>
+</tr>
+</tbody>
+</table></section>
+
+<section anchor="commercial"><name>Commercial</name>
+<table>
+<thead>
+<tr>
+<th align="left">Tag Name</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">PURCHASE_ITEM</td>
+<td align="left">UTF-8</td>
+<td align="left">URL to purchase this file. This is akin to the WPAY tag in ID3.</td>
+</tr>
+
+<tr>
+<td align="left">PURCHASE_INFO</td>
+<td align="left">UTF-8</td>
+<td align="left">Information on where to purchase this album. This is akin to the WCOM tag in ID3.</td>
+</tr>
+
+<tr>
+<td align="left">PURCHASE_OWNER</td>
+<td align="left">UTF-8</td>
+<td align="left">Information on the person who purchased the file. This is akin to the <eref target="http://id3.org/id3v2.3.0#TOWN">TOWN tag in ID3</eref>.</td>
+</tr>
+
+<tr>
+<td align="left">PURCHASE_PRICE</td>
+<td align="left">UTF-8</td>
+<td align="left">The amount paid for entity. There SHOULD only be a numeric value in here. Only numbers, no letters or symbols other than &quot;.&quot;. For instance, you would store &quot;15.59&quot; instead of &quot;$15.59USD&quot;.</td>
+</tr>
+
+<tr>
+<td align="left">PURCHASE_CURRENCY</td>
+<td align="left">UTF-8</td>
+<td align="left">The currency type used to pay for the entity. Use <eref target="https://www.xe.com/iso4217.php">ISO-4217</eref> for the 3 letter currency code.</td>
+</tr>
+</tbody>
+</table></section>
+
+<section anchor="legal"><name>Legal</name>
+<table>
+<thead>
+<tr>
+<th align="left">Tag Name</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">COPYRIGHT</td>
+<td align="left">UTF-8</td>
+<td align="left">The copyright information as per the copyright holder. This is akin to the TCOP tag in ID3.</td>
+</tr>
+
+<tr>
+<td align="left">PRODUCTION_COPYRIGHT</td>
+<td align="left">UTF-8</td>
+<td align="left">The copyright information as per the production copyright holder. This is akin to the TPRO tag in ID3.</td>
+</tr>
+
+<tr>
+<td align="left">LICENSE</td>
+<td align="left">UTF-8</td>
+<td align="left">The license applied to the content (like Creative Commons variants).</td>
+</tr>
+
+<tr>
+<td align="left">TERMS<em>OF</em>USE</td>
+<td align="left">UTF-8</td>
+<td align="left">The terms of use for this item. This is akin to the USER tag in ID3.</td>
+</tr>
+</tbody>
+</table></section>
+
+<section anchor="notes"><name>Notes</name>
+
+<ul>
+<li><t>In the Target list, a logical OR is applied on all tracks, a logical OR is applied on all chapters. Then a logical AND is applied between the Tracks list and the Chapters list to know if an element belongs to this Target.</t>
+</li>
+</ul>
+</section>
+</section>
+
+</middle>
+
+<back>
+<references><name>Normative References</name>
+<xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
+<xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
+</references>
+<references><name>Informative References</name>
+<reference anchor="RIFF.tags" target="https://sno.phy.queensu.ca/~phil/exiftool/TagNames/RIFF.html">
+  <front>
+    <title>RIFF Tags</title>
+    <author>
+      <organization>Exiftool</organization>
+    </author>
+    <date></date>
+  </front>
+</reference>
+</references>
+
+</back>
+
+</rfc>

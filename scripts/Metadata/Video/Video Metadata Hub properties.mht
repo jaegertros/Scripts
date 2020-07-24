@@ -1,0 +1,1032 @@
+From: <Saved by Blink>
+Snapshot-Content-Location: https://iptc.org/std/videometadatahub/recommendation/IPTC-VideoMetadataHub-props-Rec_1.2.html
+Subject: Video Metadata Hub properties
+Date: Wed, 10 Jun 2020 00:56:01 -0000
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	type="text/html";
+	boundary="----MultipartBoundary--A1WyGdFkmTJpzQROKKivPm0Tf5buaA5Voha1VMOH17----"
+
+
+------MultipartBoundary--A1WyGdFkmTJpzQROKKivPm0Tf5buaA5Voha1VMOH17----
+Content-Type: text/html
+Content-ID: <frame-4AF14F9FF2F4498EF48F50CD57BFCF71@mhtml.blink>
+Content-Transfer-Encoding: quoted-printable
+Content-Location: https://iptc.org/std/videometadatahub/recommendation/IPTC-VideoMetadataHub-props-Rec_1.2.html
+
+<html style=3D""><head><meta http-equiv=3D"Content-Type" content=3D"text/ht=
+ml; charset=3DUTF-8"><title>Video Metadata Hub properties</title><link href=
+=3D"https://iptc.org/std/videometadatahub/recommendation/iptcspecs1.css" re=
+l=3D"stylesheet" type=3D"text/css"></head><body><h1 class=3D"pageheader">IP=
+TC Video Metadata Hub - Recommendation 1.2/ Properties<a href=3D"https://ip=
+tc.org/"><img align=3D"left" border=3D"0" src=3D"https://iptc.org/download/=
+resources/logos/iptc-gr_70x70.jpg"></a></h1><p class=3D"smallnote1">.</p><p=
+ class=3D"note1">See the <a href=3D"https://iptc.org/std/videometadatahub/r=
+ecommendation/IPTC-VideoMetadataHub-mapping-Rec_1.2.html">Recommendation of=
+ Video Metadata Hub mappings</a></p><p class=3D"note1">See also: <a href=3D=
+"https://iptc.org/std/videometadatahub/recommendation/iptc-vmhub-schema.jso=
+n">JSON Schema of the PVMD properties (specified on this page).</a></p><p c=
+lass=3D"note1">Properties approved on 25 April 2018. Document revision as o=
+f 12 June 2018.</p><p class=3D"note1"></p><p class=3D"note1">Boxes with gre=
+en background show a new property or Property Structure. Boxes with grey ba=
+ckground show a fixed erratum - <a href=3D"https://iptc.org/std/videometada=
+tahub/recommendation/IPTC-VideoMetadataHub-props-Rec_1.2.html#errata">see a=
+ list of errata at the bottom of this page</a> and how they were fixed.</p>=
+<p class=3D"smallnote1">Copyright =C2=A9 2018, <a href=3D"https://iptc.org/=
+">IPTC</a> - all rights reserved. Published under the Creative Commons Attr=
+ibution 4.0 license <a href=3D"http://creativecommons.org/licenses/by/4.0/"=
+>http://creativecommons.org/licenses/by/4.0/</a></p><p class=3D"note1">Note=
+ on the ... Property headers:<br>EBUcore: based on the EBU Core Metadata St=
+andard.<br>XMP: based on the ISO XMP standard.<br>PVMD: a specification of =
+JSON properties for Photo and Video MetaData by IPTC (aka phovidmd).</p><p =
+class=3D"smallnote1">Note on the JSON Data Type column. It shows three valu=
+es separated by /: 1) the JSON datatype (could be an object, in this case w=
+ith uppercase name), 2) optionally a sub-type defined by JSON Schema, 3) op=
+tionally "array" if multiple values are supported. </p><table class=3D"spec=
+1 vmhprop"><thead><tr><th class=3D"hdrcol1">(Group of Properties)</th><th c=
+lass=3D"hdrcol2">Property Name</th><th class=3D"hdrcol3">Definition / Seman=
+tics</th><th class=3D"hdrcol4">User Notes</th><th class=3D"hdrcol5">Change =
+Notes</th><th class=3D"hdrcol6">Basic Type/Cardinality</th><th class=3D"hdr=
+col7">EBUcore Property</th><th class=3D"hdrcol8">XMP Property</th><th class=
+=3D"hdrcol9">XMP Data Type</th><th class=3D"hdrcol10">PVMD JSON Property</t=
+h><th class=3D"hdrcol11">PVMD JSON Data Type</th></tr></thead><tbody><tr><t=
+d>administrative</td><td>Circa Date Created</td><td>Approximate date or ran=
+ge of dates associated with the creation and production of a video.</td><td=
+>Primarily for archival use if exact dates are not available.</td><td>New 1=
+.0</td><td>Text (0..1)</td><td>date/alternative/@period=3D"...value..." + @=
+typeDefinition=3D"ivqu:circaDateCreated"</td><td>Iptc4xmpExt:CircaDateCreat=
+ed</td><td>Text</td><td>circaDateCreated</td><td>string//</td></tr><tr><td>=
+administrative</td><td>Date Created</td><td>Date and optionally time when t=
+he video was created</td><td>If exact dates are not available use Circa Dat=
+e Created.</td><td>New 1.0</td><td>Date (0..1)</td><td>date/created
+OR date + typeLink=3D"ivqu:dateCreated"/dc:date </td><td>photoshop:DateCrea=
+ted</td><td>Date</td><td>dateCreated</td><td>string/date-time/</td></tr><tr=
+><td>administrative</td><td>Date Modified</td><td>Date and optionally time =
+when the video was modified last time</td><td></td><td>New 1.0</td><td>Date=
+ (0..1)</td><td>date/modified
+OR date + typeLink=3D"ivqu:dateModified"/dc:date</td><td>xmp:ModifyDate</td=
+><td>Date</td><td>dateModified
+</td><td>string/date-time/</td></tr><tr><td>administrative</td><td>Date Rel=
+eased</td><td>Date and optionally time of the public release of the video</=
+td><td></td><td>New 1.0</td><td>Date (0..1)</td><td>date/released
+OR date + typeLink=3D"ivqu:dateReleased"/dc:date </td><td>xmpDM:releaseDate=
+</td><td>Date</td><td>dateReleased</td><td>string/date-time/</td></tr><tr><=
+td>administrative</td><td>Episode</td><td>Episode in a specific season of a=
+ TV or video series this video is a member of.</td><td></td><td>New 1.0</td=
+><td>Episode/Season stucture (0..1)</td><td>title + typeLink=3D"ivqu:episod=
+e"/dc:title + type=20
+OR dc:alternative + typeLink=3D"ivqu:episode"</td><td>Iptc4xmpExt:Episode</=
+td><td>Episode structure</td><td>episode</td><td>EpisodeSeason</td></tr><tr=
+><td>administrative</td><td>External Metadata URL</td><td>Link(s) to an ext=
+ernal web resource for retrieval of further metadata about this video</td><=
+td></td><td>New 1.0</td><td>URL (0..unbounded)</td><td>use relations and re=
+latedInformationLinks for contacts/persons and organisations</td><td>Iptc4x=
+mpExt:ExternalMetadataLink</td><td>Bag of URL</td><td>externalMetadataLinks=
+</td><td>string/uri/array</td></tr><tr><td>administrative</td><td>Feed Iden=
+tifier</td><td>Identifier of the feed/source this video was delivered by</t=
+d><td></td><td>New 1.0</td><td>Text (0..1)</td><td>identifier + typeLink=3D=
+"ivqu:feedId"/dc:identifier</td><td>Iptc4xmpExt:FeedIdentifier</td><td>Text=
+</td><td>feedIdentifier</td><td>string//</td></tr><tr><td>administrative</t=
+d><td>Publication Event</td><td>Date and optionally the time of publishing =
+this video with name and identifier for the event of this publication.</td>=
+<td></td><td>New 1.0</td><td>Publication Event structure (0..unbounded)</td=
+><td>publicationEvent/publicationDate</td><td>Iptc4xmpExt:PublicationEvent<=
+/td><td>Bag Publication Event structure</td><td>publicationEvents</td><td>P=
+ublicationEvent/array</td></tr><tr><td>administrative</td><td>Rating</td><t=
+d>How the video is rated by a public source or an authority</td><td></td><t=
+d>New 1.0</td><td>Rating structure (0..unbounded)</td><td>rating</td><td>Ip=
+tc4xmpExt:Rating</td><td>Bag Rating structure</td><td>ratings</td><td>Ratin=
+g/array</td></tr><tr><td>administrative</td><td>Ready for Release</td><td>A=
+n indicator if this video is ready for being released to the public. This d=
+epends on rules by the party responsible for the publication.</td><td></td>=
+<td>New 1.0</td><td>Boolean (0..1)</td><td>format/technicalAttributeBoolean=
+</td><td>Iptc4xmpExt:ReleaseReady</td><td>Boolean</td><td>releaseReady</td>=
+<td>boolean//</td></tr><tr><td>administrative</td><td>Season</td><td>Season=
+ of a TV or video series this video is a member of.</td><td></td><td>New 1.=
+0</td><td>Episode/Season stucture (0..1)</td><td>title + typeLink=3D"ivqu:s=
+eason"/dc:title + type=20
+OR dc:alternative +  typeLink=3D"ivqu:season"</td><td>Iptc4xmpExt:Season</t=
+d><td>Season structure</td><td>season</td><td>EpisodeSeason</td></tr><tr><t=
+d>administrative</td><td>Series</td><td>TV or video series this video is a =
+member of.</td><td></td><td>New 1.0</td><td>Series structure (0..1)</td><td=
+>title + typeLink=3D"ivqu:series"/dc:title + type=20
+OR dc:alternative +  typeLink=3D"ivqu:series"</td><td>Iptc4xmpExt:Series</t=
+d><td>Series structure</td><td>series</td><td>Series</td></tr><tr><td>admin=
+istrative</td><td>Storyline Identifier</td><td>Identifier(s) of a story evo=
+lving over time with which this video is associated</td><td></td><td>New 1.=
+0</td><td>Text (0..unbounded)</td><td>identifier + typeLink=3D"ivqu:storyli=
+neId"/dc:identifier</td><td>Iptc4xmpExt:StorylineIdentifier</td><td>Bag of =
+Text</td><td>storylineIdentifiers</td><td>string//array</td></tr><tr><td>ad=
+ministrative</td><td>Style Period</td><td>The style, historical or artistic=
+ period, movement, group, or school whose characteristics are represented b=
+y the video</td><td>The Style Period may be different from the Temporal Cov=
+erage</td><td>New 1.0</td><td>Text (0..1)</td><td>date/alternative/@period=
+=3D"...value..." + @typeDefinition=3D"ivqu:stylePeriod"</td><td>Iptc4xmpExt=
+:StylePeriod</td><td>Text</td><td>stylePeriod</td><td>string//</td></tr><tr=
+><td>administrative</td><td>Temporal Coverage</td><td>Period of time covere=
+d by the video</td><td>The period of Temporal Coverage may be different fro=
+m the Style Period.</td><td>New 1.0</td><td>Temporal Coverage structure (0.=
+.1)</td><td>See below the Temporal Coverage structure</td><td>Iptc4xmpExt:T=
+emporalCoverage</td><td>Temporal Coverage Structure</td><td>temporalCoverag=
+e</td><td>TemporalCoverage</td></tr><tr><td>administrative</td><td>Video Id=
+entifier</td><td>Globally unambiguous identifier of the video regardless of=
+ renditions, formats, encodings etc. This identifier should be shared acros=
+s all renditions.</td><td>IPTC advises to follow the guidelines by ISAN (ht=
+tp://www.isan.org)</td><td>New 1.0</td><td>Text (0..1)</td><td>identifier +=
+ typeLink=3D"ivqu:mediaId"/dc:identifier</td><td>dc:identifier</td><td>Text=
+</td><td>identifier</td><td>string//</td></tr><tr><td>administrative</td><t=
+d>Video Rendition</td><td>Unambiguous identifier of the video specific to a=
+ rendition. </td><td>Definitions of specific renditions are not provided by=
+ IPTC. Definitions of renditions may be based on format or encoding etc and=
+ can be set by producers of videos and/or system vendors.</td><td>New 1.0</=
+td><td>Text (0..1)</td><td>videocoding + type - SMPTE Register (in one stri=
+ng)
+</td><td>xmpMM:RenditionClass</td><td>Text</td><td>rendition</td><td>string=
+//</td></tr><tr><td>administrative</td><td>Video Version</td><td>Version of=
+ the video identified by the Video Identifier</td><td></td><td>New 1.0</td>=
+<td>Text (0..1)</td><td>version + typeLink=3D"ivqu:mediaId"</td><td>xmpMM:V=
+ersionID</td><td>Text</td><td>videoVersion
+</td><td>string//</td></tr><tr><td>administrative</td><td>Workflow Tag</td>=
+<td>Indicator for the role of this video in a production workflow.</td><td>=
+Could be used to indicate footage, edited video, program masters, etc. Valu=
+es are typically codes defined by a production company.</td><td>New 1.0</td=
+><td>Concept structure (0..1)</td><td>type/objectType</td><td>Iptc4xmpExt:W=
+orkflowTag</td><td>CV Term structure</td><td>workflowTag</td><td>CvTerm</td=
+></tr><tr><td>administrative</td><td>Registry Entry</td><td>Identifier of t=
+he video issued by an identified registry.</td><td>What is considered a reg=
+istry can be interpreted in a wide sense as the controlled management of as=
+sets with asset-specific identifiers</td><td>New 1.0</td><td>Registry Entry=
+ structure (0..unbounded)</td><td>identifier + typeLink=3D"ivqu:registryEnt=
+ry"/dc:identifier + attributor</td><td>Iptc4xmpExt:RegistryId</td><td>Bag R=
+egistry Entry (structure)</td><td>registryEntries</td><td>RegistryEntry/arr=
+ay</td></tr><tr><td>administrative</td><td class=3D"isnew">Recording Device=
+</td><td>Device used for recording this video</td><td></td><td class=3D"isn=
+ew">New 1.2</td><td>Device structure(0..1)</td><td></td><td>Iptc4xmpExt:Rec=
+Device</td><td>Device structure</td><td>recordingDevice</td><td>Device</td>=
+</tr><tr><td>administrative</td><td class=3D"isnew">Planning Reference</td>=
+<td>Reference to a data item used for planning the shooting of this video</=
+td><td></td><td class=3D"isnew">New 1.2</td><td>Entity with role structure =
+(0..unbounded)</td><td>planning</td><td>Iptc4xmpExt:PlanningRef</td><td>Bag=
+ Enitity with Role structure</td><td>planningRefs</td><td>EntityWRole/array=
+</td></tr><tr><td>describing a/v content</td><td>CV Term About the Content<=
+/td><td>What the video is about expressed by term(s) selected from taxonomi=
+es or controlled vocabularies</td><td></td><td>New 1.0</td><td>Concept stru=
+cture (0..unbounded)</td><td>subject/subjectCode + subjectDefinition</td><t=
+d>Iptc4xmpExt:AboutCvTerm</td><td>Bag CV Term structure</td><td>aboutCvTerm=
+s</td><td>CvTerm/array
+</td></tr><tr><td>describing a/v content</td><td>Data Displayed on Screen</=
+td><td>Text or other data shown in some region of the image.</td><td></td><=
+td>New 1.0</td><td>Text with region delimiter structure (0..unbounded)</td>=
+<td>description + typeLink=3D"ivqu:dataOnScreen"/dc:description
+OR captioning solution requiring subtitling solution or use part and descri=
+ptions for timecoded text</td><td>Iptc4xmpExt:DataOnScreen</td><td>Bag  Tex=
+t with Region Delimiter structure</td><td>dataOnScreen</td><td>TextWRegionD=
+elimiter/array</td></tr><tr><td>describing a/v content</td><td>Description<=
+/td><td>Textual description of the content of the video</td><td></td><td>Ne=
+w 1.0</td><td>Text + language tag (0..1)</td><td>description + typeLink=3D"=
+ivqu:generic"/dc:description</td><td>dc:description</td><td>Lang Alt</td><t=
+d>description</td><td>AltLang</td></tr><tr><td>describing a/v content</td><=
+td>Dopesheet</td><td>Shotlist with descriptions</td><td></td><td>New 1.0</t=
+d><td>Text + language tag (0..1)</td><td>description + typeLink=3D"ivqu:dop=
+esheet"/dc:description</td><td>Iptc4xmpExt:Dopesheet</td><td>Lang Alt</td><=
+td>dopesheet</td><td>AltLang</td></tr><tr><td>describing a/v content</td><t=
+d>Dopesheet Link</td><td>Link(s) to an external web resource providing a sh=
+otlist with descriptions</td><td></td><td>New 1.0</td><td>Qualified Link (0=
+..unbounded)</td><td></td><td>Iptc4xmpExt:DopesheetLink</td><td>Bag Qualifi=
+ed Link</td><td>dopesheetLinks</td><td>QualifiedLink/array</td></tr><tr><td=
+>describing a/v content</td><td>Featured Organisation</td><td>Organisation(=
+s) featured by the content of the video</td><td></td><td>New 1.0</td><td>En=
+tity structure (0..unbounded)</td><td>subject + typeLink=3D"ivqu:featuredOr=
+ganisation"/subjectCode + subjectDefinition
+OR description + typeLink=3D"ivqu:featuredOrganisation"/dc:description</td>=
+<td>Iptc4xmpExt:OrganisationInImageName
+Iptc4xmpExt:OrganisationInImageCode</td><td>Bag Text
+Bag Text</td><td>featuredOrganisations</td><td>Entity/array</td></tr><tr><t=
+d>describing a/v content</td><td>Genre</td><td>Artistic, style, journalisti=
+c, product or other genre(s) of the video.</td><td></td><td>New 1.0</td><td=
+>CV-Term structure (0..unbounded)</td><td>type/genre (? + type)</td><td>Ipt=
+c4xmpExt:Genre</td><td>Bag CV Term structure</td><td>genres</td><td>CvTerm/=
+array
+</td></tr><tr><td>describing a/v content</td><td>Headline </td><td>Short de=
+scription of the content of the video</td><td></td><td>New 1.0</td><td>Text=
+ + language tag (0..1)</td><td>description + typeLink=3D"ivqu:headline"/dc:=
+description</td><td>Iptc4xmpExt:Headline</td><td>Lang Alt</td><td>headline<=
+/td><td>AltLang</td></tr><tr><td>describing a/v content</td><td>Keyword</td=
+><td>What the video is about expressed by a free choice of descriptive phra=
+ses or keywords</td><td></td><td>New 1.0</td><td>Text (0..unbounded) option=
+al language tag</td><td>description + typeLink=3D"ivqu:keyword"/dc:descript=
+ion
+OR subject + typeLink=3D"ivqu:keyword"/dc:subject</td><td>dc:subject</td><t=
+d>Bag Text</td><td>keywords</td><td>string//array</td></tr><tr><td>describi=
+ng a/v content</td><td>Language Version</td><td>Language version of the vid=
+eo</td><td></td><td>New 1.0</td><td>Language tag (0..1)</td><td>language + =
+typeLink=3D"ivqu:langVersion"/dc:language</td><td>dc:language</td><td>Text =
+Closed Choice</td><td>language</td><td>string//</td></tr><tr><td>describing=
+ a/v content</td><td>Location Shot</td><td>Place from where the video was s=
+hot, in particular where the camera was located</td><td>May be used multipl=
+e times for edited videos with clips shot at different locations.</td><td>N=
+ew 1.0</td><td>Location structure (0..unbounded)</td><td>coverage/spatial/l=
+ocation + typeLink=3D"ivqu:locationShot"</td><td>Iptc4xmpExt:LocationCreate=
+d</td><td>Bag Location structure</td><td>locationsCreated</td><td>Location/=
+array</td></tr><tr><td>describing a/v content</td><td>Location Shown</td><t=
+d>Place(s) shown by the video</td><td></td><td>New 1.0</td><td>Location str=
+ucture (0..unbounded)</td><td>coverage/spatial/location + typeLink=3D"ivqu:=
+locationShown"
+OR subject + typeLink=3D"ivqu:locationShown"/subjectCode + subjectDefinitio=
+n</td><td>Iptc4xmpExt:LocationShown</td><td>Bag Location structure</td><td>=
+locationsShown</td><td>Location/array</td></tr><tr><td>describing a/v conte=
+nt</td><td>Object Shown</td><td>Object(s) shown by the video</td><td></td><=
+td>New 1.0</td><td>Entity structure (0..unbounded)</td><td>subject + typeLi=
+nk=3D"ivqu:objectShown"/subjectCode + subjectDefinition
+OR description + typeLink=3D"ivqu:objectShown"/dc:description</td><td>Iptc4=
+xmpExt:ArtworkOrObject</td><td>Bag Artwork/Object structure</td><td>objects=
+Shown
+</td><td>Entity/array</td></tr><tr><td>describing a/v content</td><td>Perso=
+n Heard</td><td>Person(s) who can be heard only in the video</td><td></td><=
+td>New 1.0</td><td>Entity structure (0..unbounded)</td><td>subject + typeLi=
+nk=3D"ivqu:personHeard"/subjectCode + subjectDefinition
+OR description + typeLink=3D"ivqu:personHeard"/dc:description</td><td>Iptc4=
+xmpExt:PersonHeard</td><td>Bag Entity structure</td><td>personsHeard
+</td><td>Entity/array</td></tr><tr><td>describing a/v content</td><td>Perso=
+n Shown</td><td>Person(s) shown by the video</td><td></td><td>New 1.0</td><=
+td>Entity or Person Details structure (0..unbounded)</td><td>subject + type=
+Link=3D"ivqu:personShown"/subjectCode + subjectDefinition
+OR description + typeLink=3D"ivqu:personShown"/dc:description</td><td>Iptc4=
+xmpExt:PersonInImageWDetails</td><td>Bag PersonWDetails structure</td><td>p=
+ersonsShown
+</td><td>PersonWDetails/array</td></tr><tr><td>describing a/v content</td><=
+td>Product Shown</td><td>Product(s) identified by a GTIN code shown by the =
+video</td><td></td><td>New 1.0</td><td>Product with GTIN structure (0..unbo=
+unded)</td><td>subject + typeLink=3D"ivqu:productShown"/subjectCode + subje=
+ctDefinition
+OR description + typeLink=3D"ivqu:productShown"/dc:description</td><td>Iptc=
+4xmpExt:ProductInImage</td><td>Bag Product structure</td><td>productsShown
+</td><td>ProductWGtin/array</td></tr><tr><td>describing a/v content</td><td=
+>Shot Type</td><td>Visual type(s) of the video</td><td></td><td>New 1.0</td=
+><td>Concept structure (0..unbounded)</td><td>type/objectType</td><td>Iptc4=
+xmpExt:VideoShotType</td><td>Bag Entity structure</td><td>videoShotTypes</t=
+d><td>Entity/array</td></tr><tr><td>describing a/v content</td><td>Shown Ev=
+ent</td><td>Event(s) shown by the video</td><td></td><td>New 1.0</td><td>En=
+tity structure (0..unbounded)</td><td>coverage/temporal + typeLink=3D"ivqu:=
+shownEvent"/periodOfTime/periodName
+OR subject + typeLink=3D"ivqu:shownEvent"/subjectCode + subjectDefinition</=
+td><td>Iptc4xmpExt:EventExt</td><td>Bag Entity structure</td><td>shownEvent=
+s</td><td>Entity/array</td></tr><tr><td>describing a/v content</td><td>Snap=
+shot Link</td><td>A still image representing  the video.</td><td></td><td>N=
+ew 1.1</td><td>Linked Image structure (0..unbounded)</td><td></td><td>Iptc4=
+xmpExt:SnapshotLink</td><td>Bag Linked Image</td><td>snapshotLinks</td><td>=
+LinkedImage/array</td></tr><tr><td>describing a/v content</td><td>Title</td=
+><td>Title of the video, should be a shorthand reference</td><td></td><td>N=
+ew 1.0</td><td>Text (0..1)</td><td>title + typeLink=3D"ivqu:videoTitle"/dc:=
+title + type=20
+OR dc:alternative + type</td><td>dc:title</td><td>Lang Alt</td><td>title</t=
+d><td>AltLang
+</td></tr><tr><td>describing a/v content</td><td>Transcript</td><td>Transcr=
+iption of the video</td><td></td><td>New 1.0</td><td>Text (0..1)</td><td>de=
+scription + typeLink=3D"ivqu:transcript"/dc:description</td><td>Iptc4xmpExt=
+:Transcript</td><td>Lang Alt</td><td>transcript</td><td>AltLang</td></tr><t=
+r><td>describing a/v content</td><td>Transcript Link</td><td>Link(s) to an =
+external web resource providing a transcription of the video</td><td></td><=
+td>New 1.0</td><td>Qualified Link structure (0..unbounded)</td><td></td><td=
+>Iptc4xmpExt:TranscriptLink</td><td>Bag Qualified Link</td><td>transcriptLi=
+nks</td><td>QualifiedLink/array</td></tr><tr><td>describing a/v content</td=
+><td>Visual Colour</td><td>The visual colouring of the video.</td><td>Techn=
+ical details of the colours are covered by =E2=80=A6</td><td>New 1.0</td><t=
+d>Text (0..1)
+Enumeration:
+- black and white/monochrome
+- colour</td><td>format/technicalAttributeString +typeLink =3D'ivqu:visualC=
+olour"</td><td>Iptc4xmpExt:VisualColour</td><td>Closed Choice
+- bw-monochrome
+- colour</td><td>visualColour</td><td>string//enum</td></tr><tr><td>rights<=
+/td><td>Contributor</td><td>Party or parties (person or organisation) which=
+ contributed to the video, refinement by the role attribute.</td><td>A dist=
+inction between contributor and creator should follow rights laws, contract=
+s or common business rules.
+Vocabulary of roles of persons contributiong to a video should be based on =
+the use by a video or movie producer assocation.</td><td>New 1.0</td><td>En=
+tity with role structure (0..unbounded)</td><td>contributor/role for contri=
+butors</td><td>Iptc4xmpExt:Contributor</td><td>Bag Entity with Role structu=
+re</td><td>contributors</td><td>EntityWRole/array</td></tr><tr><td>rights</=
+td><td>Copyright Notice </td><td>Any textual notice necessary by legal need=
+s or common use to indicate the current owner of the copyright of this medi=
+a resource</td><td></td><td>New 1.0</td><td>Text + language tag (0..1)</td>=
+<td>rights/copyrightStatement</td><td>dc:rights</td><td>Lang Alt</td><td>co=
+pyrightNotice
+</td><td>AltLang</td></tr><tr><td>rights</td><td>Copyright Year</td><td>Yea=
+r appearing in the copyright notice as numeric value</td><td></td><td>New 1=
+.0</td><td>Number/integer (0..1)</td><td>date/copyrighted</td><td>Iptc4xmpE=
+xt:CopyrightYear</td><td>number</td><td>copyrightYear</td><td>number//</td>=
+</tr><tr><td>rights</td><td>Creator</td><td>Party or parties (person or org=
+anisation) which created the video, refinement by the role attribute. </td>=
+<td>A distinction between creator and contributor should follow rights laws=
+, contracts or common business rules.=20
+Vocabulary of roles of persons creating a video should be based on the use =
+by a video or movie producer assocation.</td><td>New 1.0</td><td>Entity wit=
+h role structure (0..unbounded)</td><td>creator/role for creators
+OR contributor/role for creators</td><td>Iptc4xmpExt:Creator</td><td>Bag En=
+tity with Role structure</td><td>creators</td><td>EntityWRole/array</td></t=
+r><tr><td>rights</td><td>Credit Line</td><td>Credit to person(s) and/or org=
+anisation(s) required by the supplier of the video (clip) to be used when p=
+ublished.</td><td></td><td>New 1.0</td><td>Text (0..1)</td><td>rights/dc:ri=
+ghts + rights/ebucore:typeLink=3D"ivqu:creditline"</td><td>photoshop:Credit=
+</td><td>Text</td><td>creditLine</td><td>string//</td></tr><tr><td>rights</=
+td><td>Licensor </td><td>Company or person to  be contacted for licensing</=
+td><td></td><td>New 1.0</td><td>Entity structure (0..1)</td><td>rights/righ=
+tsHolder + typeLink=3D"ivqu:licensor"</td><td>plus:Licensor</td><td>see PLU=
+S spec</td><td>licensor
+</td><td>Entity</td></tr><tr><td>rights</td><td>Model Release Document</td>=
+<td>Identifier(s) of a Model Release document.</td><td></td><td>New 1.0</td=
+><td>Text (0..unbounded)</td><td>rights + typeLink=3D"ivqu:modelRelease"/ r=
+ightsLink</td><td>plus:ModelReleaseID</td><td>see PLUS spec</td><td>modelRe=
+leaseDocuments</td><td>string//array</td></tr><tr><td>rights</td><td>Model =
+Release Status</td><td>Summarises the availability and scope of model relea=
+ses authorizing usage of the likenesses of persons appearing in the video</=
+td><td></td><td>New 1.0</td><td>PLUS CV Term/URI</td><td>rights + typeLink=
+=3D"ivqu:modelRelease"/ rightsAttributeId</td><td>plus:ModelReleaseStatus</=
+td><td>see PLUS spec</td><td>modelReleaseStatus</td><td>CvTerm</td></tr><tr=
+><td>rights</td><td>Property Release Document</td><td>Identifier(s) of a Pr=
+operty Release document.</td><td></td><td>New 1.0</td><td>Text (0..unbounde=
+d)</td><td>rights + typeLink=3D"ivqu:propertyRelease"/ rightsLink</td><td>p=
+lus:PropertyReleaseID</td><td>see PLUS spec</td><td>propertyReleaseDocument=
+s</td><td>string//array</td></tr><tr><td>rights</td><td>Property Release St=
+atus</td><td>Summarises the availability and scope of property releases aut=
+horising usage of the properties appearing in the photograph.</td><td></td>=
+<td>New 1.0</td><td>PLUS CV Term/URI</td><td>rights + typeLink=3D"ivqu:prop=
+ertyRelease"/ rightsAttributeId</td><td>plus:PropertyReleaseStatus</td><td>=
+see PLUS spec</td><td>propertyReleaseStatus</td><td>CvTerm</td></tr><tr><td=
+>rights</td><td>Rights and Licensing Terms</td><td>Structure covering the a=
+ssertion of rights, the granting of licenses and both in human and a machin=
+e readable ways (including restrictions, embargoes, duties ...)</td><td>Emb=
+edded rights expression can cover only machine readable expression.</td><td=
+>New 1.0</td><td>Embedded or Linked Rights Expression structure (0..unbound=
+ed)</td><td>rights + typeLink=3D"ivqu:extRights"/dc:rights
+AND/OR rights + typeLink=3D"ivqu:extRights"/rightsLink</td><td>Iptc4xmpExt:=
+EmbdEncRightsExpr
+Iptc4xmpExt:LinkedEncRightsExpr</td><td>Bag Embedded or Linked Encoded Righ=
+ts Expression structure</td><td>embdEncRightsExpr, linkedEncRightsExpr</td>=
+<td>EmbdEncRightsExpr, LinkedEncRightsExpr//array</td></tr><tr><td>rights</=
+td><td>Rights Owner </td><td>Data identifying the individual or organisatio=
+n owning the rights for this media resource which could be the video as a w=
+hole or a clip in a video. The optional role attribute may indicate which f=
+acet of rights is covered by this entity.</td><td></td><td>New 1.0</td><td>=
+Entity with role (0..unbounded)</td><td>rights/rightsHolder + typeLink=3D"i=
+vqu:copyrightOwner"</td><td>plus:CopyrightOwner</td><td>see PLUS spec</td><=
+td>copyrightOwners</td><td>EntityWRole/array</td></tr><tr><td>rights</td><t=
+d>Supplier </td><td>Supplier of this copy of the media resource</td><td></t=
+d><td>New 1.0</td><td>Entity structure (0..1)</td><td>contributor/role=3D"i=
+vqu:supplier"</td><td>plus:ImageSupplier</td><td>see PLUS spec</td><td>supp=
+lier
+</td><td>Entity</td></tr><tr><td>rights</td><td>Supply Chain Source</td><td=
+>Person or party who has a role in the content supply chain.</td><td></td><=
+td>New 1.0</td><td>Entity structure (0..unbounded)</td><td>contributor/role=
+=3D"ivqu:supplychainSource"</td><td>Iptc4xmpExt:SupplyChainSource</td><td>B=
+ag Entity structure</td><td>supplyChainSources</td><td>Entity/array</td></t=
+r><tr><td>technical</td><td class=3D"isnew">Audio Bits per Sample</td><td>N=
+umber of bits used for an audio sample</td><td></td><td class=3D"isnew">New=
+ 1.2</td><td>Number (0..1)</td><td>format/audioFormat/sampleSize</td><td>Ip=
+tc4xmpExt:audioBitsPerSample</td><td>Integer</td><td>audioBitsPerSample</td=
+><td>number//</td></tr><tr><td>technical</td><td>Audio Bitrate</td><td>Bit =
+rate of the audio data depending on the Video Bit Rate Type: if fixed the f=
+ixed rate, if variable the maximum rate. The unit is bits per second.</td><=
+td></td><td>New 1.0</td><td>Number (0..1)</td><td>format/audioFormat/bitrat=
+e</td><td>Iptc4xmpExt:audioBitRate</td><td>Integer</td><td>audioBitRate</td=
+><td>number//</td></tr><tr><td>technical</td><td>Audio Bitrate Type</td><td=
+>Indicates if the bitrate of the audio data is fixed or variable</td><td></=
+td><td>New 1.0</td><td>Text (0..1)
+Enumeration
+- fixed
+- variable</td><td>format/audioFormat/bitrateMode</td><td>Iptc4xmpExt:audio=
+BitRateMode</td><td>Closed Choice Text
+- fixed
+- variable</td><td>audioBitRateType
+</td><td>string//enum</td></tr><tr><td>technical</td><td>Audio Channel Layo=
+ut</td><td>Term indicating the channel layout</td><td></td><td>New 1.0</td>=
+<td>Text (0..1)</td><td>format/audioFormat/audioConfiguration</td><td>xmpDM=
+:audioChannelType</td><td>Closed Choice Text</td><td>audioChannelLayout
+</td><td>string//</td></tr><tr><td>technical</td><td>Audio Channels</td><td=
+>Number of used audio channels</td><td></td><td>New 1.0</td><td>Number (0..=
+1)</td><td>format/audioFormat/channels</td><td>Iptc4xmpExt:audioChannelCoun=
+t</td><td>Closed Choice or
+Integer</td><td>audioChannelCount</td><td>number//</td></tr><tr><td>technic=
+al</td><td>Audio Coding</td><td>Machine readable code and a human readable =
+term for the used audio coding</td><td></td><td>New 1.0</td><td>Entity stru=
+cture (0..1)</td><td>format/audioFormat/encoding (or codec)</td><td>xmpDM:a=
+udioCompressor</td><td>Text</td><td>audioCoding</td><td>Entity</td></tr><tr=
+><td>technical</td><td>Audio Sample Rate</td><td>Rate used for sampling the=
+ audio</td><td></td><td>New 1.0</td><td>Number (0..1)</td><td>format/audioF=
+ormat/samplingRate</td><td>xmpDM:audioSampleRate</td><td>Relational</td><td=
+>audioSampleRate</td><td>number//</td></tr><tr><td>technical</td><td>Displa=
+y Aspect Ratio</td><td>Ratio of width and height of the displayed image. (W=
+idth and height do not require to be in pixels.)</td><td>e.g. 2.39:1</td><t=
+d>New 1.0</td><td>Text (0..1)</td><td>aspectRatio/@typeLink=3D"ivqu:display=
+AspectRatio"</td><td>Iptc4xmpExt:videoDisplayAspectRatio</td><td>Rational</=
+td><td>videoDisplayAspectRatio</td><td>string//</td></tr><tr><td>technical<=
+/td><td>Editorial Duration</td><td>Duration of the video content proposed f=
+or editorial use</td><td>Multiple occurrences should be used for the same v=
+alue in different time formats</td><td>New 1.0</td><td>Video Time structure=
+ (0..unbounded)</td><td>format/duration/@typeLink=3D"ivqu:editorialDuration=
+"</td><td>xmpDM:markers[xmpDM:type=3D "ivqu:editorialDuration"] /xmpDM:star=
+tTime + /xmpDM:duration</td><td>Marker</td><td>editorialDurations</td><td>V=
+ideoTime/array
+</td></tr><tr><td>technical</td><td>Editorial Duration End</td><td>The poin=
+t in time and frames the content proposed for editorial use ends</td><td>Mu=
+ltiple occurrences should be used for the same value in different time form=
+ats</td><td>New 1.0</td><td>Video Time structure (0..unbounded)</td><td>for=
+mat/end/@typeLink=3D"ivqu:editorialDurationEnd"</td><td>xmpDM:markers[xmpDM=
+:type=3D "ivqu:editorialDurationEnd"] /xmpDM:startTime</td><td>Marker</td><=
+td>editorialDurationEnds</td><td>VideoTime/array
+</td></tr><tr><td>technical</td><td>Editorial Duration Start</td><td>The po=
+int in time and frames the content proposed for editorial use starts</td><t=
+d>Multiple occurrences should be used for the same value in different time =
+formats</td><td>New 1.0</td><td>Video Time structure (0..unbounded)</td><td=
+>format/end/@typeLink=3D"ivqu:editorialDurationStart"</td><td>xmpDM:markers=
+[xmpDM:type=3D "ivqu:editorialDurationStart"] /xmpDM:startTime</td><td>Mark=
+er</td><td>editorialDurationStarts</td><td>VideoTime/array
+</td></tr><tr><td>technical</td><td>File Bitrate</td><td>The total bit rate=
+ of the all media streams in this file.</td><td></td><td>New 1.0</td><td>Nu=
+mber (0..1)</td><td>format/overallBitRate</td><td>xmpDM:fileDataRate</td><t=
+d>Rational</td><td>fileBitrate</td><td>number//</td></tr><tr><td>technical<=
+/td><td>File Duration</td><td>Duration of the overall video (from the first=
+ to the last frame)</td><td>Multiple occurrences should be used for the sam=
+e value in different time formats</td><td>New 1.0</td><td>Video Time struct=
+ure (0..1)</td><td>format/duration</td><td>xmpDM:duration</td><td>Time</td>=
+<td>fileDuration</td><td>VideoTime</td></tr><tr><td>technical</td><td>File =
+Format</td><td>Format of the file containing the video data.</td><td></td><=
+td>New 1.0</td><td>Entity structure (0..1)</td><td>format/containerformat</=
+td><td>Iptc4xmpExt:ContainerFormat</td><td>Entity structure</td><td>fileFor=
+mat</td><td>Entity</td></tr><tr><td>technical</td><td>Frame Size</td><td>Si=
+ze of the video frame in pixels</td><td></td><td>New 1.0</td><td>Frame Size=
+ structure (0..1)</td><td>format/videoFormat/width and height</td><td>xmpDM=
+:videoFrameSize</td><td>Dimensions</td><td>frameSize
+</td><td>FrameSize</td></tr><tr><td>technical</td><td>Media Type</td><td>IA=
+NA Media Type of the video.</td><td>e.g. "video/quicktime"</td><td>New 1.0<=
+/td><td>Text (0..1)</td><td>format/mimeType</td><td>dc:format</td><td>MIMET=
+ype</td><td>mediaType</td><td>string//</td></tr><tr><td>technical</td><td>O=
+rientation</td><td>Orientation of the visual content of the video as define=
+d by TIFF.</td><td></td><td>New 1.0</td><td>Number (0..1) (TIFF 6.0 orienta=
+tion - with a user guideline ("no flips"))</td><td>format/imageFormat/orien=
+tation</td><td>tiff:orientation</td><td>Closed Choice of Integer</td><td>or=
+ientation</td><td>number//</td></tr><tr><td>technical</td><td>Signal Aspect=
+ Ratio</td><td>Ratio of width and height in pixels of a frame</td><td>e.g. =
+16:9</td><td>New 1.0</td><td>Text (0..1)</td><td>aspectRatio/@typeLink=3D"i=
+vqu:signalAspectRatio"</td><td>xmpDM:videoPixelAspectRatio</td><td>Rational=
+</td><td>signalAspectRatio</td><td>string//
+</td></tr><tr><td>technical</td><td>Signal Format</td><td>Combined term inc=
+luding the size of the frame, interlaced/progressive, framerate </td><td>e.=
+g. "1080p"</td><td>New 1.0</td><td>Text (0..1)</td><td>format/videoFormat/t=
+echnicalAttributeString/@typeLink=3D"ivqu:signalFormat"</td><td>xmpDM:video=
+FieldOrder</td><td>Text</td><td>signalFormat</td><td>string//</td></tr><tr>=
+<td>technical</td><td>Stream-ready</td><td>Indicates if this video can be u=
+sed for streaming by the rule of having the key technical data of the video=
+ at the start rather than end of the file and that the wrapper and essense =
+format are suitable for streaming</td><td></td><td>New 1.0</td><td>Text (0.=
+.1)
+Enumeration:
+- true
+- false
+- unknown</td><td>format/technicalAttributeBoolean + typeLink=3D"ivqu:strea=
+mReady"</td><td>Iptc4xmpExt:StreamReady</td><td>Closed Choice of Text
+- true
+- false
+- unknown</td><td>streamReady</td><td>string//enum</td></tr><tr><td>technic=
+al</td><td>Video Bitrate</td><td>Bit rate of the video data depending on th=
+e Video Bit Rate Type: if fixed the fixed rate, if variable the maximum rat=
+e. The unit is bits per second.</td><td></td><td>New 1.0</td><td>Number (0.=
+.1)</td><td>format/videoFormat/bitrate</td><td>Iptc4xmpExt:videoBitRate</td=
+><td>Integer</td><td>videoBitrate</td><td>number//</td></tr><tr><td>technic=
+al</td><td>Video Bitrate Type</td><td>Indicates if the bitrate of the video=
+ data is fixed or variable</td><td></td><td>New 1.0</td><td>Text (0..1)
+Enumeration
+- fixed
+- variable</td><td>format/videoFormat/bitrateMode</td><td>Iptc4xmpExt:video=
+BitRateMode</td><td>Closed Choice Text
+- fixed
+- variable</td><td>videoBitrateType</td><td>string//enum</td></tr><tr><td>t=
+echnical</td><td>Video Coding</td><td>Machine readable code and a human rea=
+dable term for the used video coding</td><td></td><td>New 1.0</td><td>Entit=
+y structure (0..1)</td><td>format/videoFormat/encoding (or codec)</td><td>x=
+mpDM:videoCompressor</td><td>Text</td><td>videoCoding</td><td>Entity</td></=
+tr><tr><td>technical</td><td>Video Frame Rate</td><td>Used frame rate</td><=
+td></td><td>New 1.0</td><td>Number (0..1)</td><td>format/videoFormat/frameR=
+ate</td><td>xmpDM:videoFrameRate</td><td>Real</td><td>videoFrameRate</td><t=
+d>number//</td></tr><tr><td>technical</td><td>Video Profile</td><td>Name of=
+ the used video profile as defined by the maker of the encoding standard.</=
+td><td>e.g. "High 4:2:2"</td><td>New 1.0</td><td>Text (0..1)</td><td>format=
+/videoFormat/encoding/profile</td><td>Iptc4xmpExt:videoEncodingProfile</td>=
+<td>Text</td><td>videoEncodingProfile</td><td>string//</td></tr><tr><td>tec=
+hnical</td><td>Video Streams Count</td><td>Count of video streams in a vide=
+o file.</td><td></td><td>New 1.0</td><td>Number (0..1)</td><td>format/video=
+Format/technicalAttributeInteger [@typeLink=3D"ivqu:channels"]</td><td>Iptc=
+4xmpExt:videoStreamsCount</td><td>Integer</td><td>videoStreamsCount</td><td=
+>number//</td></tr><tr><td>tool</td><td>Markers</td><td>A marker describes =
+a location in an audio or video sequence. It is used to identify for which =
+part of the video (a clip of the video as a whole) a set of IPTC Video Meta=
+data properties is used.</td><td></td><td>New 1.0</td><td>XMP specific type=
+</td><td>use part + description or other metadata for timed markers of diff=
+erent custom types</td><td>xmpDM:markers</td><td>Marker</td><td>NA
+</td><td>NA</td></tr><tr style=3D"background-color: #009999;"><td>Property =
+Structures (PS)</td><td> </td><td> </td><td> </td><td> </td><td> </td><td> =
+</td><td> </td><td> </td><td> </td><td> </td></tr><tr style=3D"background-c=
+olor: #00cccc;"><td>PS Entity or Concept</td><td></td><td></td><td></td><td=
+>New 1.0</td><td></td><td></td><td></td><td></td><td>Entity</td><td>object<=
+/td></tr><tr><td></td><td>Identifier</td><td>Globally unique identifier of =
+the entity/concept</td><td></td><td>New 1.0</td><td>Text/URI (0..unbounded)=
+</td><td>entityId or contactId or organisationId</td><td>xmp:Identifier</td=
+><td>Bag Text</td><td>identifiers</td><td>string/uri/array</td></tr><tr><td=
+></td><td>Name</td><td>Full name of the entity/concept</td><td></td><td>New=
+ 1.0</td><td>Text + language tag (0..1)</td><td>contactDetails/Name or /giv=
+enName+ /familyName or organisationName</td><td>Iptc4xmpExt:Name</td><td>La=
+ng Alt</td><td>name</td><td>AltLang
+</td></tr><tr style=3D"background-color: #00cccc;"><td>PS Entity or Concept=
+ with role</td><td></td><td></td><td></td><td>New 1.0</td><td></td><td></td=
+><td></td><td></td><td>EntityWRole</td><td>object</td></tr><tr><td></td><td=
+>Identifier</td><td>Globally unique identifier of the entity/concept</td><t=
+d></td><td>New 1.0</td><td>Text/URI (0..unbounded)</td><td>entityId or cont=
+actId or organisationId</td><td>xmp:Identifier</td><td>Bag Text</td><td>ide=
+ntifiers</td><td>string/uri/array</td></tr><tr><td></td><td>Name</td><td>Fu=
+ll name of the entity/concept</td><td></td><td>New 1.0</td><td>Text + langu=
+age tag (0..1)</td><td>contactDetails/Name or /givenName+ /familyName or or=
+ganisationName</td><td>Iptc4xmpExt:Name</td><td>Lang Alt</td><td>name</td><=
+td>AltLang
+</td></tr><tr><td></td><td>Role</td><td>Identifier of the role the entity h=
+as in the context of the metadata property</td><td></td><td>New 1.0</td><td=
+>URI (0..unbounded)</td><td>role</td><td>Iptc4xmpExt:Role</td><td>Bag URI</=
+td><td>role</td><td>string/uri/array</td></tr><tr style=3D"background-color=
+: #00cccc;"><td>PS CV-Term</td><td></td><td></td><td></td><td>New 1.0</td><=
+td></td><td></td><td></td><td></td><td>CvTerm</td><td>object</td></tr><tr><=
+td></td><td>CV-Term CV ID</td><td>Globally unique identifier of the Control=
+led Vocabulary the term is from.</td><td></td><td>New 1.0</td><td>Text/URI =
+(0..1)</td><td>ebucore:typeThesaurus</td><td>Iptc4xmpExt:CvId</td><td>URI</=
+td><td>cvId
+</td><td>string/uri/</td></tr><tr><td></td><td>CV-Term ID</td><td>Globally =
+unique identifier of the term from a Controlled Vocabulary.</td><td></td><t=
+d>New 1.0</td><td>Text/URI (1)</td><td>ebucore:typeLink</td><td>Iptc4xmpExt=
+:CvTermId</td><td>URI</td><td>cvTermId
+</td><td>string/uri/-MANDATORY</td></tr><tr><td></td><td>CV-Term name</td><=
+td>Natural language name of the term from a Controlled Vocabulary.</td><td>=
+</td><td>New 1.0</td><td>Text + language tag (0..1)</td><td>ebucore:typeLab=
+el</td><td>Iptc4xmpExt:CvTermName</td><td>LangAlt</td><td>cvTermName</td><t=
+d>AltLang</td></tr><tr><td></td><td>Refined 'aboutness' of the CV-Term</td>=
+<td>Refinement of the 'about' relationship of the term with the content.</t=
+d><td>E.g. an identifier for "shown emotion" could be used to indicate that=
+ the CV-Term covers this facet.</td><td>New 1.0</td><td>Text/URI (0..1)</td=
+><td></td><td>Iptc4xmpExt:CvTermRefinedAbout</td><td>URI</td><td>cvTermRefi=
+nedAbout</td><td>string/uri/</td></tr><tr style=3D"background-color: #00ccc=
+c;"><td>PS Location</td><td></td><td></td><td></td><td>New 1.0</td><td></td=
+><td></td><td></td><td></td><td>Location</td><td>object</td></tr><tr><td></=
+td><td>Identifier</td><td>Globally unique identifier of the location</td><t=
+d></td><td>New 1.0</td><td>Text/URI (0..unbounded)</td><td>coverage/spatial=
+/location/locationId</td><td>xmp:Identifier</td><td>Bag Text</td><td>identi=
+fiers</td><td>string/uri/array</td></tr><tr><td></td><td>Name</td><td>Full =
+name of the location</td><td></td><td>New 1.0</td><td>Text + language tag (=
+0..1)</td><td>coverage/spatial/location/name</td><td>Iptc4xmpExt:LocationNa=
+me</td><td>Lang Alt</td><td>name</td><td>AltLang</td></tr><tr><td></td><td>=
+Sublocation name</td><td>Name of a sub location the Location is located in<=
+/td><td></td><td>New 1.0</td><td>Text + language tag (0..1)</td><td>coverag=
+e/spatial/location/name (multi-occurence +typeLabel or typeLink, etc.)</td>=
+<td>Iptc4xmpExt:Sublocation</td><td>Text</td><td>sublocation
+</td><td>AltLang
+</td></tr><tr><td></td><td>City name</td><td>Name of the city the Location =
+is located in</td><td></td><td>New 1.0</td><td>Text + language tag (0..1)</=
+td><td>coverage/spatial/location/name (multi-occurence +typeLabel or typeLi=
+nk, etc.)</td><td>Iptc4xmpExt:City</td><td>Text</td><td>city</td><td>AltLan=
+g
+</td></tr><tr><td></td><td>State/Province name</td><td>Name of the state or=
+ province the Location is located in</td><td></td><td>New 1.0</td><td>Text =
++ language tag (0..1)</td><td>coverage/spatial/location/name (multi-occuren=
+ce +typeLabel or typeLink, etc.)</td><td>Iptc4xmpExt:ProvinceState</td><td>=
+Text</td><td>provinceState</td><td>AltLang
+</td></tr><tr><td></td><td>Country name</td><td>Name of the country the Loc=
+ation is located in</td><td></td><td>New 1.0</td><td>Text + language tag (0=
+..1)</td><td>coverage/spatial/location/name (multi-occurence +typeLabel or =
+typeLink, etc.)</td><td>Iptc4xmpExt:CountryName</td><td>Text</td><td>countr=
+yName
+</td><td>AltLang
+</td></tr><tr><td></td><td>Country ISO code</td><td>ISO code of the country=
+ the Location is located in</td><td></td><td>New 1.0</td><td>Text + languag=
+e tag (0..1)</td><td>coverage/spatial/location/code</td><td>Iptc4xmpExt:Cou=
+ntryCode</td><td>Text</td><td>countryCode</td><td>string//</td></tr><tr><td=
+></td><td>World region name</td><td>Name of the world region the Location i=
+s located in</td><td></td><td>New 1.0</td><td>Text + language tag (0..1)</t=
+d><td>coverage/spatial/location/region</td><td>Iptc4xmpExt:WorldRegion</td>=
+<td>Text</td><td>worldRegion</td><td>AltLang
+</td></tr><tr><td></td><td>GPS-Longitude</td><td>Longitude of a WGS84 based=
+ position of this Location</td><td></td><td>New 1.0</td><td>Number/decimal =
+(0..1)</td><td>coverage/spatial/location/coordinates/posx + typeLabel=3D"GP=
+S"</td><td>exif:GPSLongitude</td><td>Exif GPSCoordinate</td><td>gpsLongitud=
+e</td><td>number//</td></tr><tr><td></td><td>GPS-Latitude</td><td>Latitude =
+of a WGS84 based position of this Location</td><td></td><td>New 1.0</td><td=
+>Number/decimal (0..1)</td><td>coverage/spatial/location/coordinates/posy +=
+ typeLabel=3D"GPS"</td><td>exif:GPSLatitude</td><td>Exif GPSCoordinate</td>=
+<td>gpsLatitude</td><td>number//</td></tr><tr><td></td><td>GPS-Altitude</td=
+><td>Altitude in meters of a WGS84 based position of this Location</td><td>=
+</td><td>New 1.0</td><td>Number/decimal (0..1)</td><td>coverage/spatial/loc=
+ation/altitude</td><td>exif:GPSAltitude</td><td>Exif Rational</td><td>gpsAl=
+titude</td><td>number//</td></tr><tr style=3D"background-color: #00cccc;"><=
+td>PS Person Details</td><td></td><td></td><td></td><td>New 1.0</td><td></t=
+d><td></td><td></td><td></td><td>PersonWDetails</td><td>object</td></tr><tr=
+><td></td><td>Identifier</td><td>Globally unique identifier of the person</=
+td><td></td><td>New 1.0</td><td>Text/URI (0..unbounded)</td><td>contactId</=
+td><td>Iptc4xmpExt:PersonId</td><td>Bag URI</td><td>identifiers</td><td>str=
+ing/uri/array</td></tr><tr><td></td><td>Name</td><td>Name of the person</td=
+><td></td><td>New 1.0</td><td>Text + language tag (0..1)</td><td>contactDet=
+ails/Name or /givenName+ /familyName</td><td>Iptc4xmpExt:PersonName</td><td=
+>Lang Alt</td><td>name</td><td>AltLang</td></tr><tr><td></td><td>Descriptio=
+n</td><td>A textual description of the person</td><td></td><td>New 1.0</td>=
+<td>Text + language tag (0..1)</td><td>See all EBUCore attributes</td><td>I=
+ptc4xmpExt:PersonDescription</td><td>Lang Alt</td><td>description</td><td>A=
+ltLang</td></tr><tr><td></td><td>Characteristics</td><td>A property or trai=
+t of the person</td><td></td><td>New 1.0</td><td>Concept structure (0..unbo=
+unded)</td><td>See all EBUCore attributes</td><td>Iptc4xmpExt:PersonCharact=
+eristic</td><td>Bag CV-Term structure</td><td>characteristics</td><td>CvTer=
+m/array</td></tr><tr style=3D"background-color: #00cccc;"><td>PS Product wi=
+th GTIN</td><td></td><td></td><td></td><td>New 1.0</td><td></td><td></td><t=
+d></td><td></td><td>ProductWGtin</td><td>object</td></tr><tr><td></td><td>G=
+TIN</td><td>A 14 digit GTIN (Global Trade Item Number) of the product (GTIN=
+-8 to GTIN-14 codes are used).</td><td></td><td>New 1.0</td><td>Text (1)</t=
+d><td></td><td>Iptc4xmpExt:ProductGTIN</td><td>Text</td><td>gtin</td><td>st=
+ring//-MANDATORY</td></tr><tr><td></td><td>Name</td><td>Name of the product=
+.</td><td></td><td>New 1.0</td><td>Text + language tag (0..1)</td><td></td>=
+<td>Iptc4xmpExt:ProductName</td><td>Lang Alt</td><td>name</td><td>AltLang</=
+td></tr><tr><td></td><td>Description</td><td>A textual description of the p=
+roduct.</td><td></td><td>New 1.0</td><td>Text + language tag (0..1)</td><td=
+></td><td>Iptc4xmpExt:ProductDescription</td><td>Lang Alt</td><td>descripti=
+on</td><td>AltLang</td></tr><tr style=3D"background-color: #00cccc;"><td>PS=
+ Registry Entry</td><td></td><td></td><td></td><td>New 1.0</td><td></td><td=
+></td><td></td><td></td><td>RegistryEntry</td><td>object</td></tr><tr><td><=
+/td><td>Asset Identifier</td><td>Unique identifier of the video as issued b=
+y a registry</td><td>This value shall not be changed after being applied.</=
+td><td>New 1.0</td><td>Text (preferred: URI) (1)</td><td>identifier + typeL=
+ink=3D"ivqu:assetId"/dc:identifier</td><td>Iptc4xmpExt:RegItemId</td><td>Te=
+xt</td><td>assetIdentifier</td><td>string//-MANDATORY</td></tr><tr><td></td=
+><td>Registry Identifier</td><td>An identifier for the registry which issue=
+d the identifier of the video.</td><td></td><td>New 1.0</td><td>Text (prefe=
+rred: URI) (1)</td><td>identifier + typeLink=3D"ivqu:registryId"/dc:identif=
+ier</td><td>Iptc4xmpExt:RegOrgId</td><td>Text</td><td>registryIdentifier</t=
+d><td>string/uri/-MANDATORY</td></tr><tr><td></td><td>Role</td><td>An ident=
+ifier of the reason and/or purpose for this Registry Entry.</td><td>Could i=
+ndicated e.g. "Id of the previous supplier", "Id of the original copyright =
+owner", "Id used by the archive", etc</td><td>New 1.0</td><td>Text/URI (0..=
+1)</td><td>identifier + typeLink=3D"ivqu:registryRole"/dc:identifier</td><t=
+d>Iptc4xmpExt:RegEntryRole</td><td>Text</td><td>role</td><td>string/uri/</t=
+d></tr><tr style=3D"background-color: #00cccc;"><td>PS Video Time</td><td><=
+/td><td></td><td></td><td>New 1.0</td><td></td><td></td><td></td><td></td><=
+td>VideoTime</td><td>object</td></tr><tr><td></td><td>Time Format</td><td>I=
+dentifier of the time format. For time code formats following SMPTE specifi=
+cations.</td><td></td><td>New 1.0</td><td>Text value from CV (1)
+Enumeration:
+- normalPlayTime
+- smpteTC24
+- smpteTC25
+- smpteTC2997
+- smpteTC2997drop
+- smpteTC30
+- smpteTC50
+- smpteTC5994
+- smpteTC5994drop
+- smpteTC60
+- smpteTC23976</td><td>format/technicalAttributeString + typeLink=3D"ivqu:t=
+imeFormat"</td><td>xmpDM:timeFormat</td><td>Closed choice Text
+24Timecode
+25Timecode
+2997DropTimecode
+2997NonDropTimecode
+30Timecode
+50Timecode
+5994DropTimecode
+5994NonDropTimecode
+60Timecode
+23976Timecode</td><td>timeFormat</td><td>string//enum-MANDATORY</td></tr><t=
+r><td></td><td>Time Value</td><td>Formated string including hours, minutes,=
+ seconds, fractions of seconds or frames, depending on the Time Format</td>=
+<td></td><td>New 1.0</td><td>Text (1)</td><td>format/start, format/end, par=
+tStartTime, partEndTime</td><td>xmpDM:timeValue</td><td>Text</td><td>timeVa=
+lue</td><td>string//-MANDATORY</td></tr><tr style=3D"background-color: #00c=
+ccc;"><td>PS Frame Size</td><td></td><td></td><td></td><td>New 1.0</td><td>=
+</td><td></td><td></td><td></td><td>FrameSize</td><td>object</td></tr><tr><=
+td></td><td>Width</td><td>Width of the video frame in pixels</td><td></td><=
+td>New 1.0</td><td>Number (1)</td><td>format/width</td><td class=3D"modifie=
+d">stDim:w</td><td>integer</td><td>widthPixels</td><td>number//</td></tr><t=
+r><td></td><td>Height</td><td>Height of the video frame in pixels</td><td><=
+/td><td>New 1.0</td><td>Number (1)</td><td>format/height, format/lines</td>=
+<td class=3D"modified">stDim:h</td><td>integer</td><td>heightPixels</td><td=
+>number//</td></tr><tr><td></td><td>Measure Unit</td><td>Units of width and=
+ height values, fixed value "pixels"</td><td></td><td>New 1.0</td><td>Text(=
+1)</td><td></td><td>stDim:unit</td><td>Text</td><td>unitPixels</td><td>stri=
+ng//</td></tr><tr style=3D"background-color: #00cccc;"><td>PS Rating</td><t=
+d></td><td></td><td></td><td>New 1.0</td><td></td><td></td><td></td><td></t=
+d><td>Rating</td><td>object</td></tr><tr><td></td><td>Rating Value</td><td>=
+Rating value as issued by the rating source</td><td></td><td>New 1.0</td><t=
+d>Text (1)</td><td>rating/ratingValue</td><td>Iptc4xmpExt:RatingValue</td><=
+td>Text</td><td>ratingValue</td><td>string//-MANDATORY</td></tr><tr><td></t=
+d><td>Rating Source Link</td><td>Link to the site and optionally the page o=
+f the party which has issued the rating value, linked resource should expla=
+in the rating rules.</td><td></td><td>New 1.0</td><td>URL (1)</td><td>ratin=
+g/ratingLink</td><td>Iptc4xmpExt:RatingSourceLink</td><td>Text (URI)</td><t=
+d>ratingSourceLink</td><td>string/uri/-MANDATORY</td></tr><tr><td></td><td>=
+Rating Scale Min Value</td><td>The value of the rating scale used for the l=
+owest/worst rating</td><td></td><td>New 1.0</td><td>Text (0..1)</td><td>rat=
+ing/ratingScaleMinValue</td><td>Iptc4xmpExt:RatingScaleMinValue</td><td>Tex=
+t</td><td>ratingScaleMinValue</td><td>string//</td></tr><tr><td></td><td>Ra=
+ting Scale Max Value</td><td>The value of the rating scale used for the hig=
+hest/best rating</td><td></td><td>New 1.0</td><td>Text (0..1)</td><td>ratin=
+g/ratingScaleMaxValue</td><td>Iptc4xmpExt:RatingScaleMaxValue</td><td>Text<=
+/td><td>ratingScaleMaxValue</td><td>string//</td></tr><tr><td></td><td>Rati=
+ng Value Logo</td><td>Visualisation of the rating value referenced by a lin=
+k</td><td></td><td>New 1.0</td><td>URL (0..1)</td><td>rating/linkToLogo</td=
+><td>Iptc4xmpExt:RatingValueLogoLink</td><td>Text (URL)</td><td>ratingValue=
+LogoLink
+</td><td>string/uri/</td></tr><tr><td></td><td>Rating Region</td><td>Geopol=
+itical region to which this rating applies.</td><td></td><td>New 1.0</td><t=
+d>Location Entity structure (0..unbounded)</td><td>rating/ratingRegion</td>=
+<td>Iptc4xmpExt:RatingRegion</td><td>Bag Location structure</td><td>ratingR=
+egions</td><td>Location/array</td></tr><tr style=3D"background-color: #00cc=
+cc;"><td>PS Embedded Encoded Rights Expression</td><td></td><td></td><td></=
+td><td>New 1.0</td><td></td><td></td><td></td><td></td><td>EmbdEncRightsExp=
+r</td><td>object</td></tr><tr><td></td><td>Rights Expression Language ID</t=
+d><td>Identifier of the rights expression language used by the rights expre=
+ssion.</td><td></td><td>New 1.0</td><td>Text/URI (1)</td><td>rights/rightsI=
+D</td><td>Iptc4xmpExt:RightsExprLangId</td><td>URI</td><td>rightsExprLangId=
+</td><td>string/uri/-MANDATORY</td></tr><tr><td></td><td>Encoding type</td>=
+<td>Encoding type of the rights expression, identified by an IANA Media Typ=
+e.</td><td></td><td>New 1.0</td><td>Text (1)</td><td>rights/typeLabel</td><=
+td>Iptc4xmpExt:RightsExprEncType</td><td>MIMEtype</td><td>rightsExprEncType=
+</td><td>string//-MANDATORY</td></tr><tr><td></td><td>Encoded Rights Expres=
+sion</td><td>Embedded serialized rights expression using a rights expressio=
+n language which is encoded as a string.</td><td></td><td>New 1.0</td><td>T=
+ext (1)</td><td>dc:rights or rightsLink</td><td>Iptc4xmpExt:EncRightsExpr</=
+td><td>Text</td><td>encRightsExpr</td><td>string//-MANDATORY</td></tr><tr s=
+tyle=3D"background-color: #00cccc;"><td>PS Linked Encoded Rights Expression=
+</td><td></td><td></td><td></td><td>New 1.0</td><td></td><td></td><td></td>=
+<td></td><td>LinkedEncRightsExpr</td><td>object</td></tr><tr><td></td><td>R=
+ights Expression Language ID</td><td>Identifier of the rights expression la=
+nguage used by the rights expression.</td><td></td><td>New 1.0</td><td>Text=
+/URI (1)</td><td>rights/rightsID</td><td>Iptc4xmpExt:RightsExprLangId</td><=
+td>URI</td><td>rightsExprLangId</td><td>string/uri/-MANDATORY</td></tr><tr>=
+<td></td><td>Encoding type</td><td>Encoding type of the rights expression, =
+identified by an IANA Media Type.</td><td></td><td>New 1.0</td><td>Text (0.=
+.1)</td><td>rights/typeLabel</td><td>Iptc4xmpExt:RightsExprEncType</td><td>=
+MIMEtype</td><td>rightsExprEncType</td><td>string//-MANDATORY</td></tr><tr>=
+<td></td><td>Link to Encoded Rights Expression</td><td>Link to a rights exp=
+ression using a rights expression language.</td><td></td><td>New 1.0</td><t=
+d>URL (1)</td><td>dc:rights or rightsLink</td><td>Iptc4xmpExt:LinkedRightsE=
+xpr</td><td>Text/URL</td><td>linkedRightsExpr</td><td>string/uri/-MANDATORY=
+</td></tr><tr style=3D"background-color: #00cccc;"><td>PS Series</td><td></=
+td><td></td><td></td><td>New 1.0</td><td></td><td></td><td></td><td></td><t=
+d>Series</td><td>object</td></tr><tr><td></td><td>Series name</td><td>Name =
+of the series</td><td></td><td>New 1.0</td><td>Text + language tag (0..1)</=
+td><td>title + typeLink=3D"ivqu:series"/dc:title + type=20
+OR dc:alternative + type</td><td>Iptc4xmpExt:Name</td><td>Text</td><td>name=
+</td><td>AltLang</td></tr><tr><td></td><td>Series identifier</td><td>Identi=
+fier for the series</td><td></td><td>New 1.0</td><td>URI (0..1)</td><td>ide=
+ntifier + typeLink=3D"ivqu:series"</td><td>Iptc4xmpExt:Identifier</td><td>U=
+RI</td><td>identifier</td><td>string/uri/</td></tr><tr style=3D"background-=
+color: #00cccc;"><td>PS Episode or Season of Series</td><td></td><td></td><=
+td></td><td>New 1.0</td><td></td><td>isEpisodeOf, isSeasonOf, hasEpisode, h=
+asSeason</td><td></td><td></td><td>EpisodeSeason</td><td>object</td></tr><t=
+r><td></td><td>Name</td><td>Name of the episode or season of a series</td><=
+td></td><td>New 1.0</td><td>Text + language tag (0..1)</td><td>title + type=
+Link=3D"ivqu:episode OR ivqu:season"/dc:title + type=20
+OR dc:alternative + type</td><td>Iptc4xmpExt:Name</td><td>Text</td><td>name=
+</td><td>AltLang</td></tr><tr><td></td><td>Number</td><td>Number of the epi=
+sode or season of a series</td><td></td><td>New 1.0</td><td>Integer (0..1)<=
+/td><td>title + typeLink=3D"ivqu:episodeNo OR ivqu:seasonNo"/dc:title + typ=
+e=20
+OR dc:alternative + type</td><td>Iptc4xmpExt:Number</td><td>Text</td><td>nu=
+mber</td><td>number//</td></tr><tr><td></td><td>Identifier</td><td>Identifi=
+er of the episode or season of a series</td><td></td><td>New 1.0</td><td>UR=
+I (0..1)</td><td>identifier + typeLink=3D"ivqu:episode OR ivqu:season"</td>=
+<td>Iptc4xmpExt:Identifier</td><td>URI</td><td>identifier</td><td>string/ur=
+i/</td></tr><tr style=3D"background-color: #00cccc;"><td>PS Publication Eve=
+nt</td><td></td><td></td><td></td><td>New 1.0</td><td></td><td></td><td></t=
+d><td></td><td>PublicationEvent</td><td>object</td></tr><tr><td></td><td>Pu=
+blication Date</td><td>Date and optionally the time of publishing the video=
+</td><td></td><td>New 1.0</td><td>Date (1)</td><td>publicationEvent/publica=
+tionDate + publicationTime</td><td>Iptc4xmpExt:Date</td><td>Date</td><td>da=
+te</td><td>string/date-time/-MANDATORY</td></tr><tr><td></td><td>Publicatio=
+n Event Name</td><td>Name of the event for publishing this video.</td><td>T=
+he name may include the broadcasting company, the country, if this is a (re=
+gional) first publication etc</td><td>New 1.0</td><td>Text + language tag (=
+0..1)</td><td>publicationEvent/....</td><td>Iptc4xmpExt:Name</td><td>Text</=
+td><td>name</td><td>AltLang</td></tr><tr><td></td><td>Publication Event Ide=
+ntifier</td><td>Identifier of the event for publishing this video</td><td><=
+/td><td>New 1.0</td><td>URI (0..1)</td><td></td><td>Iptc4xmpExt:Identifier<=
+/td><td>URI</td><td>identifier</td><td>string/uri/</td></tr><tr style=3D"ba=
+ckground-color: #00cccc;"><td>PS Temporal Coverage</td><td></td><td></td><t=
+d></td><td>New 1.0</td><td></td><td></td><td></td><td></td><td>TemporalCove=
+rage</td><td>object</td></tr><tr><td></td><td>From Date</td><td>Optionally =
+truncated date when the temporal coverage starts</td><td>Truncated date mea=
+ns: the date value can be year + month + day OR year + month OR year only</=
+td><td>New 1.0</td><td>Date(1)</td><td>coverage/temporal/periodOfTime/start=
+Date</td><td>Iptc4xmpExt:tempCoverageFrom</td><td>Date</td><td>tempCoverage=
+From
+</td><td>string/date-time/</td></tr><tr><td></td><td>To Date</td><td>Option=
+ally truncated date when the temporal coverage ends</td><td></td><td>New 1.=
+0</td><td>Date(1)</td><td>coverage/temporal/periodOfTime/endDate</td><td>Ip=
+tc4xmpExt:tempCoverageTo</td><td>Date</td><td>tempCoverageTo</td><td>string=
+/date-time/</td></tr><tr style=3D"background-color: #00cccc;"><td>PS Qualif=
+ied Link</td><td></td><td></td><td></td><td>New 1.0</td><td></td><td></td><=
+td></td><td></td><td>QualifiedLink</td><td>object</td></tr><tr><td></td><td=
+>Link</td><td>URL of  the link</td><td></td><td>New 1.0</td><td>URL (1)</td=
+><td>{URL link of a property}</td><td>Iptc4xmpExt:Link</td><td>URL</td><td>=
+link</td><td>string/uri/</td></tr><tr><td></td><td>Qualifier</td><td>Term q=
+ualifying the use of the link</td><td></td><td>New 1.0</td><td>URI (0..1)</=
+td><td>{qualifier attribute, if available, of the property}</td><td>Iptc4xm=
+pExt:LinkQualifier</td><td>URI</td><td>linkQualifier</td><td>string/uri/</t=
+d></tr><tr style=3D"background-color: #00cccc;"><td>PS Text with Region Del=
+imiter</td><td></td><td></td><td></td><td>New 1.0</td><td></td><td></td><td=
+></td><td></td><td>TextWRegionDelimiter</td><td>object</td></tr><tr><td></t=
+d><td>Text</td><td>Text or textual data</td><td></td><td>New 1.0</td><td>Te=
+xt (1)</td><td></td><td>Iptc4xmpExt:RegionText</td><td>Text</td><td>regionT=
+ext</td><td>string//-MANDATORY</td></tr><tr><td></td><td>Measure Type</td><=
+td>How the measures of the rectangle are expressed</td><td>Absolute pixes: =
+measured from the upper left corner of the frame
+Ratio: percentage of the width or height, reference point upper left corner=
+ of the frame</td><td>New 1.0</td><td>Text (0..1) - enumeration
+- absolutePixels
+- ratio</td><td></td><td>Iptc4xmpExt:Region/stArea:unit</td><td>Closed Choi=
+ce:
+- pixel
+- normalized {=3Dratio}</td><td>measureType</td><td>string//enum</td></tr><=
+tr><td></td><td>Rectangle, upper left X</td><td>Horizontal axis value of th=
+e upper left corner of the rectange</td><td></td><td>New 1.0</td><td>Decima=
+l (0..1)</td><td></td><td>Iptc4xmpExt:Region/stArea:x</td><td>Real</td><td>=
+regionAreaX</td><td>number//</td></tr><tr><td></td><td>Rectangle, upper lef=
+t Y</td><td>Vertical axis value of the upper left corner of the rectange</t=
+d><td></td><td>New 1.0</td><td>Decimal (0..1)</td><td></td><td>Iptc4xmpExt:=
+Region/stArea:y</td><td>Real</td><td>regionAreaY</td><td>number//</td></tr>=
+<tr><td></td><td>Rectangle, horizontal size</td><td>Horizontal width of the=
+ rectangle</td><td></td><td>New 1.0</td><td>Decimal (0..1)</td><td></td><td=
+>Iptc4xmpExt:Region/stArea:w</td><td>Real</td><td>regionAreaWidth</td><td>n=
+umber//</td></tr><tr><td></td><td>Rectangle, vertical size</td><td>Vertical=
+ height of the rectangle</td><td></td><td>New 1.0</td><td>Decimal (0..1)</t=
+d><td></td><td>Iptc4xmpExt:Region/stArea:h</td><td>Real</td><td>regionAreaH=
+eight</td><td>number//</td></tr><tr style=3D"background-color: #00cccc;"><t=
+d>PS Linked Image</td><td>
+</td><td></td><td></td><td>New 1.1</td><td></td><td></td><td></td><td></td>=
+<td>LinkedImage</td><td>object</td></tr><tr><td></td><td>Image Link</td><td=
+>Link URL locating the image resource</td><td></td><td>New 1.1</td><td>URL =
+(1)</td><td></td><td>Iptc4xmpExt:Link</td><td>URL</td><td>link</td><td>stri=
+ng/uri/</td></tr><tr><td></td><td>Image Qualifier
+</td><td>Qualifier of the relationship of the image with the video</td><td>=
+</td><td>New 1.1</td><td>URI (0..unbounded)</td><td></td><td>Iptc4xmpExt:Li=
+nkQualifier</td><td>Bag URI</td><td>linkQualifiers</td><td>string/uri/array=
+</td></tr><tr><td></td><td>Image Role</td><td>Role of this image in the con=
+text of the video</td><td></td><td>New 1.1</td><td>Text (0..1)</td><td></td=
+><td>Iptc4xmpExt:ImageRole</td><td>Text</td><td>role</td><td>string//</td><=
+/tr><tr><td></td><td>Media Type</td><td>IANA Media (MIME) Type</td><td></td=
+><td>New 1.1</td><td>Text (0..1)</td><td></td><td>dc:format</td><td></td><t=
+d>mediaType</td><td>string//</td></tr><tr><td></td><td>Image Width</td><td>=
+Width of the image, in pixels</td><td></td><td>New 1.1</td><td>Integer (0..=
+1)</td><td></td><td>Iptc4xmpExt:WidthPixels</td><td>integer</td><td>widthPi=
+xels</td><td>number//</td></tr><tr><td></td><td>Image Height</td><td>Height=
+ of the image, in pixels</td><td></td><td>New 1.1</td><td>Integer (0..1)</t=
+d><td></td><td>Iptc4xmpExt:HeightPixels</td><td>integer</td><td>heightPixel=
+s</td><td>number//</td></tr><tr><td></td><td>Used Video Frame</td><td>Frame=
+ of the video used for this still image.
+</td><td></td><td>New 1.1</td><td>Video Time structure (0..1)</td><td></td>=
+<td>Iptc4xmpExt:UsedVideoFrame</td><td>Video Time</td><td>usedVideoFrame</t=
+d><td>VideoTime</td></tr><tr style=3D"background-color: #00cccc;"><td class=
+=3D"isnew">PS Device</td><td></td><td></td><td></td><td class=3D"isnew">New=
+ 1.2</td><td></td><td></td><td></td><td></td><td>Device</td><td>object</td>=
+</tr><tr><td></td><td>Manufacturer</td><td>Name of the manufacturer of the =
+device</td><td></td><td>New 1.2</td><td>Text (0..1)</td><td></td><td>Iptc4x=
+mpExt:Manufacturer</td><td>Text</td><td>manufacturer</td><td>string//</td><=
+/tr><tr><td></td><td>Model Name</td><td>Name of the device model</td><td></=
+td><td>New 1.2</td><td>Text (0..1)</td><td></td><td>Iptc4xmpExt:ModelName</=
+td><td>Text</td><td>modelName</td><td>string//</td></tr><tr><td></td><td>Se=
+rial Number</td><td>Serial number, assigned by manufacturer</td><td></td><t=
+d>New 1.2</td><td>Text (0..1)</td><td></td><td>Iptc4xmpExt:SerialNumber</td=
+><td>Text</td><td>serialNumber</td><td>string//</td></tr><tr><td></td><td>A=
+ttached Lens Description</td><td>Short description of the lens used with th=
+e device at the time of the recording</td><td></td><td>New 1.2</td><td>Text=
+ (0..1)</td><td></td><td>Iptc4xmpExt:AttLensDescription</td><td>Text</td><t=
+d>attLensDescription</td><td>string//</td></tr><tr><td></td><td>Owner=C2=B4=
+s Device ID</td><td>Identifier assigned by the owner of the device</td><td>=
+</td><td>New 1.2</td><td>Text (0..1)</td><td></td><td>Iptc4xmpExt:OwnersDev=
+iceId</td><td>Text</td><td>ownerDeviceId</td><td>string//</td></tr><tr styl=
+e=3D"background-color: #00cccc;"><td>PS XMP Alt Lang</td><td></td><td></td>=
+<td></td><td>New 1.0</td><td></td><td></td><td></td><td></td><td>AltLang ob=
+ject</td><td>object</td></tr><tr><td></td><td></td><td></td><td></td><td></=
+td><td></td><td></td><td></td><td></td><td>pattern property: "^(((([A-Za-z]=
+{2,3}(-([A-Za-z]{3}(-[A-Za-z]{3}){0,2}))?)|[A-Za-z]{4}|[A-Za-z]{5,8})(-([A-=
+Za-z]{4}))?(-([A-Za-z]{2}|[0-9]{3}))?(-([A-Za-z0-9]{5,8}|[0-9][A-Za-z0-9]{3=
+}))*(-([0-9A-WY-Za-wy-z](-[A-Za-z0-9]{2,8})+))*(-(x(-[A-Za-z0-9]{1,8})+))?)=
+|(x(-[A-Za-z0-9]{1,8})+))$"
+
+Comment: this regex limits the property name to BCP47 language tags</td><td=
+>string//</td></tr></tbody></table><h2 id=3D"errata">(Fixed) Errata</h2><ta=
+ble class=3D"spec1 vmhproperrata"><thead><tr><th class=3D"hdrcol1">Date</th=
+><th class=3D"hdrcol2">What had an error</th><th class=3D"hdrcol3">Error</t=
+h><th class=3D"hdrcol4">How the error was fixed</th></tr></thead><tbody><tr=
+><td>2018-04-25</td><td>XMP: PS Frame Size</td><td>Properties do not align =
+with XMP Dimension</td><td>XMP Dimension properties replace IPTC properties=
+</td></tr><tr><td>2018-06-11</td><td>Column PVMD JSON Data Type</td><td>No =
+values were shown</td><td>Values are shown now</td></tr></tbody></table><di=
+v id=3D"fatkun-drop-panel">
+        <a id=3D"fatkun-drop-panel-close-btn">=C3=97</a>
+            <div id=3D"fatkun-drop-panel-inner">
+                <div class=3D"fatkun-content">
+                    <svg class=3D"fatkun-icon" viewBox=3D"0 0 1024 1024" ve=
+rsion=3D"1.1" xmlns=3D"http://www.w3.org/2000/svg" p-id=3D"5892"><path d=3D=
+"M494.933333 782.933333c2.133333 2.133333 4.266667 4.266667 8.533334 6.4h8.=
+533333c6.4 0 10.666667-2.133333 14.933333-6.4l2.133334-2.133333 275.2-275.2=
+c8.533333-8.533333 8.533333-21.333333 0-29.866667-8.533333-8.533333-21.3333=
+33-8.533333-29.866667 0L533.333333 716.8V128c0-12.8-8.533333-21.333333-21.3=
+33333-21.333333s-21.333333 8.533333-21.333333 21.333333v588.8L249.6 475.733=
+333c-8.533333-8.533333-21.333333-8.533333-29.866667 0-8.533333 8.533333-8.5=
+33333 21.333333 0 29.866667l275.2 277.333333zM853.333333 874.666667H172.8c-=
+12.8 0-21.333333 8.533333-21.333333 21.333333s8.533333 21.333333 21.333333 =
+21.333333H853.333333c12.8 0 21.333333-8.533333 21.333334-21.333333s-10.6666=
+67-21.333333-21.333334-21.333333z" p-id=3D"5893"></path></svg>
+                    <div class=3D"fatkun-title">Drag and Drop</div>
+                    <div class=3D"fatkun-desc">The image will be downloaded=
+</div>
+                </div>
+            </div>
+    </div></body></html>
+------MultipartBoundary--A1WyGdFkmTJpzQROKKivPm0Tf5buaA5Voha1VMOH17----
+Content-Type: text/css
+Content-Transfer-Encoding: quoted-printable
+Content-Location: https://iptc.org/std/videometadatahub/recommendation/iptcspecs1.css
+
+@charset "utf-8";
+
+body { font-family: "Open Sans", Calibri, Candara, Arial, sans-serif; font-=
+size: 1.1em; }
+
+.pageheader { color: rgb(74, 144, 226); }
+
+table { border-collapse: collapse; }
+
+table, th, td { border: 1px solid gray; }
+
+th { background-color: rgb(153, 214, 255); font-size: 1em; height: 40px; }
+
+td { padding-left: 5px; padding-right: 3px; font-size: 0.85em; }
+
+.hdrcolIptc { background-color: rgb(153, 214, 255); }
+
+.bgdcolIptc { background-color: rgb(216, 239, 253); }
+
+.hdrcolNoniptc { background-color: rgb(178, 248, 178); }
+
+.bgdcolNoniptc { background-color: rgb(222, 253, 222); }
+
+.hdrcolNoniptc2 { background-color: rgb(255, 211, 122); }
+
+.bgdcolNoniptc2 { background-color: rgb(250, 235, 204); }
+
+.note1 { }
+
+.smallnote1 { font-size: 0.8em; }
+
+.modified { background-color: lightgray; }
+
+.isnew { background-color: rgb(204, 255, 204); }
+
+.vmhmapping td { font-size: 0.75em; }
+------MultipartBoundary--A1WyGdFkmTJpzQROKKivPm0Tf5buaA5Voha1VMOH17----
+Content-Type: image/jpeg
+Content-Transfer-Encoding: base64
+Content-Location: https://iptc.org/download/resources/logos/iptc-gr_70x70.jpg
+
+/9j/4AAQSkZJRgABAQEAYABgAAD//gAfTEVBRCBUZWNobm9sb2dpZXMgSW5jLiBWMS4wMQD/2wBD
+AAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8t
+MC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgo
+KCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCABGAEYDASIAAhEBAxEB/8QAHAAAAQUBAQEAAAAAAAAA
+AAAAAAIDBQYHBAgB/8QANxAAAQMDAQcBBgQFBQAAAAAAAQIDBAAFEQYHEhMhMUFRcSIyYZGhsRQz
+UnIVI0NigULB0dLw/8QAGgEAAgMBAQAAAAAAAAAAAAAAAwQAAgUBBv/EACQRAAICAQMEAgMAAAAA
+AAAAAAECAAMREiExBCJBURNhBXHw/9oADAMBAAIRAxEAPwCmue+r1pNKc99XrSa0JnwrptkF+5XC
+PCiI35EhYbbT5JNO2W1TL1cmIFuZU9JdOEpHb4nwB5rVr5YLNs0gWKct5x/UbT4ewn3XU8gtOOyQ
+Oh65+lWbG3mWVc7+JMWjZto6E43ZLxN/E355rikB4oIH9gHLt3ye9Y1qu3RLTqCZBt81M6MyvdS8
+kdfI+JHTI5Vu+qtP2zaVYGL5p99LdzbRhtwHdJx1bX4I7Htnwapmx/TVkm3C8WvUcRxV5bSpHAeT
+gIRyBUn+7J6+MY70JGwCSYVlyQAJklLZ/Ob/AHCpPVlpFj1JcbYlziIjPFCV9yOoz8cVGM/nN/uF
+HBzAHae12PyG/wBo+1FDH5Df7R9qKz5oTxO576vWuq022Zd7g1Ct0dciS6cJQn7nwPjXPuLccc3E
+qVu5UcDOB5r0jsksdrtmkP4jYVtT7lIaJW6s7vtgfleUgH/nxTrvpESRNRxKzaONso0vKfuNlDl3
+kKCW5Ta+I2rPRKj1Rjx/q8+LVAmWLaxpRbElAamNj20A/wAyO52Uk90n69DX3RV9l6wj3iyattAb
+kxjuPp3CG1AnkOfRQ6jn4IrFLwp/QO0CYiwzCfwboCFE5CkkAlCvOM4PpQQNRPuFJ0gepJRZV+2U
+aqWy4niRnD7SMnhSW+yh4I+Yq7XfbDY24rkyzWtZvTze4XHmkp3fAUoHKgPH2ri1xtA05qbQCRKi
+ly7LO6hgclR3B1WFfp+/TzjFaIF17sN5Qto2U7R6bKemy3pUpwuPvLLjiz1UonJNJjpKpDSUgklQ
+AA9abq1bMLQbzrm1R93Lbbofc8bqPa+pAH+aITgZgwMnE9YtDdaQD1CQKKyrVX8QvuuJUK1yX2hF
+YAVw3CkEgjPT4q+lFWXoV0gvYASM4lj1bZIVCQJU9iF+skGZLtd0jMolTVbiJTnMOA/0lZ5D/fv2
+qdvdquOzG8rvenkLkadfUPxcPOeF/wC7Ht0NYUs4cUR5rcNlG0Zuc03p/U60rUpPCYkO8w4Om4vP
+fwe/T1A6kHUJdGB7TNFN0VqTSMibpGWymU+2eE44n3F+FDsrtzzjl1FeU7vGmRLlJYuaHETULPFD
+nvb3cnz61q2rXHdlepy/pqWyqJPQpS7c6SrhnsceMnkevUc6yi6XCVdLg/NnvKekvK3lrV1JqVLj
+ccTlrZ2PMuWg9H23VljuDTFwU1qFs77LC8BCkAfM589uVdOldAxb1Au1uflOxNVxV5REeASndA+u
+fI6cu1GzLTsW9QJT1ruzkPVcVYdjIPsp3QPrnofHLlirotadZoUtahY9e2cZUVHcDgT90n6Z7g84
+zEE7yKoIG0p8XTNhk6NuMaWty16ptRW6+JKuTg8Ad09MY5gnuDVt2L2hGndK3DVFwTurfbIaB68N
+P/ZWPkKh4bUnaxqG3ql29mIxb0blwltHPGOfdB+OOQ54yTnpVo17dGZtwt+l7YpLURDrbbpR0ByA
+Ej4J+/pRaajc+jxyfoSljipdY/Q+zJnZVBccjT71LGX57p3Sf0gnJ/ySflRV3gRGoMNmLHTustIC
+Ej4Ciluot+awv/YjNNfxIFnitz31etJBweVOuMub6v5a+vg0ngufoV8jTUUi5kp+a+p+W84+8oAF
+biipRwMDmfhTNOJYeUoJS04pR6AJJzVosez3U15Ukx7W8y0f6skcJPrz5n/ANcJA5nQCeJOaRj6e
+kaRXKiXI2fVNuWZAkPOYDngAd09BjGQT3BqWYiXbaxPgSnLe1bY8ZvhSrijOX/KU+eXbnjJ59qmb
+JsvsOm2kzdX3FqS4OYZzut59PeX9PSpK6aruF0jqgaLtz6IjY3C801zA8JA5J+/pUqpe45Tj2eBO
+vYtYw3PocmO6ivlu0bZk6f0ylKZCU7q1p58PPUk91n6VnunFFWpLapRJUZTZJPf2hXSrS9/UoqVa
+ppUTkktk5rtsGmr0xfLe69a5aG0SG1KUWzgAKGTW5TXR09RVWBJ5OeZl2PbfYGZTib3RRRXlJ6KJ
+4aP0J+VHDR+hPyooqSQ3EjokA+lZeu7anvt5mwLfOjRG2XltZCSk4BI64JoorS/HIp1sRnAiHWsR
+pAOMyVtuzmMXxJvs1+4v5yQSQk+pzk/MVdocRiEwlmI02yynohCcAUUUpffZae85jNVKVjtEfooo
+oENCiiipJP/Z
+
+------MultipartBoundary--A1WyGdFkmTJpzQROKKivPm0Tf5buaA5Voha1VMOH17------
