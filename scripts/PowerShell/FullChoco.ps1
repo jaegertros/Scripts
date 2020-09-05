@@ -346,4 +346,15 @@ Remove both these if installing#>
 
 #choco install powershellhere-elevated
 
+<#
+AtomicParsley is a lightweight command line program for reading, parsing
+and setting metadata into MPEG-4 files supporting these styles of metadata:
+iTunes-style metadata into .mp4, .m4a, .m4p, .m4v, .m4b files
+3gp-style assets (3GPP TS 26.444 version 6.4.0 Release 6 specification
+conforming) in 3GPP, 3GPP2, MobileMP4 and derivatives
+ISO copyright notices at movie and track level for MPEG-4 and derivative
+files uuid private user extension text and file embedding for MPEG-4 and
+derivative files
+#>
+#choco install atomicparsley
 
