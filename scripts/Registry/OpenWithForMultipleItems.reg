@@ -1,0 +1,11 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\image\shell\Open With Photoshop\command]
+@="\"C:\\Program Files\\Adobe\\Adobe Photoshop 2020\\Photoshop.exe\" \"%1\""
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\image\shell\Open With Photoshop]
+"IconPath"="%ProgramFiles%\\Adobe\\Adobe Photoshop 2020\\Photoshop.exe,0"
+
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer]
+"MultipleInvokePromptMinimum"=dword:00000016
+
