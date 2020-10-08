@@ -171,6 +171,7 @@ $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown');
 
 ##########Basics################
 <#
+netsh advfirewall set allprofiles state off
 choco install 7zip
 choco install disabledefender-winconfig
 choco install defender-injector
