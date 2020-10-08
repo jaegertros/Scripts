@@ -169,6 +169,25 @@ Write-Host -NoNewLine 'Press any key to install the packages that you removed co
 $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown');
 
 
+##########Basics################
+<#
+choco install 7zip
+choco install disabledefender-winconfig
+choco install defender-injector
+choco install windowsfirewallcontrol
+choco install path-copy-copy
+choco install regshot
+choco install notepadplusplus
+choco install npppluginmanager
+Add-MpPreference -ExclusionPath “C:\tools\Sysinternals”
+choco install sysinternals --params "/InstallDir:C:\tools\Sysinternals"
+Set-Item -Path Env:Path -Value ($Env:Path + ";C:\tools\Sysinternals")
+Add-MpPreference -ExclusionPath “C:\tools\NirLauncher”
+choco install nirlauncher --params "'/Sysinternals'" --install-args="'/DIR=C:\tools\NirLauncher'"
+
+#######################
+#>
+
 
 #####Notepad++ - so much better than that shitty Windows notepad
 #choco install notepadplusplus
