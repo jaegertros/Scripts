@@ -294,6 +294,10 @@ Remove both these if installing#>
 
 
 
+choco install unreal-linux
+choco install winlibs-toolchain
+choco install winlibs
+choco install codeblocks
 
 #choco install javaruntime
 
